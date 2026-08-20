@@ -10,6 +10,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onNavigate, activeSection }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [clickedButton, setClickedButton] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,6 +33,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, activeSection }) => 
   ];
 
   const handleClick = (id: string) => {
+    setClickedButton(id);
+    setTimeout(() => setClickedButton(null), 350);
     setIsOpen(false);
     onNavigate(id);
   };
@@ -47,29 +50,36 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, activeSection }) => 
             className="flex items-center gap-2 cursor-pointer group"
             onClick={() => handleClick('home')}
           >
-            <div className="p-1.5 rounded-lg bg-indigo-600 text-white flex items-center justify-center shadow-lg shadow-indigo-600/35 group-hover:scale-105 transition-transform duration-200">
+            <div className="p-1.5 rounded-lg bg-indigo-600 text-white flex items-center justify-center shadow-lg shadow-indigo-600/35 group-hover:scale-110 active:scale-95 transition-transform duration-200">
               <Sparkles className="w-5 h-5" />
             </div>
-            <span className="text-xl font-bold tracking-tight text-white">
+            <span className="text-xl font-bold tracking-tight text-white group-hover:text-indigo-200 transition-colors">
               DISHA <span className="text-indigo-400">AI</span>
             </span>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => handleClick(item.id)}
-                className={`text-sm font-medium transition-colors cursor-pointer ${
-                  activeSection === item.id 
-                    ? 'text-indigo-400 font-semibold' 
-                    : 'text-slate-300 hover:text-white'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
+          <div className="hidden md:flex items-center gap-4 lg:gap-6">
+            {navItems.map((item) => {
+              const isActive = activeSection === item.id;
+              const isClicked = clickedButton === item.id;
+
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleClick(item.id)}
+                  className={`px-3.5 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ease-out cursor-pointer select-none ${
+                    isClicked
+                      ? 'scale-125 bg-indigo-600/40 text-white font-bold shadow-lg shadow-indigo-500/50 border border-indigo-400'
+                      : isActive
+                      ? 'scale-115 text-indigo-300 font-bold bg-indigo-500/20 border border-indigo-500/40 shadow-md shadow-indigo-500/25'
+                      : 'text-slate-300 hover:text-white hover:scale-110 hover:bg-slate-800/60'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
           </div>
 
           {/* Desktop CTA */}
