@@ -10,6 +10,7 @@ import {
 const NAV_ITEMS = [
   { label: 'Dashboard', path: '/student/dashboard', icon: LayoutDashboard },
   { label: 'DISHA AI', path: '/student/disha-ai', icon: MessageSquareText },
+  { label: 'Smart Attendance', path: '/student/smart-attendance', icon: CheckCircle2 },
   { label: 'My Goal', path: '/student/goal', icon: Target },
   { label: 'Roadmap', path: '/student/roadmap', icon: Map },
   { label: 'Study Planner', path: '/student/study-planner', icon: CalendarDays },
