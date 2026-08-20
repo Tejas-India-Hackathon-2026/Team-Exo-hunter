@@ -29,69 +29,94 @@ Behavior guidelines:
 
 You are speaking with a B.Tech Computer Science student interested in AI/ML and Fullstack Development.`;
 
-// Conversation history for context-aware responses
-let conversationHistory: Array<{ role: string; parts: Array<{ text: string }> }> = [];
-
-export async function getAiResponse(userMessage: string, customApiKey?: string): Promise<string> {
+export async function getAiResponse(
+  userMessage: string, 
+  customApiKey?: string, 
+  history: Array<{ role: 'user' | 'assistant'; content: string }> = []
+): Promise<string> {
   if (!customApiKey || !customApiKey.trim()) {
     return "KEY_NOT_CONFIGURED";
   }
 
-  // Add user message to conversation history
-  conversationHistory.push({
+  // Format dynamic chat history to match Gemini's API format
+  const apiContents = history
+    .filter(m => m.content !== 'KEY_NOT_CONFIGURED') // filter out key prompts
+    .map(m => ({
+      role: m.role === 'user' ? 'user' : 'model',
+      parts: [{ text: m.content }],
+    }));
+
+  // Add the current user prompt
+  apiContents.push({
     role: 'user',
     parts: [{ text: userMessage }],
   });
 
-  // Keep only last 20 messages to avoid token limits
-  if (conversationHistory.length > 20) {
-    conversationHistory = conversationHistory.slice(-20);
-  }
+  // Keep last 20 messages to prevent token overflows
+  const contents = apiContents.slice(-20);
 
   const apiKey = customApiKey;
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`;
+  
+  const models = ['gemini-3.6-flash', 'gemini-1.5-flash'];
+  let response: Response | null = null;
+  let lastErrorStatus = 200;
+  let lastErrorBody = '';
 
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        system_instruction: {
-          parts: [{ text: DISHA_SYSTEM_PROMPT }],
-        },
-        contents: conversationHistory,
-        generationConfig: {
-          temperature: 0.8,
-          topP: 0.95,
-          topK: 40,
-          maxOutputTokens: 1024,
-        },
-        safetySettings: [
-          { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_ONLY_HIGH' },
-          { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_ONLY_HIGH' },
-          { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_ONLY_HIGH' },
-          { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_ONLY_HIGH' },
-        ],
-      }),
-    });
+  for (const model of models) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    try {
+      response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          system_instruction: {
+            parts: [{ text: DISHA_SYSTEM_PROMPT }],
+          },
+          contents: contents,
+          generationConfig: {
+            temperature: 0.8,
+            topP: 0.95,
+            topK: 40,
+            maxOutputTokens: 1024,
+          },
+          safetySettings: [
+            { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_ONLY_HIGH' },
+            { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_ONLY_HIGH' },
+            { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_ONLY_HIGH' },
+            { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_ONLY_HIGH' },
+          ],
+        }),
+      });
 
-    if (!response.ok) {
-      const errorBody = await response.text();
-      console.error('Gemini API error:', response.status, errorBody);
-      try {
-        const parsed = JSON.parse(errorBody);
-        const errMsg = parsed?.error?.message || '';
-        if (response.status === 400 && (errMsg.toLowerCase().includes('api key not valid') || errMsg.toLowerCase().includes('key invalid'))) {
-          return `🔑 **Invalid API Key:** The Gemini API returned "API key not valid."
+      if (response.ok) {
+        break; // Successfully completed the request!
+      } else {
+        lastErrorStatus = response.status;
+        lastErrorBody = await response.text();
+        console.warn(`Model ${model} failed with status ${response.status}. trying next...`);
+      }
+    } catch (e) {
+      console.warn(`Failed to connect using model ${model}:`, e);
+    }
+  }
+
+  if (!response || !response.ok) {
+    console.error('All Gemini API models failed. Last status:', lastErrorStatus, lastErrorBody);
+    try {
+      const parsed = JSON.parse(lastErrorBody);
+      const errMsg = parsed?.error?.message || '';
+      if (lastErrorStatus === 400 && (errMsg.toLowerCase().includes('api key not valid') || errMsg.toLowerCase().includes('key invalid'))) {
+        return `🔑 **Invalid API Key:** The Gemini API returned "API key not valid."
 
 Please check that you copied the key correctly from Google AI Studio. You can reset or update it using the **"Set Gemini Key"** button in the header.`;
-        }
-        return `⚠️ **Gemini API Error (Status ${response.status}):** ${errMsg || 'Unknown error. Check your API key limits.'}`;
-      } catch {
-        return `⚠️ **Gemini API Error:** Status ${response.status} was returned by Google servers.`;
       }
+      return `⚠️ **Gemini API Error (Status ${lastErrorStatus}):** ${errMsg || 'Unknown error or service temporarily unavailable. Please try again later.'}`;
+    } catch {
+      return `⚠️ **Gemini API Error:** Status ${lastErrorStatus} was returned by Google servers.`;
     }
+  }
 
+  try {
     const data = await response.json();
 
     // Extract the text from Gemini's response
@@ -99,18 +124,9 @@ Please check that you copied the key correctly from Google AI Studio. You can re
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
       "I'm having trouble generating a response right now. Please try again!";
 
-    // Add assistant response to conversation history
-    conversationHistory.push({
-      role: 'model',
-      parts: [{ text: aiText }],
-    });
-
     return aiText;
   } catch (error) {
     console.error('DISHA AI Error:', error);
-
-    // Remove the failed user message from history
-    conversationHistory.pop();
 
     return `⚠️ I'm having trouble connecting to my AI engine right now.
 
@@ -152,7 +168,6 @@ export async function generateDynamicRoadmap(
     ];
   }
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${customApiKey}`;
   const prompt = `Generate a customized 9-step learning roadmap for a student targeting the career goal: "${careerGoal}".
 The student currently has these skills: ${JSON.stringify(currentSkills)}.
 Return the roadmap as a JSON array of 9 steps. Each step must have exactly this JSON format:
@@ -166,16 +181,28 @@ Return the roadmap as a JSON array of 9 steps. Each step must have exactly this 
 Set the first 3 steps status as "completed", step 4 status as "current", and the remaining 5 steps as "upcoming".
 Return ONLY the raw JSON array, without any markdown formatting or backticks.`;
 
+  const models = ['gemini-3.6-flash', 'gemini-1.5-flash'];
+  let response: Response | null = null;
+
+  for (const model of models) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${customApiKey}`;
+    try {
+      response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { responseMimeType: 'application/json' }
+        })
+      });
+      if (response.ok) break;
+    } catch (e) {
+      console.warn(`Roadmap connect failed for ${model}:`, e);
+    }
+  }
+
   try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { responseMimeType: 'application/json' }
-      })
-    });
-    if (!response.ok) throw new Error('API error');
+    if (!response || !response.ok) throw new Error('All models failed');
     const data = await response.json();
     const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
     return JSON.parse(text);
@@ -211,28 +238,39 @@ export async function generateDynamicStudyPlan(
     ];
   }
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${customApiKey}`;
   const prompt = `Generate a customized list of 6 study tasks for a student targeting "${careerGoal}" with ${studyHours} hours of daily study.
-Return the tasks as a JSON array of 6 objects. Each object must have exactly this JSON format:
-{
-  "id": "t1",
-  "title": "Task Description",
-  "priority": "high" | "medium" | "low",
-  "completed": boolean,
-  "category": "Practice" | "Theory" | "Projects" | "Review"
-}
-Return ONLY the raw JSON array, without any markdown formatting or backticks.`;
+  Return the tasks as a JSON array of 6 objects. Each object must have exactly this JSON format:
+  {
+    "id": "t1",
+    "title": "Task Description",
+    "priority": "high" | "medium" | "low",
+    "completed": boolean,
+    "category": "Practice" | "Theory" | "Projects" | "Review"
+  }
+  Return ONLY the raw JSON array, without any markdown formatting or backticks.`;
+
+  const models = ['gemini-3.6-flash', 'gemini-1.5-flash'];
+  let response: Response | null = null;
+
+  for (const model of models) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${customApiKey}`;
+    try {
+      response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { responseMimeType: 'application/json' }
+        })
+      });
+      if (response.ok) break;
+    } catch (e) {
+      console.warn(`Study plan connect failed for ${model}:`, e);
+    }
+  }
 
   try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { responseMimeType: 'application/json' }
-      })
-    });
-    if (!response.ok) throw new Error('API error');
+    if (!response || !response.ok) throw new Error('All models failed');
     const data = await response.json();
     const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
     return JSON.parse(text);
