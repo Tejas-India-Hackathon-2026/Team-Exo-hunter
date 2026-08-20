@@ -100,3 +100,19 @@ npm run build
 * **Milestone 1 (Hackathon MVP):** High-fidelity interactive React 19 UI with multi-track simulators, dynamic roadmap calculator, face recognition HUD, and team roster.
 * **Milestone 2 (Backend AI Integration):** Connect live LLM prompt chains (LangChain / Gemini API) and RAG document parsers.
 * **Milestone 3 (Edge Device Deployment):** Connect Raspberry Pi / camera hardware via WebSocket streams to central attendance server.
+
+## 🏛️ DISHA for Smart Campus (AutoSoft Catalog)
+Integrated 12 next-generation campus modules from the AutoSoft catalog to establish a complete digital ecosystem for modern colleges:
+1. **Smart Attendance** - Biometric & QR-based attendance tracking.
+2. **Digital Notes** - AI-powered notes categorization and lookup.
+3. **AI Study Assistant** - 24/7 PDF summaries, homework aids, and mock test generators.
+4. **Smart Timetable** - Auto-scheduling with faculty substitution notifications.
+5. **Results & Grades** - Live grading dashboards and academic trend analysis.
+6. **Assignments** - Verifiable digital assignments with plagiarism checking.
+7. **Notices & Events** - Global campus announcement bulletins and alerts.
+8. **Placement Portal** - Multi-member placement drives and custom resume logs.
+9. **QR Attendance** - Instant session QR codes with location boundaries.
+10. **Smart Notifications** - High-priority campus activity alerts.
+11. **Digital ID Card** - Encrypted mobile student ID cards.
+12. **Internship Updates** - Curated stream-wise job and project opportunities.
+
