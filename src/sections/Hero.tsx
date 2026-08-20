@@ -35,6 +35,23 @@ export const Hero: React.FC<HeroProps> = ({ onStudentsClick, onCollegesClick }) 
   ]);
   const [logIndex, setLogIndex] = useState(0);
 
+  // Dynamic floating starry particles in background
+  const [particles, setParticles] = useState<{ id: number; left: string; top: string; size: string; delay: string; duration: string; color: string }[]>([]);
+
+  useEffect(() => {
+    // Generate 18 subtle floating data nodes
+    const generated = Array.from({ length: 18 }).map((_, i) => ({
+      id: i,
+      left: `${(i * 5.5) + (Math.random() * 2)}%`, // Spaced out across 100% width to prevent stacking
+      top: `${Math.random() * 65 + 10}%`,
+      size: `${Math.random() * 4 + 2}px`,
+      delay: `${Math.random() * -10}s`,
+      duration: `${Math.random() * 10 + 6}s`,
+      color: Math.random() > 0.5 ? 'bg-indigo-500/20' : 'bg-sky-400/20'
+    }));
+    setParticles(generated);
+  }, []);
+
   // Live Logs Simulator Hook
   useEffect(() => {
 
@@ -64,14 +81,26 @@ export const Hero: React.FC<HeroProps> = ({ onStudentsClick, onCollegesClick }) 
       <div className="absolute top-[35%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] md:w-[600px] h-[350px] md:h-[600px] bg-indigo-600/10 rounded-full blur-3xl -z-10 pointer-events-none neural-pulse-core" />
       <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] md:w-[450px] h-[250px] md:h-[450px] bg-sky-500/5 rounded-full blur-3xl -z-10 pointer-events-none neural-pulse-core" />
 
-      {/* 🚀 Drifting AI Synapses */}
-      <div className="absolute top-1/4 left-1/10 w-4 h-4 rounded-full bg-indigo-500/30 blur-[2px] float-slow hidden md:block" />
-      <div className="absolute top-1/2 left-[15%] w-6 h-6 rounded-full bg-sky-500/20 blur-[3px] float-medium hidden md:block" />
-      <div className="absolute bottom-1/4 left-[8%] w-3.5 h-3.5 rounded-full bg-purple-500/25 blur-[1px] float-slow hidden md:block" />
-      
-      <div className="absolute top-1/3 right-[12%] w-5 h-5 rounded-full bg-indigo-500/25 blur-[2px] float-medium hidden md:block" />
-      <div className="absolute top-2/3 right-[8%] w-3 h-3 rounded-full bg-sky-400/30 blur-[1px] float-slow hidden md:block" />
-      <div className="absolute bottom-1/3 right-[15%] w-7 h-7 rounded-full bg-purple-500/15 blur-[4px] float-medium hidden md:block" />
+      {/* 🚀 Dynamic Drifting Neural Synapses */}
+      {particles.map((p) => (
+        <div
+          key={p.id}
+          className={`${p.color} absolute rounded-full blur-[0.5px] pointer-events-none -z-10`}
+          style={{
+            left: p.left,
+            top: p.top,
+            width: p.size,
+            height: p.size,
+            animation: `float-particle ${p.duration} ease-in-out infinite`,
+            animationDelay: p.delay
+          }}
+        />
+      ))}
+
+      {/* ⚡ Diagonal sweeping light beam */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+        <div className="absolute w-[200%] h-40 bg-gradient-to-b from-indigo-500/0 via-indigo-500/3 to-indigo-500/0 blur-3xl sweep-wave-effect" />
+      </div>
 
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(99,102,241,0.05),transparent_60%)] pointer-events-none" />
 
