@@ -144,3 +144,5 @@
 // Config options initialized
 
 // Bootstrap validation checks
+
+// Standard parameters spacing checks
