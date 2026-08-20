@@ -96,6 +96,26 @@ npm run lint
 
 ---
 
+## 👥 Team Exo-Hunter (Tejas India Hackathon 2026)
+
+| Member | Name | Role | Focus Areas | Live Status |
+| :---: | :--- | :--- | :--- | :---: |
+| **01** | **Ayush Raj** *(Lead)* | Lead Architect | System Design, React 19 Core, Backend | 🟢 Active |
+| **02** | **Gungun** | AI Systems Lead | Computer Vision, Face Recognition, Analytics | 🟢 Active |
+| **03** | **Jyoti** | Frontend & AI Guidance | Student Roadmaps, Interactive UI, Simulators | 🟢 Active |
+| **04** | **Shubhanshu** | Cloud Infra & QA | CI/CD, Deployment, UI/UX Auditing | 🟢 Active |
+
+---
+
+## 📡 Live Hackathon Progress & Updates
+
+* **🟢 [Active] Team Exo-Hunter (Ayush Raj, Gungun, Jyoti, Shubhanshu):**
+  - Integrated full 4-member Team Exo-Hunter Showcase & Live Updates tracker in UI.
+  - Linked dynamic navigation and active progress verification for evaluators and admins.
+  - Validated React 19 / Vite / Tailwind production build compatibility.
+
+---
+
 ## 🌟 Milestone 2: Student DISHA Guidance Module (Completed)
 
 We have built the student-facing guidance module as specified in Milestone 2. 
@@ -136,3 +156,4 @@ We have built the student-facing guidance module as specified in Milestone 2.
 * **Milestone 1 (Completed):** Establish modern, scalable React/Vite/Tailwind framework and build a premium landing page with interactive simulator previews.
 * **Milestone 2 (Completed):** Complete the Student DISHA Guidance Module using local states, mocks, and full storage integrations.
 * **Milestone 3 (Future):** Embed local face detection logic in the client utilizing TensorFlow.js or a Python FastAPI camera server.
+

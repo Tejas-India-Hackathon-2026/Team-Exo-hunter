@@ -105,9 +105,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 </button>
               </li>
               <li>
-                <span className="text-slate-500 cursor-not-allowed">
+                <button onClick={() => onNavigate('team')} className="hover:text-white transition-colors cursor-pointer">
                   About Team
-                </span>
+                </button>
               </li>
               <li>
                 <span className="text-slate-500 cursor-not-allowed">

@@ -28,6 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, activeSection }) => 
     { label: 'For Students', id: 'students' },
     { label: 'For Colleges', id: 'colleges' },
     { label: 'How It Works', id: 'how-it-works' },
+    { label: 'Team', id: 'team' },
   ];
 
   const handleClick = (id: string) => {

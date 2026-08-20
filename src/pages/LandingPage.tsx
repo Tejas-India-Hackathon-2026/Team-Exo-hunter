@@ -5,6 +5,7 @@ import { SolutionCards } from '../sections/SolutionCards';
 import { HowItWorks } from '../sections/HowItWorks';
 import { StudentFeatures } from '../sections/StudentFeatures';
 import { CampusFeatures } from '../sections/CampusFeatures';
+import { TeamSection } from '../sections/TeamSection';
 import { Footer } from '../components/Footer';
 import { X, Sparkles, Brain, Award, ShieldAlert, Scan, BarChart3 } from 'lucide-react';
 
@@ -23,7 +24,7 @@ export const LandingPage = () => {
   // Scroll handler to highlight active navbar section
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'students', 'colleges', 'how-it-works'];
+      const sections = ['home', 'students', 'colleges', 'how-it-works', 'team'];
       const scrollPos = window.scrollY + 200;
 
       for (const section of sections) {
@@ -156,6 +157,9 @@ export const LandingPage = () => {
           resetSimulations();
         }} 
       />
+
+      {/* Team Showcase */}
+      <TeamSection />
 
       {/* Footer */}
       <Footer onNavigate={handleNavigate} />
