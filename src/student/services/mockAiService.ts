@@ -78,7 +78,18 @@ export async function getAiResponse(userMessage: string, customApiKey?: string):
     if (!response.ok) {
       const errorBody = await response.text();
       console.error('Gemini API error:', response.status, errorBody);
-      throw new Error(`API returned ${response.status}`);
+      try {
+        const parsed = JSON.parse(errorBody);
+        const errMsg = parsed?.error?.message || '';
+        if (response.status === 400 && (errMsg.toLowerCase().includes('api key not valid') || errMsg.toLowerCase().includes('key invalid'))) {
+          return `🔑 **Invalid API Key:** The Gemini API returned "API key not valid."
+
+Please check that you copied the key correctly from Google AI Studio. You can reset or update it using the **"Set Gemini Key"** button in the header.`;
+        }
+        return `⚠️ **Gemini API Error (Status ${response.status}):** ${errMsg || 'Unknown error. Check your API key limits.'}`;
+      } catch {
+        return `⚠️ **Gemini API Error:** Status ${response.status} was returned by Google servers.`;
+      }
     }
 
     const data = await response.json();
