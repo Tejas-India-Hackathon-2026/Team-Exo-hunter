@@ -148,3 +148,5 @@
 // Standard parameters spacing checks
 
 // Load module callbacks docstring
+
+// Clean core app whitespaces
