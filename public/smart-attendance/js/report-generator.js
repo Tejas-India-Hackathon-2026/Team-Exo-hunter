@@ -1,4 +1,4 @@
-// AutoSoft AI Smart Attendance - PDF Report Generator
+// Disha AI Smart Attendance - PDF Report Generator
 
 (function() {
   window.asaReports = {
@@ -38,7 +38,7 @@
       doc.setTextColor(255, 255, 255);
       doc.setFont("Helvetica", "bold");
       doc.setFontSize(20);
-      doc.text("AUTOSOFT SOLUTIONS", margin, 18);
+      doc.text("DISHA AI", margin, 18);
 
       doc.setFont("Helvetica", "normal");
       doc.setFontSize(11);
@@ -191,7 +191,7 @@
       doc.setTextColor(...darkText);
       doc.text("Smart Recognition. Accurate Attendance. Better Classrooms.", pageWidth / 2 - 40, pageHeight - 12);
       doc.setTextColor(150, 150, 150);
-      doc.text("Powered by AutoSoft Solutions Pvt. Ltd.", pageWidth / 2 - 25, pageHeight - 8);
+      doc.text("Powered by Disha AI Pvt. Ltd.", pageWidth / 2 - 25, pageHeight - 8);
 
       // Save PDF to file downloads
       const filename = `Attendance_Report_${sessionRecord.className.replace(/\s+/g, '_')}_${sessionRecord.date}.pdf`;

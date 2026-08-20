@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
-  <title>Student Registration - AutoSoft AI Attendance</title>
+  <title>Student Registration - Disha AI Attendance</title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,7 +17,7 @@
   <div id="autosoft-attendance-app">
     <!-- Navbar Header -->
     <header style="padding: 20px 24px; border-bottom: 1px solid var(--asa-border); background: var(--asa-panel-solid); display: flex; justify-content: space-between; align-items: center;">
-      <span style="font-family: var(--asa-display); font-size: 1.3rem; font-weight: 800; color: #fff;">Auto<span>Soft</span> <span style="color: var(--asa-primary); font-weight: 400; font-size: 1rem;">| AI Attendance</span></span>
+      <span style="font-family: var(--asa-display); font-size: 1.3rem; font-weight: 800; color: #fff;">Disha<span>AI</span> <span style="color: var(--asa-primary); font-weight: 400; font-size: 1rem;">| AI Attendance</span></span>
       <a href="index.html" class="asa-btn asa-btn-secondary" style="padding: 8px 16px; font-size: 0.85rem;"><i class="fa-solid fa-house"></i> Home</a>
     </header>
 
@@ -179,7 +179,7 @@
           
           <!-- Card Header branding -->
           <div style="background: rgba(0, 229, 255, 0.05); padding: 16px; border-bottom: 1.5px solid var(--asa-border); display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-family: var(--asa-display); font-weight: 800; font-size: 0.95rem; color: #fff; letter-spacing: 0.5px;">Auto<span>Soft</span> <span style="color: var(--asa-primary); font-weight: 400; font-size: 0.75rem;">COLLEGE ID</span></span>
+            <span style="font-family: var(--asa-display); font-weight: 800; font-size: 0.95rem; color: #fff; letter-spacing: 0.5px;">Disha<span>AI</span> <span style="color: var(--asa-primary); font-weight: 400; font-size: 0.75rem;">COLLEGE ID</span></span>
             <span id="card-status-badge" style="font-size: 0.65rem; background: var(--asa-success-glow); color: var(--asa-success); border: 1px solid rgba(16, 185, 129, 0.2); padding: 2px 6px; border-radius: 4px; font-weight: 700;">BIOMETRIC ACTIVE</span>
           </div>
 
@@ -206,7 +206,7 @@
           <!-- Card Footer info -->
           <div style="background: rgba(255,255,255,0.02); padding: 10px 24px; border-top: 1px solid var(--asa-border); display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; color: var(--asa-text-muted);">
             <span>Issued: <strong style="color: #fff;" id="id-card-date">July 09, 2026</strong></span>
-            <span>Signature: <strong style="color: var(--asa-primary); font-family: 'Space Grotesk';">AUTOSOFT AI</strong></span>
+            <span>Signature: <strong style="color: var(--asa-primary); font-family: 'Space Grotesk';">DISHA AI</strong></span>
           </div>
         </div>
 
@@ -364,7 +364,7 @@
           const students = JSON.parse(localStorage.getItem('asa_students') || '[]');
           
           // Seeded student username is 'student', which maps to Ayush Raj (STU-CSE-1001)
-          const student = students.find(s => s.fullName === 'Ayush Raj' || s.email === 'ayush@autosoftsolution.com');
+          const student = students.find(s => s.fullName === 'Ayush Raj' || s.email === 'ayush@dishaai.com');
           if (student) {
             // Render Step 3 Card ID Details
             document.getElementById('id-card-name').innerText = student.fullName;

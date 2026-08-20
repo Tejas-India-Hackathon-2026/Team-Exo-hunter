@@ -1,4 +1,4 @@
-// AutoSoft AI Smart Attendance - Authentication & Access Controls
+// Disha AI Smart Attendance - Authentication & Access Controls
 
 (function() {
   // Prototype Credentials Database

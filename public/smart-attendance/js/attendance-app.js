@@ -1,9 +1,9 @@
-// AutoSoft AI Smart Attendance - Database Setup & Seeding
+// Disha AI Smart Attendance - Database Setup & Seeding
 
 (function() {
   // Seed data lists
   const defaultStudents = [
-    { id: "STU-CSE-1001", fullName: "Ayush Raj", rollNo: "CSE-001", email: "ayush@autosoftsolution.com", mobile: "9931079287", branch: "Computer Science", semester: "Semester IV", section: "A+B", session: "2025-2029", regNo: "UG-2025-00431", faceRegistered: true, status: "Active" },
+    { id: "STU-CSE-1001", fullName: "Ayush Raj", rollNo: "CSE-001", email: "ayush@dishaai.com", mobile: "9931079287", branch: "Computer Science", semester: "Semester IV", section: "A+B", session: "2025-2029", regNo: "UG-2025-00431", faceRegistered: true, status: "Active" },
     { id: "STU-CSE-1002", fullName: "Rohan Sharma", rollNo: "CSE-002", email: "rohan@gmail.com", mobile: "9876543210", branch: "Computer Science", semester: "Semester IV", section: "A+B", session: "2025-2029", regNo: "UG-2025-00432", faceRegistered: true, status: "Active" },
     { id: "STU-CSE-1003", fullName: "Priya Patel", rollNo: "CSE-003", email: "priya@gmail.com", mobile: "9876543211", branch: "Computer Science", semester: "Semester IV", section: "A+B", session: "2025-2029", regNo: "UG-2025-00433", faceRegistered: true, status: "Active" },
     { id: "STU-CSE-1004", fullName: "Amit Kumar", rollNo: "CSE-004", email: "amit@gmail.com", mobile: "9876543212", branch: "Computer Science", semester: "Semester IV", section: "A+B", session: "2025-2029", regNo: "UG-2025-00434", faceRegistered: true, status: "Active" },
@@ -40,10 +40,10 @@
   ];
 
   const defaultFaculties = [
-    { id: "FAC-01", fullName: "Mr. Anand Raj (AP)", username: "faculty", email: "anand@autosoftsolution.com", department: "Computer Science" },
-    { id: "FAC-02", fullName: "Mr. Niraj Nirmal (AP)", username: "niraj", email: "niraj@autosoftsolution.com", department: "Computer Science" },
-    { id: "FAC-03", fullName: "Mr. Md. Zaki Anwer (AP)", username: "zaki", email: "zaki@autosoftsolution.com", department: "Computer Science" },
-    { id: "FAC-04", fullName: "Ms. Manisha Rani (AP)", username: "manisha", email: "manisha@autosoftsolution.com", department: "Computer Science" }
+    { id: "FAC-01", fullName: "Mr. Anand Raj (AP)", username: "faculty", email: "anand@dishaai.com", department: "Computer Science" },
+    { id: "FAC-02", fullName: "Mr. Niraj Nirmal (AP)", username: "niraj", email: "niraj@dishaai.com", department: "Computer Science" },
+    { id: "FAC-03", fullName: "Mr. Md. Zaki Anwer (AP)", username: "zaki", email: "zaki@dishaai.com", department: "Computer Science" },
+    { id: "FAC-04", fullName: "Ms. Manisha Rani (AP)", username: "manisha", email: "manisha@dishaai.com", department: "Computer Science" }
   ];
 
   // Seed logs matching Semester IV
@@ -138,5 +138,5 @@
     }
   };
 
-  console.log("AutoSoft Database updated to Semester IV (Sec A+B Combined) with Dynamic Timetable seeding.");
+  console.log("Disha AI Database updated to Semester IV (Sec A+B Combined) with Dynamic Timetable seeding.");
 })();

@@ -1,8 +1,8 @@
-# AutoSoft AI Smart Attendance System
+# Disha AI Smart Attendance System
 
 > **“Smart Recognition. Accurate Attendance. Better Classrooms.”**
 
-An independent, fully modular, and responsive AI-powered classroom attendance system prototype built for **AutoSoft Solutions**. This system uses facial recognition simulations to identify students, log attendance, enable faculty override verifications, compile professional PDF summaries, and share data via WhatsApp.
+An independent, fully modular, and responsive AI-powered classroom attendance system prototype built for **Disha AI**. This system uses facial recognition simulations to identify students, log attendance, enable faculty override verifications, compile professional PDF summaries, and share data via WhatsApp.
 
 ---
 
@@ -90,4 +90,4 @@ To deploy changes to production:
    ```bash
    npx netlify-cli deploy --prod --dir=.
    ```
-2. The card is integrated on the main portal homepage at `https://autosoftsolution.com`. Click **Open Smart Attendance** to launch the dashboard.
+2. The card is integrated on the main portal homepage at `https://dishaai.com`. Click **Open Smart Attendance** to launch the dashboard.

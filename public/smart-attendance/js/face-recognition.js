@@ -1,4 +1,4 @@
-// AutoSoft AI Smart Attendance - Classroom Face Scanner Simulator
+// Disha AI Smart Attendance - Classroom Face Scanner Simulator
 
 (function() {
   let demoTimer = null;

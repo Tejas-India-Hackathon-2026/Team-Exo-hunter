@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
-  <title>Reports Desk - AutoSoft AI Attendance</title>
+  <title>Reports Desk - Disha AI Attendance</title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -24,7 +24,7 @@
       <!-- Sidebar Navigation -->
       <aside class="asa-sidebar">
         <div class="asa-sidebar-logo">
-          <span>Auto<span>Soft</span> <span style="font-size: 0.8rem; font-weight: 500; color: var(--asa-text-muted);">AI</span></span>
+          <span>Disha<span>AI</span> <span style="font-size: 0.8rem; font-weight: 500; color: var(--asa-text-muted);">AI</span></span>
         </div>
         <ul class="asa-sidebar-menu">
           <li class="asa-menu-item"><a href="faculty-dashboard.html" class="asa-menu-link" id="nav-dash-link"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
@@ -181,7 +181,7 @@
     function compileWhatsAppMessage() {
       if (!activeSession) return;
       const facultyName = document.getElementById('wa-faculty-name').value || activeSession.facultyName;
-      const text = `🎓 *AutoSoft AI Smart Attendance Summary*\n\n` +
+      const text = `🎓 *Disha AI Smart Attendance Summary*\n\n` +
         `*Class:* ${activeSession.className}\n` +
         `*Subject:* ${activeSession.subjectName}\n` +
         `*Date:* ${activeSession.date}\n` +
@@ -191,7 +191,7 @@
         `*Absent Students:* ${activeSession.absentCount}\n` +
         `*Attendance Rate:* ${activeSession.attendanceRate}%\n\n` +
         `_(Student logs uploaded to portals. PDF reports compiled on dashboard.)_\n` +
-        `*Powered by AutoSoft Solutions*`;
+        `*Powered by Disha AI*`;
       
       document.getElementById('wa-message-body').value = text;
     }

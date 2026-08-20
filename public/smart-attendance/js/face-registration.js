@@ -1,4 +1,4 @@
-// AutoSoft AI Smart Attendance - Face Registration Controller
+// Disha AI Smart Attendance - Face Registration Controller
 
 (function() {
   let stream = null;
