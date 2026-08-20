@@ -51,8 +51,8 @@ DISHA AI is an intelligent dual-sided ecosystem engineered for **students** and 
 
 | Member No. | Name | Role | Focus Areas | Live Status |
 | :---: | :--- | :--- | :--- | :---: |
-| **01** | **Ayush Raj** *(Lead)* | Lead Architect & Fullstack Systems | System Architecture, React 19 Core, Backend | 🟢 Active |
-| **02** | **Gungun** | AI & Smart Campus Logic Specialist | Computer Vision, Face Recognition, Analytics | 🟢 Active |
+| **01** | **Ayush Raj** | AI & Smart Campus Logic Specialist | Computer Vision, Face Recognition, Analytics | 🟢 Active |
+| **02** | **Gungun** *(Lead)* | Lead Architect & Fullstack Systems | System Architecture, React 19 Core, Backend | 🟢 Active |
 | **03** | **Jyoti** | Frontend & Student AI Guidance Lead | React / TypeScript, Tailwind CSS v4, Simulators | 🟢 Active |
 | **04** | **Shubhanshu** | Cloud Infra, DevOps & UI/UX Specialist | CI/CD, Deployment, UI/UX Auditing, QA | 🟢 Active |
 

@@ -19,22 +19,8 @@ const TEAM_MEMBERS: TeamMember[] = [
   {
     id: 'member-1',
     name: 'Ayush Raj',
-    role: 'Lead Architect & Fullstack Systems',
-    memberNo: 'Member 01 (Lead)',
-    skills: ['System Architecture', 'React 19', 'FastAPI', 'Backend Core'],
-    status: 'Active',
-    contributions: [
-      'Project Foundation & Core Architecture',
-      'API Routing & Central Data Pipeline',
-      'Hackathon Lead Coordination'
-    ],
-    icon: <Cpu className="w-5 h-5 text-indigo-400" />
-  },
-  {
-    id: 'member-2',
-    name: 'Gungun',
     role: 'AI & Smart Campus Logic Specialist',
-    memberNo: 'Member 02',
+    memberNo: 'Member 01',
     skills: ['Computer Vision', 'Edge AI', 'Face Recognition', 'Analytics'],
     status: 'Active',
     contributions: [
@@ -43,6 +29,20 @@ const TEAM_MEMBERS: TeamMember[] = [
       'Student Academic Analytics Models'
     ],
     icon: <BrainCircuit className="w-5 h-5 text-sky-400" />
+  },
+  {
+    id: 'member-2',
+    name: 'Gungun',
+    role: 'Lead Architect & Fullstack Systems',
+    memberNo: 'Member 02 (Lead)',
+    skills: ['System Architecture', 'React 19', 'FastAPI', 'Backend Core'],
+    status: 'Active',
+    contributions: [
+      'Project Foundation & Core Architecture',
+      'API Routing & Central Data Pipeline',
+      'Hackathon Lead Coordination'
+    ],
+    icon: <Cpu className="w-5 h-5 text-indigo-400" />
   },
   {
     id: 'member-3',
