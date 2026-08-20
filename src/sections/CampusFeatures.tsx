@@ -1,5 +1,10 @@
 import React from 'react';
-import { ScanFace, CheckSquare, BarChart3, MessageSquareText, ArrowRight } from 'lucide-react';
+import {
+  ScanFace, CheckSquare, BarChart3, ArrowRight,
+  Fingerprint, BookOpen, Brain, CalendarCheck,
+  ClipboardList, Megaphone, Briefcase, QrCode,
+  Bell, IdCard, Rocket
+} from 'lucide-react';
 import { CAMPUS_FEATURES } from '../data/landingData';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
@@ -9,7 +14,17 @@ const iconMap: Record<string, React.ComponentType<any>> = {
   ScanFace,
   CheckSquare,
   BarChart3,
-  MessageSquareText,
+  Fingerprint,
+  BookOpen,
+  Brain,
+  CalendarCheck,
+  ClipboardList,
+  Megaphone,
+  Briefcase,
+  QrCode,
+  Bell,
+  IdCard,
+  Rocket
 };
 
 interface CampusFeaturesProps {

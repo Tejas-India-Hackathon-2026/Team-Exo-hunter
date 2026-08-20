@@ -80,29 +80,80 @@ export const STUDENT_FEATURES: FeatureItem[] = [
 
 export const CAMPUS_FEATURES: FeatureItem[] = [
   {
-    id: 'face-detection',
-    title: 'AI Face Detection',
-    description: 'Automated campus student identification and security check-ins using low-latency, privacy-first edge facial recognition model.',
-    iconName: 'ScanFace',
+    id: 'smart-attendance',
+    title: 'Smart Attendance',
+    description: 'QR-based and biometric attendance with real-time analytics and parent alerts.',
+    iconName: 'Fingerprint',
+    badge: 'Real-time'
+  },
+  {
+    id: 'digital-notes',
+    title: 'Digital Notes',
+    description: 'Upload, share, and organize study material with AI-powered search and tagging.',
+    iconName: 'BookOpen'
+  },
+  {
+    id: 'ai-study-assistant',
+    title: 'AI Study Assistant',
+    description: 'Chat with AI, summarize PDFs, generate quizzes, get homework help 24/7.',
+    iconName: 'Brain',
     badge: 'AI Core'
   },
   {
-    id: 'smart-attendance',
-    title: 'Smart Attendance',
-    description: 'Eliminate manual rosters. Auto-register student attendance via classroom scanners or geo-fenced campus entry points.',
-    iconName: 'CheckSquare'
+    id: 'smart-timetable',
+    title: 'Smart Timetable',
+    description: 'Auto-generated timetables with reminders, substitutions, and schedule alerts.',
+    iconName: 'CalendarCheck'
   },
   {
-    id: 'student-analytics',
-    title: 'Student Analytics',
-    description: 'Comprehensive campus metrics. Identify at-risk students early, view academic statistics, and monitor overall engagement.',
+    id: 'results-grades',
+    title: 'Results & Grades',
+    description: 'Instant result publishing with analytics, grade trends, and performance reports.',
     iconName: 'BarChart3'
   },
   {
-    id: 'campus-assistant',
-    title: 'Campus AI Assistant',
-    description: 'A 24/7 smart assistant trained on campus regulations, schedules, and circulars to answer student questions in real-time.',
-    iconName: 'MessageSquareText'
+    id: 'assignments',
+    title: 'Assignments',
+    description: 'Submit, grade, and track assignments with plagiarism detection and feedback.',
+    iconName: 'ClipboardList'
+  },
+  {
+    id: 'notices-events',
+    title: 'Notices & Events',
+    description: 'Push notifications for circulars, events, exams, and emergency announcements.',
+    iconName: 'Megaphone'
+  },
+  {
+    id: 'placement-portal',
+    title: 'Placement Portal',
+    description: 'Job drives, resume builder, company listings, and placement status tracking.',
+    iconName: 'Briefcase',
+    badge: 'Placements'
+  },
+  {
+    id: 'qr-attendance',
+    title: 'QR Attendance',
+    description: 'Generate unique QR per class session — scan & mark attendance in seconds.',
+    iconName: 'QrCode'
+  },
+  {
+    id: 'smart-notifications',
+    title: 'Smart Notifications',
+    description: 'AI-prioritized alerts so students never miss what matters most.',
+    iconName: 'Bell'
+  },
+  {
+    id: 'digital-id',
+    title: 'Digital ID Card',
+    description: 'Secure verifiable digital student ID with QR code and biometric support.',
+    iconName: 'IdCard'
+  },
+  {
+    id: 'internship-updates',
+    title: 'Internship Updates',
+    description: 'Browse, apply, and track internship opportunities curated for your stream.',
+    iconName: 'Rocket',
+    badge: 'Careers'
   }
 ];
 
