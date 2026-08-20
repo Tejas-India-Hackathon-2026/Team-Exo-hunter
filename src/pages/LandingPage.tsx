@@ -10,9 +10,10 @@ import { CampusFeatures } from '../sections/CampusFeatures';
 import { TeamSection } from '../sections/TeamSection';
 import { Footer } from '../components/Footer';
 import { 
-  X, Sparkles, Award, ShieldAlert, Scan, 
-  BarChart3, CheckCircle2,
-  Target, Map, CalendarDays, TrendingUp, UserCircle
+  X, Sparkles, ShieldAlert, Scan, 
+  CheckCircle2,
+  Target, Map, CalendarDays, TrendingUp, UserCircle,
+  School, Activity, Building2
 } from 'lucide-react';
 
 export const LandingPage = () => {
@@ -26,9 +27,7 @@ export const LandingPage = () => {
   const [currentUser, setCurrentUser] = useState<{ name: string; email: string; role: 'student' | 'college' } | null>(null);
   const [authToast, setAuthToast] = useState<string | null>(null);
 
-  // Campus Simulator States
-  const [campusActivity, setCampusActivity] = useState<'idle' | 'scanning' | 'success'>('idle');
-  const [analyticsData, setAnalyticsData] = useState({ present: 42, absent: 3, rate: '93%' });
+
 
   // Scroll handler to highlight active navbar section
   useEffect(() => {
@@ -68,17 +67,8 @@ export const LandingPage = () => {
     }
   };
 
-  // Mock Face Detection Simulator
-  const runFaceSimulation = () => {
-    setCampusActivity('scanning');
-    setTimeout(() => {
-      setCampusActivity('success');
-      setAnalyticsData({ present: 43, absent: 2, rate: '95%' });
-    }, 1800);
-  };
-
   const resetSimulations = () => {
-    setCampusActivity('idle');
+    // Left empty since interactive simulator runs are replaced by static modules links
   };
 
   return (
@@ -262,80 +252,132 @@ export const LandingPage = () => {
                   </div>
                 </div>
               ) : (
-                /* Smart Campus Interactive Demo */
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-base font-bold text-white mb-1 flex items-center gap-1.5">
-                      <Scan className="w-4 h-4 text-sky-400" />
-                      Attendance Camera Simulation HUD
+                /* Smart Campus Interactive Options Hub */
+                <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
+                  <div className="text-center space-y-2">
+                    <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-300 text-xs font-semibold uppercase tracking-wider mb-2">
+                      <Sparkles className="w-3 h-3 text-sky-400" />
+                      DISHA Smart Solutions Hub
+                    </div>
+                    <h3 className="text-2xl font-extrabold text-white tracking-tight">
+                      Explore Smart Systems
                     </h3>
-                    <p className="text-slate-400 text-xs">
-                      Simulate classroom hardware scanning student faces to mark attendance on the centralized server.
+                    <p className="text-slate-400 text-xs max-w-md mx-auto leading-relaxed">
+                      Select a specialized AI system to launch its live dashboard or view system blueprints.
                     </p>
                   </div>
 
-                  {/* Simulated Frame */}
-                  <div className="aspect-video w-full rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center relative overflow-hidden">
-                    {campusActivity === 'scanning' && (
-                      <div className="absolute left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-sky-400 to-transparent pointer-events-none z-20 scan-laser" />
-                    )}
-
-                    {campusActivity === 'idle' && (
-                      <div className="text-center space-y-2 p-4">
-                        <span className="text-xs text-slate-500 block">Classroom Camera Feed Offline</span>
-                        <button 
-                          onClick={runFaceSimulation}
-                          className="px-4 py-2 rounded-lg bg-sky-500 hover:bg-sky-600 text-xs font-semibold text-white cursor-pointer shadow-md shadow-sky-500/25"
-                        >
-                          Simulate Camera Scan
-                        </button>
-                      </div>
-                    )}
-
-                    {campusActivity === 'scanning' && (
-                      <div className="space-y-2 text-center p-4">
-                        <div className="w-10 h-10 border-3 border-sky-400 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-                        <span className="text-xs text-sky-400 font-mono animate-pulse block">Detecting Face Keypoints...</span>
-                      </div>
-                    )}
-
-                    {campusActivity === 'success' && (
-                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-950 p-4">
-                        <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500 flex items-center justify-center text-emerald-400 mb-2">
-                          <Award className="w-5 h-5" />
+                  {/* Options Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    
+                    {/* Smart Attendance Card */}
+                    <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-emerald-500/40 hover:bg-emerald-950/5 transition-all space-y-3 flex flex-col justify-between group">
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"><Scan className="w-4 h-4" /></span>
+                          <span className="text-[9px] font-bold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-500/30 uppercase">Live Demo</span>
                         </div>
-                        <span className="text-xs font-semibold text-white">Face Matches: 1 student verified</span>
-                        <span className="text-[10px] text-slate-500 mt-0.5">Updated: Student ID #4819 marked present.</span>
-                        <button
-                          onClick={() => setCampusActivity('idle')}
-                          className="text-[9px] text-sky-400 hover:underline mt-4 uppercase tracking-wider font-semibold cursor-pointer"
-                        >
-                          Scan Again
-                        </button>
+                        <h4 className="font-bold text-white text-sm">Smart Attendance Portal</h4>
+                        <p className="text-[11px] text-slate-400 leading-relaxed">
+                          Edge face-recognition dashboard tracking records, unrecognized alert lists, and classroom diagnostics.
+                        </p>
                       </div>
-                    )}
-                  </div>
-
-                  {/* Attendance Analytics Metrics */}
-                  <div className="bg-slate-950/80 rounded-xl border border-slate-800 p-4">
-                    <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-                      <BarChart3 className="w-4 h-4 text-sky-400" />
-                      Classroom Statistics
-                    </h4>
-                    <div className="grid grid-cols-3 gap-2 text-center">
-                      <div className="p-2.5 bg-slate-900 border border-slate-800 rounded-lg">
-                        <span className="text-[10px] text-slate-500 block font-semibold">Present</span>
-                        <span className="text-base font-extrabold text-white">{analyticsData.present}</span>
-                      </div>
-                      <div className="p-2.5 bg-slate-900 border border-slate-800 rounded-lg">
-                        <span className="text-[10px] text-slate-500 block font-semibold">Absent</span>
-                        <span className="text-base font-extrabold text-rose-500">{analyticsData.absent}</span>
-                      </div>
-                      <div className="p-2.5 bg-slate-900 border border-slate-800 rounded-lg">
-                        <span className="text-[10px] text-slate-500 block font-semibold">Ratio</span>
-                        <span className="text-base font-extrabold text-indigo-400">{analyticsData.rate}</span>
-                      </div>
+                      <button
+                        onClick={() => {
+                          setModalType(null);
+                          window.open('/Team-Exo-hunter/smart-attendance/index.html', '_blank');
+                        }}
+                        className="w-full mt-3 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-750 text-white font-bold text-[11px] transition-all cursor-pointer flex items-center justify-center gap-1"
+                      >
+                        Launch Attendance ➜
+                      </button>
                     </div>
+
+                    {/* Smart Colleges Card */}
+                    <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-sky-500/40 hover:bg-sky-950/5 transition-all space-y-3 flex flex-col justify-between group">
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="p-2 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-500/20"><School className="w-4 h-4" /></span>
+                          <span className="text-[9px] font-bold text-sky-400 bg-sky-950/80 px-2 py-0.5 rounded border border-sky-500/30 uppercase">Live Demo</span>
+                        </div>
+                        <h4 className="font-bold text-white text-sm">Smart Colleges Portal</h4>
+                        <p className="text-[11px] text-slate-400 leading-relaxed">
+                          Central campus navigation covering smart classes, digital libraries, and central security metrics.
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setModalType(null);
+                          window.open('/Team-Exo-hunter/campus-one.html', '_blank');
+                        }}
+                        className="w-full mt-3 py-2.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white font-bold text-[11px] transition-all cursor-pointer flex items-center justify-center gap-1"
+                      >
+                        Launch Campus One ➜
+                      </button>
+                    </div>
+
+                    {/* Smart Hospital Card */}
+                    <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-rose-500/40 hover:bg-rose-950/5 transition-all space-y-3 flex flex-col justify-between group">
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="p-2 rounded-lg bg-rose-500/10 text-rose-400 border border-rose-500/20"><Activity className="w-4 h-4" /></span>
+                          <span className="text-[9px] font-bold text-rose-400 bg-rose-950/80 px-2 py-0.5 rounded border border-rose-500/30 uppercase">Mock View</span>
+                        </div>
+                        <h4 className="font-bold text-white text-sm">Smart Hospital Care</h4>
+                        <p className="text-[11px] text-slate-400 leading-relaxed">
+                          AI-driven queue allocation, real-time patient charts management, and automated diagnostic reports generation.
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => alert('Smart Hospital Dashboard is being integrated into the campus healthcare network.')}
+                        className="w-full mt-3 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-[11px] transition-all cursor-pointer flex items-center justify-center gap-1"
+                      >
+                        Launch Hospital HUD
+                      </button>
+                    </div>
+
+                    {/* Smart Administrative Services Card */}
+                    <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-amber-500/40 hover:bg-amber-950/5 transition-all space-y-3 flex flex-col justify-between group">
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="p-2 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20"><Building2 className="w-4 h-4" /></span>
+                          <span className="text-[9px] font-bold text-amber-400 bg-amber-950/80 px-2 py-0.5 rounded border border-amber-500/30 uppercase">Mock View</span>
+                        </div>
+                        <h4 className="font-bold text-white text-sm">Smart Admin Services</h4>
+                        <p className="text-[11px] text-slate-400 leading-relaxed">
+                          Digital workplace systems automating billing workflows, MSME registry, and legal certificates authentication.
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => alert('Smart Administrative Services dashboard preview is loading.')}
+                        className="w-full mt-3 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-[11px] transition-all cursor-pointer flex items-center justify-center gap-1"
+                      >
+                        Launch Admin Services
+                      </button>
+                    </div>
+
+                    {/* Smart Organization Card */}
+                    <div className="col-span-1 sm:col-span-2 p-4 rounded-xl bg-slate-950 border border-slate-800 hover:border-indigo-500/40 hover:bg-indigo-950/5 transition-all space-y-3 flex flex-col justify-between group">
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <span className="p-2 rounded-lg bg-indigo-500/10 text-indigo-400 border border-indigo-500/20"><Target className="w-4 h-4" /></span>
+                            <h4 className="font-bold text-white text-sm">Smart Organization Management</h4>
+                          </div>
+                          <span className="text-[9px] font-bold text-indigo-400 bg-indigo-950/80 px-2 py-0.5 rounded border border-indigo-500/30 uppercase">Active</span>
+                        </div>
+                        <p className="text-[11px] text-slate-400 leading-relaxed">
+                          Enterprise scheduling systems linking student councils, campus faculty calendars, and live CCTV feeds.
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => alert('Smart Organization calendar synchronizer initialized.')}
+                        className="w-full mt-3 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-[11px] transition-all cursor-pointer flex items-center justify-center gap-1"
+                      >
+                        Configure Organization Schedules
+                      </button>
+                    </div>
+
                   </div>
                 </div>
               )}
