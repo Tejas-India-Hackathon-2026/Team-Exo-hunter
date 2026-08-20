@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
 import { AuthModal } from '../components/AuthModal';
 import { Hero } from '../sections/Hero';
@@ -15,6 +16,7 @@ import {
 } from 'lucide-react';
 
 export const LandingPage = () => {
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('home');
   const [modalType, setModalType] = useState<'student' | 'college' | null>(null);
   const [studentTab, setStudentTab] = useState<'roadmap' | 'quiz' | 'notes'>('roadmap');
@@ -519,6 +521,47 @@ export const LandingPage = () => {
                           <span>Generated 8 spaced-repetition flashcards for your daily review calendar.</span>
                         </div>
                       </div>
+
+                      <button
+                        onClick={() => setQuizSubmitted(true)}
+                        className="w-full py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold cursor-pointer shadow-lg shadow-emerald-600/25"
+                      >
+                        Submit & View AI Feedback Analysis
+                      </button>
+                    </div>
+                  )}
+
+                  {studentTab === 'notes' && (
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="text-base font-bold text-white mb-1 flex items-center gap-1.5">
+                          <FileText className="w-4 h-4 text-indigo-400" />
+                          AI Smart Notes & Flashcard Generator
+                        </h3>
+                        <p className="text-slate-400 text-xs">
+                          Convert complex lecture audios and markdown documents into structured study flashcards.
+                        </p>
+                      </div>
+
+                      <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs text-slate-300 space-y-2.5 shadow-inner">
+                        <div className="text-[10px] text-indigo-400 border-b border-slate-800 pb-1.5 flex justify-between">
+                          <span>// GENERATED SMART SUMMARY</span>
+                          <span className="text-emerald-400">MARKDOWN READY</span>
+                        </div>
+                        <div className="text-indigo-200 font-semibold text-xs">
+                          # Deep Learning & Neural Architectures (Summary)
+                        </div>
+                        <p className="text-slate-400 text-[11px] leading-relaxed">
+                          - <strong>Backpropagation:</strong> Optimization technique computing gradient of loss function with respect to weights using chain rule.
+                        </p>
+                        <p className="text-slate-400 text-[11px] leading-relaxed">
+                          - <strong>Activation Functions:</strong> ReLU, LeakyReLU avoid vanishing gradients in deeper layers compared to Sigmoid.
+                        </p>
+                        <div className="p-2 rounded bg-indigo-950/40 border border-indigo-900/50 text-[10px] text-indigo-300 flex items-center gap-1.5">
+                          <Check className="w-3.5 h-3.5 text-emerald-400" />
+                          <span>Generated 8 spaced-repetition flashcards for your daily review calendar.</span>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -631,7 +674,34 @@ export const LandingPage = () => {
         onSuccess={(userData) => {
           setCurrentUser(userData);
           setAuthToast(`🎉 Welcome to DISHA AI, ${userData.name}! Signed in as ${userData.role}.`);
-          setTimeout(() => setAuthToast(null), 4500);
+          
+          if (userData.role === 'student') {
+            try {
+              const saved = window.localStorage.getItem('disha-student-profile');
+              const profile = saved ? JSON.parse(saved) : {
+                name: 'Arjun Sharma',
+                course: 'B.Tech',
+                branch: 'Computer Science & Engineering',
+                semester: '5th Semester',
+                skills: ['Python', 'JavaScript', 'HTML/CSS', 'React', 'SQL'],
+                interests: ['Artificial Intelligence', 'Web Development', 'Data Science'],
+                careerGoal: 'AI/ML Engineer',
+                studyHours: 4,
+                experienceLevel: 'intermediate',
+              };
+              profile.name = userData.name;
+              window.localStorage.setItem('disha-student-profile', JSON.stringify(profile));
+            } catch (e) {
+              console.error('Error syncing profile name:', e);
+            }
+          }
+
+          setTimeout(() => {
+            setAuthToast(null);
+            if (userData.role === 'student') {
+              navigate('/student');
+            }
+          }, 1200);
         }}
       />
 
