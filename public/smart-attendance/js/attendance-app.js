@@ -146,3 +146,5 @@
 // Bootstrap validation checks
 
 // Standard parameters spacing checks
+
+// Load module callbacks docstring
