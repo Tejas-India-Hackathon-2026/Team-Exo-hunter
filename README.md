@@ -98,18 +98,19 @@ npm run lint
 
 ## 👥 Team Exo-Hunter (Tejas India Hackathon 2026)
 
-| Member | Role | Focus Areas | Live Status |
-| :--- | :--- | :--- | :---: |
-| **Member 01** | Lead Architect | System Design, React 19 Core, Cloud Infra | 🟢 Active |
-| **Member 02** | AI Systems Lead | Computer Vision, Face Recognition, Analytics | 🟢 Active |
-| **Jyoti (Member 03)** | Frontend & AI Guidance | Student Roadmaps, Interactive UI, Live Updates | 🟢 Active |
+| Member | Name | Role | Focus Areas | Live Status |
+| :---: | :--- | :--- | :--- | :---: |
+| **01** | **Ayush Raj** *(Lead)* | Lead Architect | System Design, React 19 Core, Backend | 🟢 Active |
+| **02** | **Gungun** | AI Systems Lead | Computer Vision, Face Recognition, Analytics | 🟢 Active |
+| **03** | **Jyoti** | Frontend & AI Guidance | Student Roadmaps, Interactive UI, Simulators | 🟢 Active |
+| **04** | **Shubhanshu** | Cloud Infra & QA | CI/CD, Deployment, UI/UX Auditing | 🟢 Active |
 
 ---
 
 ## 📡 Live Hackathon Progress & Updates
 
-* **🟢 [Active] Team Member 3 (Jyoti - `@jyotijio745-afk`):**
-  - Integrated interactive Team Exo-Hunter Showcase & Live Updates tracker.
+* **🟢 [Active] Team Exo-Hunter (Ayush Raj, Gungun, Jyoti, Shubhanshu):**
+  - Integrated full 4-member Team Exo-Hunter Showcase & Live Updates tracker in UI.
   - Linked dynamic navigation and active progress verification for evaluators and admins.
   - Validated React 19 / Vite / Tailwind production build compatibility.
 
