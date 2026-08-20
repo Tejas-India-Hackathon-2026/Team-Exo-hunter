@@ -542,6 +542,28 @@ export const LandingPage = () => {
         onSuccess={(userData) => {
           setCurrentUser(userData);
           setAuthToast(`🎉 Welcome to DISHA AI, ${userData.name}! Signed in as ${userData.role}.`);
+          
+          if (userData.role === 'student') {
+            try {
+              const saved = window.localStorage.getItem('disha-student-profile');
+              const profile = saved ? JSON.parse(saved) : {
+                name: 'Arjun Sharma',
+                course: 'B.Tech',
+                branch: 'Computer Science & Engineering',
+                semester: '5th Semester',
+                skills: ['Python', 'JavaScript', 'HTML/CSS', 'React', 'SQL'],
+                interests: ['Artificial Intelligence', 'Web Development', 'Data Science'],
+                careerGoal: 'AI/ML Engineer',
+                studyHours: 4,
+                experienceLevel: 'intermediate',
+              };
+              profile.name = userData.name;
+              window.localStorage.setItem('disha-student-profile', JSON.stringify(profile));
+            } catch (e) {
+              console.error('Error syncing profile name:', e);
+            }
+          }
+
           setTimeout(() => {
             setAuthToast(null);
             if (userData.role === 'student') {
