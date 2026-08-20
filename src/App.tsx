@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { LandingPage } from './pages/LandingPage';
 import { StudentLayout } from './student/StudentLayout';
@@ -12,6 +13,13 @@ import { ProjectGuidance } from './student/pages/ProjectGuidance';
 import { Progress } from './student/pages/Progress';
 
 import './App.css';
+
+const SmartAttendanceRedirect = () => {
+  useEffect(() => {
+    window.location.replace('/Team-Exo-hunter/smart-attendance/index.html');
+  }, []);
+  return null;
+};
 
 function App() {
   return (
@@ -31,7 +39,7 @@ function App() {
         <Route path="projects" element={<ProjectGuidance />} />
         <Route path="progress" element={<Progress />} />
         <Route path="profile" element={<StudentProfile />} />
-        <Route path="smart-attendance" element={<Dashboard />} />
+        <Route path="smart-attendance" element={<SmartAttendanceRedirect />} />
       </Route>
     </Routes>
   );
