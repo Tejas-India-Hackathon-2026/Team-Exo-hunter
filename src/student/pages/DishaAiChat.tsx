@@ -16,27 +16,92 @@ const WELCOME_MESSAGE: AiMessage = {
   timestamp: new Date(),
 };
 
-// ── Tiny markdown-ish renderer (bold + bullet lines) ─────────────
+// ── Tiny markdown-ish renderer (bold + lists + code blocks) ─────────────
 function renderContent(text: string) {
-  return text.split('\n').map((line, i) => {
-    // Convert **bold** markers
-    const parts = line.split(/(\*\*[^*]+\*\*)/g).map((seg, j) => {
-      if (seg.startsWith('**') && seg.endsWith('**')) {
+  const lines = text.split('\n');
+  let inCodeBlock = false;
+  let codeContent: string[] = [];
+
+  const elements = lines.map((line, i) => {
+    // Toggle code blocks
+    if (line.trim().startsWith('```')) {
+      if (inCodeBlock) {
+        inCodeBlock = false;
+        const code = codeContent.join('\n');
+        codeContent = [];
         return (
-          <span key={j} className="font-semibold text-white">
-            {seg.slice(2, -2)}
-          </span>
+          <pre key={i} className="my-3 p-3.5 rounded-xl bg-slate-950/90 border border-slate-800 font-mono text-[11px] text-indigo-300 overflow-x-auto shadow-inner leading-relaxed select-text">
+            <code>{code}</code>
+          </pre>
         );
+      } else {
+        inCodeBlock = true;
+        return null;
       }
-      return <span key={j}>{seg}</span>;
-    });
+    }
+
+    if (inCodeBlock) {
+      codeContent.push(line);
+      return null;
+    }
+
+    // Check if line is a bullet item
+    let isBullet = false;
+    let cleanLine = line;
+    if (line.trim().startsWith('•')) {
+      isBullet = true;
+      cleanLine = line.replace(/^\s*•\s*/, '');
+    } else if (line.trim().startsWith('* ')) {
+      isBullet = true;
+      cleanLine = line.replace(/^\s*\*\s*/, '');
+    } else if (line.trim().startsWith('- ')) {
+      isBullet = true;
+      cleanLine = line.replace(/^\s*-\s*/, '');
+    }
+
+    // Process inline bold & backticks
+    const parseInline = (str: string) => {
+      const tokens = str.split(/(\*\*[^*]+\*\*|`[^`]+`)/g);
+      return tokens.map((token, j) => {
+        if (token.startsWith('**') && token.endsWith('**')) {
+          return (
+            <strong key={j} className="font-extrabold text-white">
+              {token.slice(2, -2)}
+            </strong>
+          );
+        }
+        if (token.startsWith('`') && token.endsWith('`')) {
+          return (
+            <code key={j} className="px-1.5 py-0.5 rounded bg-slate-905 border border-slate-800 text-indigo-300 font-mono text-[11px] font-semibold">
+              {token.slice(1, -1)}
+            </code>
+          );
+        }
+        return <span key={j}>{token}</span>;
+      });
+    };
+
+    if (isBullet) {
+      return (
+        <li key={i} className="list-none pl-5 relative before:content-['•'] before:absolute before:left-1 before:text-indigo-400 font-normal py-0.5 text-slate-300 leading-relaxed">
+          {parseInline(cleanLine)}
+        </li>
+      );
+    }
+
+    const trimmed = line.trim();
+    if (!trimmed) {
+      return <div key={i} className="h-2" />;
+    }
 
     return (
-      <span key={i} className="block">
-        {parts}
-      </span>
+      <p key={i} className="leading-relaxed text-slate-300 my-0.5">
+        {parseInline(line)}
+      </p>
     );
-  });
+  }).filter(Boolean);
+
+  return <div className="space-y-1">{elements}</div>;
 }
 
 // ── Component ────────────────────────────────────────────────────
