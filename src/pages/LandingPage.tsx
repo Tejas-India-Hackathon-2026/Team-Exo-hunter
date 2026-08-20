@@ -12,7 +12,7 @@ import { Footer } from '../components/Footer';
 import { CAREER_TRACKS, QUIZ_SAMPLES } from '../data/landingData';
 import { 
   X, Sparkles, Brain, Award, ShieldAlert, Scan, 
-  BarChart3, FileText, Check, HelpCircle, CheckCircle2
+  BarChart3, FileText, Check, HelpCircle, CheckCircle2, RotateCcw, ArrowRight
 } from 'lucide-react';
 
 export const LandingPage = () => {
@@ -331,52 +331,193 @@ export const LandingPage = () => {
                     </div>
                   )}
 
-                  {studentTab === 'quiz' && (
+                  {studentTab === 'quiz' && (() => {
+                    const answeredCount = Object.keys(selectedAnswers).length;
+                    const correctCount = QUIZ_SAMPLES.reduce(
+                      (acc, q) => acc + (selectedAnswers[q.id] === q.correct ? 1 : 0),
+                      0
+                    );
+                    const scorePercent = Math.round((correctCount / QUIZ_SAMPLES.length) * 100);
+
+                    return (
+                      <div className="space-y-4">
+                        <div>
+                          <h3 className="text-base font-bold text-white mb-1 flex items-center gap-1.5">
+                            <HelpCircle className="w-4 h-4 text-indigo-400" />
+                            Adaptive Diagnostic Assessment
+                          </h3>
+                          <p className="text-slate-400 text-xs">
+                            Test baseline fundamentals to highlight knowledge gaps before job interviews.
+                          </p>
+                        </div>
+
+                        {/* Interactive Diagnostic Score Card (Shown when submitted) */}
+                        {quizSubmitted && (
+                          <div className="p-4 rounded-xl bg-slate-950 border border-indigo-500/40 shadow-xl space-y-3 animate-in zoom-in-95 duration-200">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2.5">
+                                <div className="p-2 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                                  <Award className="w-5 h-5 text-indigo-400" />
+                                </div>
+                                <div>
+                                  <div className="text-sm font-bold text-white flex items-center gap-2">
+                                    <span>AI Diagnostic Score: {correctCount}/{QUIZ_SAMPLES.length}</span>
+                                    <span className="text-indigo-400 font-mono font-normal">({scorePercent}%)</span>
+                                  </div>
+                                  <div className="text-[11px] text-slate-400 mt-0.5">
+                                    {scorePercent === 100
+                                      ? '🌟 Exceptional Foundation: Ready for advanced capstones!'
+                                      : scorePercent >= 50
+                                      ? '⚡ Strong Baseline: Good core knowledge with minor refinement needed.'
+                                      : '🎯 Growth Opportunity: Tailored roadmap suggested below.'}
+                                  </div>
+                                </div>
+                              </div>
+                              <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                                scorePercent === 100 ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' :
+                                scorePercent >= 50 ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30' :
+                                'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                              }`}>
+                                {scorePercent === 100 ? 'Mastery' : scorePercent >= 50 ? 'Proficient' : 'Learning'}
+                              </span>
+                            </div>
+
+                            <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-slate-900">
+                              <button
+                                onClick={() => {
+                                  setStudentTab('roadmap');
+                                  runRoadmapSimulation();
+                                }}
+                                className="flex-1 py-2 px-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer shadow-md shadow-indigo-600/20 transition-all"
+                              >
+                                <Sparkles className="w-3.5 h-3.5 text-indigo-200" />
+                                <span>Generate Custom AI Roadmap</span>
+                                <ArrowRight className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                onClick={() => {
+                                  setSelectedAnswers({});
+                                  setQuizSubmitted(false);
+                                }}
+                                className="py-2 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer transition-all"
+                              >
+                                <RotateCcw className="w-3.5 h-3.5 text-slate-400" />
+                                <span>Retake Assessment</span>
+                              </button>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Questions List */}
+                        <div className="space-y-3">
+                          {QUIZ_SAMPLES.map((q) => {
+                            const userAnswer = selectedAnswers[q.id];
+                            return (
+                              <div key={q.id} className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2.5 text-xs">
+                                <div className="flex justify-between items-center text-[10px] font-mono text-indigo-400 uppercase font-semibold">
+                                  <span>Topic: {q.topic}</span>
+                                  {quizSubmitted && (
+                                    <span className={userAnswer === q.correct ? 'text-emerald-400 font-bold' : 'text-rose-400 font-bold'}>
+                                      {userAnswer === q.correct ? '✓ Correct' : '✗ Incorrect'}
+                                    </span>
+                                  )}
+                                </div>
+                                <div className="text-white font-medium">
+                                  {q.question}
+                                </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-1">
+                                  {q.options.map((opt, oIdx) => {
+                                    const isSelected = userAnswer === oIdx;
+                                    const isCorrectOption = q.correct === oIdx;
+
+                                    let buttonStyle = 'bg-slate-900 border-slate-800/80 text-slate-400 hover:bg-slate-800';
+                                    
+                                    if (quizSubmitted) {
+                                      if (isSelected) {
+                                        buttonStyle = isCorrectOption
+                                          ? 'bg-emerald-950/80 border-emerald-500 text-emerald-300 font-semibold shadow-xs shadow-emerald-500/20'
+                                          : 'bg-rose-950/80 border-rose-500 text-rose-300 font-semibold';
+                                      } else if (isCorrectOption) {
+                                        buttonStyle = 'bg-emerald-950/40 border border-dashed border-emerald-500/60 text-emerald-400';
+                                      }
+                                    } else if (isSelected) {
+                                      buttonStyle = 'bg-indigo-600/30 border-indigo-500 text-white font-medium shadow-xs shadow-indigo-500/20';
+                                    }
+
+                                    return (
+                                      <button
+                                        key={oIdx}
+                                        disabled={quizSubmitted}
+                                        onClick={() => setSelectedAnswers(prev => ({ ...prev, [q.id]: oIdx }))}
+                                        className={`p-2.5 rounded-lg text-left text-xs border transition-all cursor-pointer disabled:cursor-default flex items-center justify-between gap-1.5 ${buttonStyle}`}
+                                      >
+                                        <span>{opt}</span>
+                                        {quizSubmitted && isCorrectOption && !isSelected && (
+                                          <span className="text-[9px] text-emerald-400 bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-500/30 shrink-0">
+                                            Correct
+                                          </span>
+                                        )}
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+
+                                {/* AI Explanation Insight */}
+                                {quizSubmitted && (
+                                  <div className="p-2.5 rounded-lg bg-indigo-950/30 border border-indigo-900/40 text-[11px] text-indigo-200 flex items-start gap-2 animate-in fade-in duration-200">
+                                    <Sparkles className="w-3.5 h-3.5 text-indigo-400 shrink-0 mt-0.5" />
+                                    <span><strong>AI Insight:</strong> {q.explanation}</span>
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+
+                        {!quizSubmitted && (
+                          <button
+                            onClick={() => setQuizSubmitted(true)}
+                            disabled={answeredCount === 0}
+                            className="w-full py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-semibold cursor-pointer shadow-lg shadow-emerald-600/25 transition-all flex items-center justify-center gap-1.5"
+                          >
+                            <span>Submit & View AI Feedback Analysis</span>
+                            <span className="text-[10px] opacity-80">({answeredCount}/{QUIZ_SAMPLES.length} Answered)</span>
+                          </button>
+                        )}
+                      </div>
+                    );
+                  })()}
+
+                  {studentTab === 'notes' && (
                     <div className="space-y-4">
                       <div>
                         <h3 className="text-base font-bold text-white mb-1 flex items-center gap-1.5">
-                          <HelpCircle className="w-4 h-4 text-indigo-400" />
-                          Adaptive Diagnostic Assessment
+                          <FileText className="w-4 h-4 text-indigo-400" />
+                          AI Smart Notes & Flashcard Generator
                         </h3>
                         <p className="text-slate-400 text-xs">
-                          Test baseline fundamentals to highlight knowledge gaps before job interviews.
+                          Convert complex lecture audios and markdown documents into structured study flashcards.
                         </p>
                       </div>
 
-                      <div className="space-y-3">
-                        {QUIZ_SAMPLES.map((q) => (
-                          <div key={q.id} className="p-3.5 rounded-xl bg-slate-950 border border-slate-800 space-y-2 text-xs">
-                            <div className="text-[10px] font-mono text-indigo-400 uppercase font-semibold">
-                              Topic: {q.topic}
-                            </div>
-                            <div className="text-white font-medium">
-                              {q.question}
-                            </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-1">
-                              {q.options.map((opt, oIdx) => {
-                                const isSelected = selectedAnswers[q.id] === oIdx;
-                                const isCorrect = q.correct === oIdx;
-                                return (
-                                  <button
-                                    key={oIdx}
-                                    onClick={() => setSelectedAnswers(prev => ({ ...prev, [q.id]: oIdx }))}
-                                    className={`p-2 rounded-lg text-left text-xs border transition-all cursor-pointer ${
-                                      isSelected
-                                        ? quizSubmitted
-                                          ? isCorrect
-                                            ? 'bg-emerald-950/80 border-emerald-500 text-emerald-300'
-                                            : 'bg-rose-950/80 border-rose-500 text-rose-300'
-                                          : 'bg-indigo-600/30 border-indigo-500 text-white'
-                                        : 'bg-slate-900 border-slate-800/80 text-slate-400 hover:bg-slate-800'
-                                    }`}
-                                  >
-                                    {opt}
-                                  </button>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        ))}
+                      <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs text-slate-300 space-y-2.5 shadow-inner">
+                        <div className="text-[10px] text-indigo-400 border-b border-slate-800 pb-1.5 flex justify-between">
+                          <span>// GENERATED SMART SUMMARY</span>
+                          <span className="text-emerald-400">MARKDOWN READY</span>
+                        </div>
+                        <div className="text-indigo-200 font-semibold text-xs">
+                          # Deep Learning & Neural Architectures (Summary)
+                        </div>
+                        <p className="text-slate-400 text-[11px] leading-relaxed">
+                          - <strong>Backpropagation:</strong> Optimization technique computing gradient of loss function with respect to weights using chain rule.
+                        </p>
+                        <p className="text-slate-400 text-[11px] leading-relaxed">
+                          - <strong>Activation Functions:</strong> ReLU, LeakyReLU avoid vanishing gradients in deeper layers compared to Sigmoid.
+                        </p>
+                        <div className="p-2 rounded bg-indigo-950/40 border border-indigo-900/50 text-[10px] text-indigo-300 flex items-center gap-1.5">
+                          <Check className="w-3.5 h-3.5 text-emerald-400" />
+                          <span>Generated 8 spaced-repetition flashcards for your daily review calendar.</span>
+                        </div>
                       </div>
 
                       <button

@@ -14,9 +14,6 @@ const iconMap: Record<string, React.ComponentType<any>> = {
 export const HowItWorks: React.FC = () => {
   return (
     <section id="how-it-works" className="py-20 bg-slate-950 relative overflow-hidden dark-grid-bg">
-      {/* ⚡ Glowing data flow connector lines */}
-      <div className="absolute top-24 left-0 right-0 h-[2px] glowing-timeline-line hidden lg:block pointer-events-none opacity-80" />
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}

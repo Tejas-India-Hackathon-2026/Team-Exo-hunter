@@ -13,7 +13,7 @@ export const SolutionCards: React.FC<SolutionCardsProps> = ({
   onCollegesClick,
 }) => {
   return (
-    <section className="py-20 bg-slate-950 relative border-t border-b border-slate-900">
+    <section id="solutions" className="py-20 bg-slate-950 relative border-t border-b border-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}

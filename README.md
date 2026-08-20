@@ -51,8 +51,8 @@ DISHA AI is an intelligent dual-sided ecosystem engineered for **students** and 
 
 | Member No. | Name | Role | Focus Areas | Live Status |
 | :---: | :--- | :--- | :--- | :---: |
-| **01** | **Ayush Raj** *(Lead)* | Lead Architect & Fullstack Systems | System Architecture, React 19 Core, Backend | 🟢 Active |
-| **02** | **Gungun** | AI & Smart Campus Logic Specialist | Computer Vision, Face Recognition, Analytics | 🟢 Active |
+| **01** | **Ayush Raj** | AI & Smart Campus Logic Specialist | Computer Vision, Face Recognition, Analytics | 🟢 Active |
+| **02** | **Gungun** *(Lead)* | Lead Architect & Fullstack Systems | System Architecture, React 19 Core, Backend | 🟢 Active |
 | **03** | **Jyoti** | Frontend & Student AI Guidance Lead | React / TypeScript, Tailwind CSS v4, Simulators | 🟢 Active |
 | **04** | **Shubhanshu** | Cloud Infra, DevOps & UI/UX Specialist | CI/CD, Deployment, UI/UX Auditing, QA | 🟢 Active |
 
@@ -95,12 +95,6 @@ npm run build
 
 ---
 
-## 🔮 Roadmap Milestones
-
-* **Milestone 1 (Hackathon MVP):** High-fidelity interactive React 19 UI with multi-track simulators, dynamic roadmap calculator, face recognition HUD, and team roster.
-* **Milestone 2 (Backend AI Integration):** Connect live LLM prompt chains (LangChain / Gemini API) and RAG document parsers.
-* **Milestone 3 (Edge Device Deployment):** Connect Raspberry Pi / camera hardware via WebSocket streams to central attendance server.
-
 ## 🏛️ DISHA for Smart Campus
 Integrated 12 next-generation campus modules to establish a complete digital ecosystem for modern colleges:
 1. **Smart Attendance** - Biometric & QR-based attendance tracking.
@@ -116,3 +110,10 @@ Integrated 12 next-generation campus modules to establish a complete digital eco
 11. **Digital ID Card** - Encrypted mobile student ID cards.
 12. **Internship Updates** - Curated stream-wise job and project opportunities.
 
+---
+
+## 🔮 Roadmap Milestones
+
+* **Milestone 1 (Hackathon MVP):** High-fidelity interactive React 19 UI with multi-track simulators, dynamic roadmap calculator, face recognition HUD, and team roster.
+* **Milestone 2 (Backend AI Integration):** Connect live LLM prompt chains (LangChain / Gemini API) and RAG document parsers.
+* **Milestone 3 (Edge Device Deployment):** Connect Raspberry Pi / camera hardware via WebSocket streams to central attendance server.
