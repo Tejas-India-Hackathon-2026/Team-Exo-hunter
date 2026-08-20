@@ -58,3 +58,4 @@
 * Commit #58: style(landing): refine layout width constraints for student info popup - Completed on 08/20/2026 23:21:54
 * Commit #59: refactor(landing): clean up unused simulator state variables - Completed on 08/20/2026 23:21:55
 * Commit #60: refactor(landing): remove redundant mockup roadmap generator logic - Completed on 08/20/2026 23:21:56
+* Commit #61: style(landing): customize glassmorphic pillar hover states on dialog - Completed on 08/20/2026 23:21:56
