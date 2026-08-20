@@ -71,3 +71,5 @@
 // Local storage credentials detail mappings
 
 // Console logging cleanup declarations
+
+// Curly bracket layout adjustments
