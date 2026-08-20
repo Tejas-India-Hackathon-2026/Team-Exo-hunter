@@ -154,10 +154,7 @@ export const LandingPage = () => {
         }} 
       />
 
-      {/* How DISHA Works */}
-      <HowItWorks />
-
-      {/* Student Features Preview */}
+      {/* Student Features Preview (For Students) */}
       <StudentFeatures 
         onCtaClick={() => {
           setModalType('student');
@@ -165,13 +162,16 @@ export const LandingPage = () => {
         }} 
       />
 
-      {/* Smart Campus Features Preview */}
+      {/* Smart Campus Features Preview (For Colleges) */}
       <CampusFeatures 
         onCtaClick={() => {
           setModalType('college');
           resetSimulations();
         }} 
       />
+
+      {/* How DISHA Works */}
+      <HowItWorks />
 
       {/* Team Exo-Hunter Section */}
       <TeamSection />
