@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #6366f1; /* Indigo 500 */
+  --color-primary-hover: #4f46e5; /* Indigo 600 */
+  --color-secondary: #0ea5e9; /* Sky 500 */
+  --color-dark-bg: #030712; /* Slate 950 */
+  --color-card-bg: rgba(15, 23, 42, 0.6);
+  --color-card-border: rgba(99, 102, 241, 0.15);
+}
+
+:root {
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+  background-color: #030712; /* Slate 950 */
+  color: #f1f5f9; /* Slate 100 */
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+/* Custom dark grid background */
+.dark-grid-bg {
+  background-image: 
+    linear-gradient(to right, rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Drifting/floating particles keyframe */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-20px) translateX(10px);
+  }
+}
+
+@keyframes float-medium {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-15px) translateX(-15px);
+  }
+}
+
+/* Pulsing AI aura core keyframe */
+@keyframes neural-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.15;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.3;
+  }
+}
+
+/* Scanning radar scanner beam keyframe */
+@keyframes laser-sweep {
+  0% {
+    top: 0%;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+/* Glowing timeline flow trail */
+@keyframes glow-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.float-slow {
+  animation: float-slow 12s ease-in-out infinite;
+}
+
+.float-medium {
+  animation: float-medium 8s ease-in-out infinite;
+}
+
+.neural-pulse-core {
+  animation: neural-pulse 6s ease-in-out infinite;
+}
+
+.scan-laser {
+  animation: laser-sweep 4s linear infinite;
+}
+
+/* Glassmorphism custom classes */
+.glass-card {
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(99, 102, 241, 0.12);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+.glass-card-student {
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.05);
+}
+
+.glass-card-campus {
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(14, 165, 233, 0.05);
+}
+
+.glass-navbar {
+  background: rgba(3, 7, 18, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Connective line glow effect */
+.glowing-timeline-line {
+  background: linear-gradient(90deg, #6366f1, #0ea5e9, #6366f1);
+  background-size: 200% 200%;
+  animation: glow-flow 4s linear infinite;
+}
