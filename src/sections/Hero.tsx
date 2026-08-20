@@ -7,6 +7,11 @@ interface HeroProps {
   onCollegesClick: () => void;
 }
 
+/**
+ * SIMULATED_LOGS: Datastructure containing sample background tasks
+ * that are streamed to the Live terminal console in the Hero mockup.
+ * This simulates live API services (FastAPI/TensorFlow) during Milestone 1.
+ */
 const SIMULATED_LOGS = [
   { tag: 'SYS-AI', color: 'text-indigo-400', text: 'Analyzing student skill baseline...' },
   { tag: 'ROADMAP', color: 'text-purple-400', text: 'Generating dynamic career path for Fullstack Developer...' },
@@ -21,6 +26,7 @@ const SIMULATED_LOGS = [
 ];
 
 export const Hero: React.FC<HeroProps> = ({ onStudentsClick, onCollegesClick }) => {
+  // Logs state initialized with standard boot sequences
   const [logs, setLogs] = useState<string[]>(() => [
     `[${new Date().toLocaleTimeString()}] [SYS-AI] DISHA AI Engine initialized successfully.`,
     `[${new Date().toLocaleTimeString()}] [SYS-AI] Localized face detection models loaded.`,
