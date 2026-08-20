@@ -148,9 +148,7 @@ export const LandingPage = () => {
           resetSimulations();
         }} 
         onCollegesClick={() => {
-          handleNavigate('colleges');
-          setModalType('college');
-          resetSimulations();
+          navigate('/student/smart-attendance');
         }} 
       />
 
