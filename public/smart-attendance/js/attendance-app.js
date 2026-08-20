@@ -150,3 +150,5 @@
 // Load module callbacks docstring
 
 // Clean core app whitespaces
+
+// Event listeners code style check
