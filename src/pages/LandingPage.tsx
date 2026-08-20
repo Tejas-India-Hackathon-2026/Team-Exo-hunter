@@ -134,9 +134,7 @@ export const LandingPage = () => {
           resetSimulations();
         }} 
         onCollegesClick={() => {
-          handleNavigate('colleges');
-          setModalType('college');
-          resetSimulations();
+          window.open('/Team-Exo-hunter/campus-one.html', '_blank');
         }} 
       />
 
