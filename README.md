@@ -101,8 +101,8 @@ npm run build
 * **Milestone 2 (Backend AI Integration):** Connect live LLM prompt chains (LangChain / Gemini API) and RAG document parsers.
 * **Milestone 3 (Edge Device Deployment):** Connect Raspberry Pi / camera hardware via WebSocket streams to central attendance server.
 
-## 🏛️ DISHA for Smart Campus (AutoSoft Catalog)
-Integrated 12 next-generation campus modules from the AutoSoft catalog to establish a complete digital ecosystem for modern colleges:
+## 🏛️ DISHA for Smart Campus
+Integrated 12 next-generation campus modules to establish a complete digital ecosystem for modern colleges:
 1. **Smart Attendance** - Biometric & QR-based attendance tracking.
 2. **Digital Notes** - AI-powered notes categorization and lookup.
 3. **AI Study Assistant** - 24/7 PDF summaries, homework aids, and mock test generators.
