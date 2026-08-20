@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback, type FormEvent, type KeyboardEvent } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Sparkles, Send, Bot, Loader2, Key, X } from 'lucide-react';
+import { Sparkles, Send, Bot, Loader2, Key, X, Pencil } from 'lucide-react';
 import { SUGGESTED_PROMPTS } from '../data/studentData';
 import {
   getAiResponse,
@@ -116,6 +116,10 @@ export const DishaAiChat = () => {
   const [tempKey, setTempKey] = useState(apiKey);
   const [showKeyModal, setShowKeyModal] = useState(false);
 
+  // Message Editing States
+  const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
+  const [editInput, setEditInput] = useState('');
+
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -141,9 +145,11 @@ export const DishaAiChat = () => {
       setInput('');
       setIsLoading(true);
 
+      const history = messages.slice(1);
+
       try {
         const savedKey = localStorage.getItem('disha-gemini-key') || '';
-        const reply = await getAiResponse(trimmed, savedKey);
+        const reply = await getAiResponse(trimmed, savedKey, history);
         const assistantMsg: AiMessage = {
           id: generateMessageId(),
           role: 'assistant',
@@ -164,8 +170,54 @@ export const DishaAiChat = () => {
         inputRef.current?.focus();
       }
     },
-    [input, isLoading],
+    [input, isLoading, messages],
   );
+
+  // ── Edit submit handler ─────────────────────────────────────────
+  const handleEditSubmit = async (messageId: string, newText: string) => {
+    const trimmed = newText.trim();
+    if (!trimmed || isLoading) return;
+
+    const msgIndex = messages.findIndex(m => m.id === messageId);
+    if (msgIndex === -1) return;
+
+    // Get history before this edited message (excluding welcome message at index 0)
+    const history = messages.slice(1, msgIndex);
+
+    const updatedUserMsg: AiMessage = {
+      ...messages[msgIndex],
+      content: trimmed,
+      timestamp: new Date(),
+    };
+
+    // Slice history up to edited message, and clear subsequent chat history
+    const nextMessages = [...messages.slice(0, msgIndex), updatedUserMsg];
+    setMessages(nextMessages);
+    setEditingMessageId(null);
+    setIsLoading(true);
+
+    try {
+      const savedKey = localStorage.getItem('disha-gemini-key') || '';
+      const reply = await getAiResponse(trimmed, savedKey, history);
+      const assistantMsg: AiMessage = {
+        id: generateMessageId(),
+        role: 'assistant',
+        content: reply,
+        timestamp: new Date(),
+      };
+      setMessages(prev => [...prev, assistantMsg]);
+    } catch {
+      const errMsg: AiMessage = {
+        id: generateMessageId(),
+        role: 'assistant',
+        content: '⚠️ Something went wrong. Please try again.',
+        timestamp: new Date(),
+      };
+      setMessages(prev => [...prev, errMsg]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     const q = searchParams.get('q');
@@ -242,106 +294,155 @@ export const DishaAiChat = () => {
 
       {/* ── Chat area (scrollable) ──────────────────────────────── */}
       <div className="flex-1 min-h-0 overflow-y-auto px-6 py-5 space-y-4 scroll-smooth">
-        {messages.map(msg => (
+        {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+            className={`flex items-start gap-2 group ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
+            {/* User Edit Button (Left of bubble, visible on hover) */}
+            {msg.role === 'user' && editingMessageId !== msg.id && (
+              <button
+                onClick={() => {
+                  setEditingMessageId(msg.id);
+                  setEditInput(msg.content);
+                }}
+                className="self-center opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg hover:bg-slate-900 text-slate-400 hover:text-white cursor-pointer select-none"
+                title="Edit message"
+              >
+                <Pencil className="w-3.5 h-3.5" />
+              </button>
+            )}
+
             {/* Assistant avatar */}
             {msg.role === 'assistant' && (
-              <div className="flex-shrink-0 mt-1 mr-3 p-1.5 rounded-lg bg-indigo-500/15 text-indigo-400 self-start">
-                <Bot className="w-4 h-4" />
+              <div className="flex-shrink-0 mt-1 mr-1.5 p-1.5 rounded-lg bg-indigo-500/15 text-indigo-400 self-start relative">
+                <span className="absolute inset-0 rounded-lg bg-indigo-500/20 animate-ping duration-1500 opacity-60" />
+                <Bot className="w-4 h-4 relative z-10" />
               </div>
             )}
 
-            <div
-              className={`max-w-[75%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
-                msg.role === 'user'
-                  ? 'bg-indigo-600 text-white rounded-br-md'
-                  : 'bg-slate-800/70 border border-indigo-500/15 text-slate-300 rounded-bl-md'
-              }`}
-            >
-              {msg.content === 'KEY_NOT_CONFIGURED' ? (
-                <div className="space-y-3 p-1">
-                  <p className="font-bold text-white text-xs flex items-center gap-1.5">
-                    <Key className="w-4 h-4 text-indigo-400" />
-                    Set Gemini API Key to chat
-                  </p>
-                  <p className="text-slate-400 text-xs leading-normal">
-                    To enable smart chat replies, please paste your Google Gemini API Key below. This key is free and stays locally in your browser.
-                  </p>
-                  <div className="flex gap-2">
-                    <input
-                      type="password"
-                      placeholder="Paste AIzaSy... key here"
-                      id="inline-key-input"
-                      className="flex-1 px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-indigo-500 placeholder-slate-700"
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                          const val = (e.target as HTMLInputElement).value.trim();
+            {editingMessageId === msg.id ? (
+              /* Inline Edit Area */
+              <div className="flex-1 max-w-[75%] rounded-2xl p-4 bg-slate-900 border border-indigo-500/30 space-y-3 shadow-xl shadow-indigo-950/20">
+                <textarea
+                  value={editInput}
+                  onChange={(e) => setEditInput(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-indigo-500 resize-none min-h-[60px] leading-relaxed"
+                  autoFocus
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault();
+                      handleEditSubmit(msg.id, editInput);
+                    }
+                  }}
+                />
+                <div className="flex justify-end gap-2 text-xs">
+                  <button
+                    onClick={() => setEditingMessageId(null)}
+                    className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold rounded-lg cursor-pointer transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => handleEditSubmit(msg.id, editInput)}
+                    disabled={!editInput.trim() || isLoading}
+                    className="px-3.5 py-1.5 bg-indigo-650 hover:bg-indigo-650 text-white font-bold rounded-lg cursor-pointer disabled:opacity-50 transition-colors"
+                  >
+                    Save &amp; Submit
+                  </button>
+                </div>
+              </div>
+            ) : (
+              /* Normal Bubble */
+              <div
+                className={`max-w-[75%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                  msg.role === 'user'
+                    ? 'bg-indigo-650 text-white rounded-br-md shadow-md'
+                    : 'bg-slate-800/70 border border-indigo-500/15 text-slate-300 rounded-bl-md shadow-lg shadow-indigo-950/10'
+                }`}
+              >
+                {msg.content === 'KEY_NOT_CONFIGURED' ? (
+                  <div className="space-y-3 p-1">
+                    <p className="font-bold text-white text-xs flex items-center gap-1.5">
+                      <Key className="w-4 h-4 text-indigo-400" />
+                      Set Gemini API Key to chat
+                    </p>
+                    <p className="text-slate-400 text-xs leading-normal">
+                      To enable smart chat replies, please paste your Google Gemini API Key below. This key is free and stays locally in your browser.
+                    </p>
+                    <div className="flex gap-2">
+                      <input
+                        type="password"
+                        placeholder="Paste AIzaSy... key here"
+                        id="inline-key-input"
+                        className="flex-1 px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-indigo-500 placeholder-slate-750"
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            const val = (e.target as HTMLInputElement).value.trim();
+                            if (val) {
+                              localStorage.setItem('disha-gemini-key', val);
+                              setApiKey(val);
+                              setMessages((prev) => {
+                                const next = [...prev];
+                                next[next.length - 1] = {
+                                  id: generateMessageId(),
+                                  role: 'assistant',
+                                  content: '🎉 API Key configured successfully! How can I help you today?',
+                                  timestamp: new Date(),
+                                };
+                                return next;
+                              });
+                            }
+                          }
+                        }}
+                      />
+                      <button
+                        onClick={() => {
+                          const inputEl = document.getElementById('inline-key-input') as HTMLInputElement;
+                          const val = inputEl?.value.trim();
                           if (val) {
                             localStorage.setItem('disha-gemini-key', val);
                             setApiKey(val);
-                            setMessages(prev => {
+                            setMessages((prev) => {
                               const next = [...prev];
                               next[next.length - 1] = {
                                 id: generateMessageId(),
                                 role: 'assistant',
                                 content: '🎉 API Key configured successfully! How can I help you today?',
-                                timestamp: new Date()
+                                timestamp: new Date(),
                               };
                               return next;
                             });
                           }
-                        }
-                      }}
-                    />
-                    <button
-                      onClick={() => {
-                        const inputEl = document.getElementById('inline-key-input') as HTMLInputElement;
-                        const val = inputEl?.value.trim();
-                        if (val) {
-                          localStorage.setItem('disha-gemini-key', val);
-                          setApiKey(val);
-                          setMessages(prev => {
-                            const next = [...prev];
-                            next[next.length - 1] = {
-                              id: generateMessageId(),
-                              role: 'assistant',
-                              content: '🎉 API Key configured successfully! How can I help you today?',
-                              timestamp: new Date()
-                            };
-                            return next;
-                          });
-                        }
-                      }}
-                      className="px-3.5 py-1.5 bg-indigo-650 hover:bg-indigo-600 text-white font-bold rounded-lg text-xs transition-colors cursor-pointer select-none"
-                    >
-                      Save
-                    </button>
+                        }}
+                        className="px-3.5 py-1.5 bg-indigo-650 hover:bg-indigo-600 text-white font-bold rounded-lg text-xs transition-colors cursor-pointer select-none"
+                      >
+                        Save
+                      </button>
+                    </div>
+                    <p className="text-[10px] text-slate-500">
+                      Get a free key from{' '}
+                      <a
+                        href="https://aistudio.google.com/"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-indigo-400 hover:underline"
+                      >
+                        Google AI Studio ↗
+                      </a>
+                    </p>
                   </div>
-                  <p className="text-[10px] text-slate-500">
-                    Get a free key from{' '}
-                    <a
-                      href="https://aistudio.google.com/"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-indigo-400 hover:underline"
-                    >
-                      Google AI Studio ↗
-                    </a>
-                  </p>
-                </div>
-              ) : (
-                renderContent(msg.content)
-              )}
-              <span className="block mt-2 text-[10px] opacity-40 text-right">
-                {msg.timestamp.toLocaleTimeString([], {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
-              </span>
-            </div>
+                ) : (
+                  renderContent(msg.content)
+                )}
+                <span className="block mt-2 text-[10px] opacity-40 text-right">
+                  {msg.timestamp.toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
+                </span>
+              </div>
+            )}
           </div>
         ))}
 
