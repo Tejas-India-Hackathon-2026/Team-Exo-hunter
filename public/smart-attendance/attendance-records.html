@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+  <title>Attendance Database Logs - AutoSoft AI Attendance</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Attendance CSS -->
+  <link rel="stylesheet" href="css/attendance-style.css">
+</head>
+<body>
+  <div id="autosoft-attendance-app">
+    <!-- Toast notifications -->
+    <div id="autosoft-attendance-app-toast-container"></div>
+
+    <div class="asa-layout-wrapper">
+      <!-- Sidebar Navigation -->
+      <aside class="asa-sidebar">
+        <div class="asa-sidebar-logo">
+          <span>Auto<span>Soft</span> <span style="font-size: 0.8rem; font-weight: 500; color: var(--asa-text-muted);">AI</span></span>
+        </div>
+        <ul class="asa-sidebar-menu">
+          <li class="asa-menu-item"><a href="faculty-dashboard.html" class="asa-menu-link" id="nav-dash-link"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+          <li class="asa-menu-item"><a href="live-attendance.html" class="asa-menu-link"><i class="fa-solid fa-camera"></i> Live AI Scanner</a></li>
+          <li class="asa-menu-item"><a href="attendance-records.html" class="asa-menu-link active"><i class="fa-solid fa-database"></i> Attendance Logs</a></li>
+          <li class="asa-menu-item"><a href="unrecognized-faces.html" class="asa-menu-link"><i class="fa-solid fa-face-rolling-eyes"></i> Unresolved Queue</a></li>
+          <li class="asa-menu-item"><a href="reports.html" class="asa-menu-link"><i class="fa-solid fa-file-pdf"></i> Reports Desk</a></li>
+          <li class="asa-menu-item"><a href="classroom-analytics.html" class="asa-menu-link"><i class="fa-solid fa-brain"></i> Analytics</a></li>
+          <li class="asa-menu-item"><a href="privacy.html" class="asa-menu-link"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a></li>
+          <li class="asa-menu-item" style="margin-top: 30px; border-top: 1px solid var(--asa-border); padding-top: 15px;"><a href="../" class="asa-menu-link"><i class="fa-solid fa-arrow-left-long"></i> Back to Main Portal</a></li>
+          <li class="asa-menu-item"><a href="#" onclick="window.asaAuth.logout()" class="asa-menu-link" style="color: var(--asa-danger);"><i class="fa-solid fa-power-off"></i> Sign Out</a></li>
+        </ul>
+      </aside>
+
+      <!-- Main Logs Content -->
+      <main class="asa-main-content">
+        <!-- Header Banner -->
+        <header class="asa-header">
+          <div class="asa-header-title">
+            <h1>Attendance Log Database</h1>
+            <p>Search, filter, and override classroom face scanner logs.</p>
+          </div>
+          <div class="asa-header-meta">
+            <a href="reports.html" class="asa-btn asa-btn-primary" style="padding: 10px 18px; font-size: 0.88rem;"><i class="fa-solid fa-file-export"></i> Go to Reports</a>
+          </div>
+        </header>
+
+        <!-- Filters Section -->
+        <section class="asa-card" style="padding: 24px; margin-bottom: 30px;">
+          <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 16px;"><i class="fa-solid fa-filter" style="color: var(--asa-primary);"></i> Filter Records</h3>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px;">
+            <div class="asa-input-group" style="margin-bottom: 0;">
+              <label class="asa-input-label">Date</label>
+              <input type="date" id="filter-date" class="asa-input" style="padding: 10px 12px; font-size: 0.88rem;">
+            </div>
+
+            <div class="asa-input-group" style="margin-bottom: 0;">
+              <label class="asa-input-label">Department Branch</label>
+              <select id="filter-branch" class="asa-select" style="padding: 10px 12px; font-size: 0.88rem;">
+                <option value="All">All Branches</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Mechanical">Mechanical</option>
+                <option value="Civil">Civil</option>
+              </select>
+            </div>
+
+            <div class="asa-input-group" style="margin-bottom: 0;">
+              <label class="asa-input-label">Semester</label>
+              <select id="filter-semester" class="asa-select" style="padding: 10px 12px; font-size: 0.88rem;">
+                <option value="All" selected>All Semesters</option>
+                <option>Semester I</option>
+                <option>Semester II</option>
+                <option>Semester III</option>
+                <option>Semester IV</option>
+                <option>Semester V</option>
+                <option>Semester VI</option>
+                <option>Semester VII</option>
+                <option>Semester VIII</option>
+              </select>
+            </div>
+
+            <div class="asa-input-group" style="margin-bottom: 0;">
+              <label class="asa-input-label">Subject</label>
+              <select id="filter-subject" class="asa-select" style="padding: 10px 12px; font-size: 0.88rem;">
+                <option value="All">All Subjects</option>
+                <option value="Computer Networks">Computer Networks</option>
+                <option value="Computer Organization and Architecture">Computer Organization & Architecture</option>
+                <option value="Design and Analysis of Algorithms">Design & Analysis of Algorithms</option>
+                <option value="Database Management System">Database Management System</option>
+                <option value="Effective Technical Communication">Effective Technical Communication</option>
+                <option value="Formal Language and Automata Theory">Formal Language & Automata Theory</option>
+              </select>
+            </div>
+
+            <div class="asa-input-group" style="margin-bottom: 0; display: flex; align-items: flex-end;">
+              <button class="asa-btn asa-btn-primary" style="width: 100%; padding: 12px; font-size: 0.88rem;" onclick="loadLogsTable()"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Records Table Card -->
+        <section class="asa-card" style="padding: 30px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <h3 style="font-size: 1.15rem; font-weight: 700;"><i class="fa-solid fa-list-check" style="color: var(--asa-primary);"></i> Student Records List</h3>
+            
+            <div style="display: flex; gap: 10px;">
+              <button class="asa-btn asa-btn-secondary" style="padding: 8px 14px; font-size: 0.82rem;" onclick="exportCSV()"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
+              <button class="asa-btn asa-btn-secondary" style="padding: 8px 14px; font-size: 0.82rem;" onclick="window.print()"><i class="fa-solid fa-print"></i> Print</button>
+            </div>
+          </div>
+
+          <div class="asa-table-container">
+            <table class="asa-table">
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Student Name</th>
+                  <th>Roll No</th>
+                  <th>Match Time</th>
+                  <th>Confidence</th>
+                  <th>Status</th>
+                  <th>Verification</th>
+                  <th style="text-align: center;">Actions Override</th>
+                </tr>
+              </thead>
+              <tbody id="logs-tbody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Javascript Core, Auth & Attendance Libraries -->
+  <script src="js/attendance-app.js"></script>
+  <script src="js/attendance-auth.js"></script>
+  <script>
+    // Enforce guard
+    window.asaAuth.requireRole(['Faculty', 'Admin']);
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Set session link
+      const session = window.asaAuth.getSession();
+      if (session && session.role === 'Admin') {
+        const link = document.getElementById('nav-dash-link');
+        link.href = "admin-dashboard.html";
+      }
+
+      loadLogsTable();
+    });
+
+    function loadLogsTable() {
+      const selectedDate = document.getElementById('filter-date').value;
+      const selectedBranch = document.getElementById('filter-branch').value;
+      const selectedSemester = document.getElementById('filter-semester').value;
+      const selectedSubject = document.getElementById('filter-subject').value;
+
+      const students = window.asaDB.get("asa_students");
+      const logs = window.asaDB.get("asa_logs");
+
+      // 1. Filter students belonging to this branch + sem
+      const targetStudents = students.filter(s => {
+        const matchBranch = selectedBranch === "All" || s.branch === selectedBranch;
+        const matchSem = selectedSemester === "All" || s.semester === selectedSemester;
+        return matchBranch && matchSem;
+      });
+
+      // 2. Filter logs for this date + subject
+      const targetLogs = logs.filter(l => {
+        const matchDate = !selectedDate || l.date === selectedDate;
+        const matchSubject = selectedSubject === "All" || l.subjectName === selectedSubject;
+        return matchDate && matchSubject;
+      });
+
+      const tbody = document.getElementById('logs-tbody');
+      tbody.innerHTML = '';
+
+      if (targetStudents.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--asa-text-muted); padding: 40px;">No registered students match selected filters.</td></tr>`;
+        return;
+      }
+
+      // 3. Compile rows
+      targetStudents.forEach((student, index) => {
+        // Check if student has a presence log
+        const logEntry = targetLogs.find(l => l.studentId === student.id);
+        const isPresent = !!logEntry;
+
+        const time = isPresent ? logEntry.detectionTime : "-";
+        const confidence = isPresent ? `${logEntry.confidence}%` : "-";
+        const statusBadge = isPresent 
+          ? '<span class="asa-badge asa-badge-present">PRESENT</span>' 
+          : '<span class="asa-badge asa-badge-absent">ABSENT</span>';
+        
+        const verification = isPresent ? (logEntry.verified || "AI Detected") : "-";
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${index + 1}</td>
+          <td><strong>${student.fullName}</strong></td>
+          <td>${student.rollNo}</td>
+          <td>${time}</td>
+          <td style="${isPresent ? 'color: var(--asa-success); font-weight: 700;' : ''}">${confidence}</td>
+          <td>${statusBadge}</td>
+          <td style="font-size: 0.85rem; color: var(--asa-text-muted);">${verification}</td>
+          <td style="text-align: center;">
+            ${isPresent 
+              ? `<button class="asa-btn asa-btn-secondary" style="padding: 6px 12px; font-size: 0.78rem; border-color: rgba(239, 68, 68, 0.2); color: var(--asa-danger);" onclick="overrideStatus('${student.id}', 'Absent')"><i class="fa-solid fa-user-xmark"></i> Absent</button>`
+              : `<button class="asa-btn asa-btn-secondary" style="padding: 6px 12px; font-size: 0.78rem; border-color: rgba(16, 185, 129, 0.2); color: var(--asa-success);" onclick="overrideStatus('${student.id}', 'Present')"><i class="fa-solid fa-user-check"></i> Present</button>`
+            }
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function overrideStatus(studentId, newStatus) {
+      const selectedDate = document.getElementById('filter-date').value;
+      const selectedSubject = document.getElementById('filter-subject').value;
+
+      if (!selectedDate || selectedSubject === "All") {
+        alert("Please select a specific Date and Subject to override attendance logs.");
+        return;
+      }
+
+      let logs = window.asaDB.get("asa_logs");
+      const students = window.asaDB.get("asa_students");
+      const student = students.find(s => s.id === studentId);
+
+      if (!student) return;
+
+      if (newStatus === 'Present') {
+        // Insert a new log row
+        logs.push({
+          id: `LOG-${Math.floor(10000 + Math.random() * 90000)}`,
+          studentId: student.id,
+          studentName: student.fullName,
+          rollNo: student.rollNo,
+          className: `B.Tech ${student.branch} – ${student.semester} (Sec ${student.section})`,
+          subjectName: selectedSubject,
+          date: selectedDate,
+          detectionTime: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+          confidence: 100, // Manual Override indicator
+          status: "Present",
+          verified: "Faculty Override"
+        });
+        triggerToast(`Marked ${student.fullName} as PRESENT.`, 'success');
+      } else {
+        // Remove existing log row
+        logs = logs.filter(l => !(l.studentId === studentId && l.date === selectedDate && l.subjectName === selectedSubject));
+        triggerToast(`Marked ${student.fullName} as ABSENT.`, 'error');
+      }
+
+      window.asaDB.save("asa_logs", logs);
+      loadLogsTable();
+    }
+
+    function exportCSV() {
+      const tbody = document.getElementById('logs-tbody');
+      let csvContent = "data:text/csv;charset=utf-8,";
+      csvContent += "S.No,Student Name,Roll Number,Match Time,AI Confidence,Status,Verification\n";
+      
+      const rows = tbody.querySelectorAll('tr');
+      rows.forEach(row => {
+        const cols = row.querySelectorAll('td');
+        if (cols.length >= 6) {
+          const cells = [
+            cols[0].innerText,
+            cols[1].innerText.replace(/,/g, ''),
+            cols[2].innerText,
+            cols[3].innerText,
+            cols[4].innerText,
+            cols[5].innerText,
+            cols[6].innerText
+          ];
+          csvContent += cells.join(",") + "\n";
+        }
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `Attendance_Records_${document.getElementById('filter-date').value}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function triggerToast(message, type = 'success') {
+      const container = document.getElementById('autosoft-attendance-app-toast-container');
+      const toast = document.createElement('div');
+      toast.className = `asa-toast ${type}`;
+      toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation'}"></i> ${message}`;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
+    }
+  </script>
+</body>
+</html>

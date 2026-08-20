@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+  <title>Unresolved Faces Queue - AutoSoft AI Attendance</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Attendance CSS -->
+  <link rel="stylesheet" href="css/attendance-style.css">
+</head>
+<body>
+  <div id="autosoft-attendance-app">
+    <!-- Toast notifications -->
+    <div id="autosoft-attendance-app-toast-container"></div>
+
+    <div class="asa-layout-wrapper">
+      <!-- Sidebar Navigation -->
+      <aside class="asa-sidebar">
+        <div class="asa-sidebar-logo">
+          <span>Auto<span>Soft</span> <span style="font-size: 0.8rem; font-weight: 500; color: var(--asa-text-muted);">AI</span></span>
+        </div>
+        <ul class="asa-sidebar-menu">
+          <li class="asa-menu-item"><a href="faculty-dashboard.html" class="asa-menu-link" id="nav-dash-link"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+          <li class="asa-menu-item"><a href="live-attendance.html" class="asa-menu-link"><i class="fa-solid fa-camera"></i> Live AI Scanner</a></li>
+          <li class="asa-menu-item"><a href="attendance-records.html" class="asa-menu-link"><i class="fa-solid fa-database"></i> Attendance Logs</a></li>
+          <li class="asa-menu-item"><a href="unrecognized-faces.html" class="asa-menu-link active"><i class="fa-solid fa-face-rolling-eyes"></i> Unresolved Queue</a></li>
+          <li class="asa-menu-item"><a href="reports.html" class="asa-menu-link"><i class="fa-solid fa-file-pdf"></i> Reports Desk</a></li>
+          <li class="asa-menu-item"><a href="classroom-analytics.html" class="asa-menu-link"><i class="fa-solid fa-brain"></i> Analytics</a></li>
+          <li class="asa-menu-item"><a href="privacy.html" class="asa-menu-link"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a></li>
+          <li class="asa-menu-item" style="margin-top: 30px; border-top: 1px solid var(--asa-border); padding-top: 15px;"><a href="../" class="asa-menu-link"><i class="fa-solid fa-arrow-left-long"></i> Back to Main Portal</a></li>
+          <li class="asa-menu-item"><a href="#" onclick="window.asaAuth.logout()" class="asa-menu-link" style="color: var(--asa-danger);"><i class="fa-solid fa-power-off"></i> Sign Out</a></li>
+        </ul>
+      </aside>
+
+      <!-- Main Queue Content -->
+      <main class="asa-main-content">
+        <!-- Header Banner -->
+        <header class="asa-header">
+          <div class="asa-header-title">
+            <h1>Unresolved Biometric Matches</h1>
+            <p>Verify unrecognized faces captured during camera scans and map them to students.</p>
+          </div>
+          <div class="asa-header-meta">
+            <div class="asa-user-badge"><i class="fa-solid fa-face-rolling-eyes"></i> PENDING VERIFICATIONS</div>
+          </div>
+        </header>
+
+        <!-- Retraining explanatory tip box -->
+        <section style="background: rgba(245, 158, 11, 0.04); border: 1.5px solid var(--asa-warning); border-radius: 16px; padding: 20px; margin-bottom: 35px; line-height: 1.5; color: var(--asa-text); display: flex; align-items: flex-start; gap: 14px;">
+          <i class="fa-solid fa-circle-info" style="color: var(--asa-warning); font-size: 1.5rem; margin-top: 2px;"></i>
+          <div>
+            <h4 style="font-weight: 700; font-family: var(--asa-display); margin-bottom: 4px;">Faculty Corrections & Retraining Notes</h4>
+            <p style="font-size: 0.88rem; color: var(--asa-text-muted);">
+              Faculty corrections can be added to a verified training dataset and used during future model retraining. AutoSoft AI models do not retrain instantly inside the browser to preserve system processing resources.
+            </p>
+          </div>
+        </section>
+
+        <!-- Unresolved cards list -->
+        <section class="asa-queue-grid" id="unresolved-cards-grid"></section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Javascript Core & Auth Libraries -->
+  <script src="js/attendance-app.js"></script>
+  <script src="js/attendance-auth.js"></script>
+  <script>
+    // Enforce guard
+    window.asaAuth.requireRole(['Faculty', 'Admin']);
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Set session link
+      const session = window.asaAuth.getSession();
+      if (session && session.role === 'Admin') {
+        const link = document.getElementById('nav-dash-link');
+        link.href = "admin-dashboard.html";
+      }
+
+      loadUnresolvedCards();
+    });
+
+    function loadUnresolvedCards() {
+      const grid = document.getElementById('unresolved-cards-grid');
+      grid.innerHTML = '';
+
+      const unrecognized = window.asaDB.get("asa_unrecognized").filter(u => u.status === "Pending");
+      const students = window.asaDB.get("asa_students");
+
+      if (unrecognized.length === 0) {
+        grid.innerHTML = `
+          <div class="asa-card" style="grid-column: 1 / -1; text-align: center; padding: 50px;">
+            <i class="fa-solid fa-face-smile" style="font-size: 3rem; color: var(--asa-success); margin-bottom: 15px;"></i>
+            <h4 style="font-weight: 700;">All Matches Resolved</h4>
+            <p style="color: var(--asa-text-muted); font-size: 0.9rem; margin-top: 4px;">No unrecognized face logs require verification at this time.</p>
+          </div>
+        `;
+        return;
+      }
+
+      unrecognized.forEach(card => {
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'asa-queue-card';
+        cardDiv.innerHTML = `
+          <div class="asa-queue-face-wrapper">
+            <i class="fa-solid fa-user-ninja asa-queue-face-placeholder"></i>
+            <div style="position: absolute; top: 12px; right: 12px; background: var(--asa-danger-glow); color: var(--asa-danger); border: 1.5px solid rgba(239, 68, 68, 0.3); border-radius: 4px; padding: 2px 6px; font-size: 0.68rem; font-weight: 800;">
+              CONFIDENCE: ${card.confidence}%
+            </div>
+          </div>
+          
+          <div style="line-height: 1.5; font-size: 0.85rem; color: var(--asa-text-muted);">
+            <p><strong>Class:</strong> <span style="color: #fff;">${card.className}</span></p>
+            <p><strong>Subject:</strong> <span style="color: #fff;">${card.subjectName}</span></p>
+            <p><strong>Time:</strong> <span style="color: #fff;">${card.date} at ${card.time}</span></p>
+          </div>
+
+          <!-- Dropdown mapping -->
+          <div class="asa-input-group" style="margin-bottom: 0;">
+            <label class="asa-input-label" style="font-size: 0.78rem;">Map to Student Account</label>
+            <select id="map-select-${card.id}" class="asa-select" style="padding: 10px; font-size: 0.85rem;">
+              <option value="">-- Select Student --</option>
+              ${students.map(s => `<option value="${s.id}">${s.fullName} (${s.rollNo})</option>`).join('')}
+            </select>
+          </div>
+
+          <!-- Actions -->
+          <div style="display: flex; gap: 8px;">
+            <button class="asa-btn asa-btn-primary" style="flex: 2; font-size: 0.82rem; padding: 10px;" onclick="mapFace('${card.id}')"><i class="fa-solid fa-link"></i> Map</button>
+            <button class="asa-btn asa-btn-secondary" style="flex: 1; font-size: 0.82rem; padding: 10px; border-color: rgba(239, 68, 68, 0.25); color: var(--asa-danger);" onclick="ignoreCard('${card.id}')">Ignore</button>
+          </div>
+        `;
+        grid.appendChild(cardDiv);
+      });
+    }
+
+    function mapFace(cardId) {
+      const select = document.getElementById(`map-select-${cardId}`);
+      const studentId = select.value;
+
+      if (!studentId) {
+        alert("Please select a student from the list to map this face.");
+        return;
+      }
+
+      const students = window.asaDB.get("asa_students");
+      const student = students.find(s => s.id === studentId);
+      if (!student) return;
+
+      const unresolved = window.asaDB.get("asa_unrecognized");
+      const card = unresolved.find(u => u.id === cardId);
+      if (!card) return;
+
+      // 1. Mark status as resolved
+      card.status = "Resolved";
+      window.asaDB.save("asa_unrecognized", unresolved);
+
+      // 2. Insert Present log record for that student
+      const logs = window.asaDB.get("asa_logs");
+      logs.push({
+        id: `LOG-${Math.floor(10000 + Math.random() * 90000)}`,
+        studentId: student.id,
+        studentName: student.fullName,
+        rollNo: student.rollNo,
+        className: card.className,
+        subjectName: card.subjectName,
+        date: card.date,
+        detectionTime: card.time,
+        confidence: 100, // Manual correction indicator
+        status: "Present",
+        verified: "Faculty Face Match Verification"
+      });
+      window.asaDB.save("asa_logs", logs);
+
+      triggerToast(`Student identity verified successfully. Verified correction saved for future model retraining.`, 'success');
+
+      // Refresh list
+      loadUnresolvedCards();
+    }
+
+    function ignoreCard(cardId) {
+      const unresolved = window.asaDB.get("asa_unrecognized");
+      const index = unresolved.findIndex(u => u.id === cardId);
+      if (index !== -1) {
+        unresolved.splice(index, 1);
+        window.asaDB.save("asa_unrecognized", unresolved);
+        triggerToast("Match verification ignored.", "error");
+        loadUnresolvedCards();
+      }
+    }
+
+    function triggerToast(message, type = 'success') {
+      const container = document.getElementById('autosoft-attendance-app-toast-container');
+      const toast = document.createElement('div');
+      toast.className = `asa-toast ${type}`;
+      toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation'}"></i> ${message}`;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
+    }
+  </script>
+</body>
+</html>

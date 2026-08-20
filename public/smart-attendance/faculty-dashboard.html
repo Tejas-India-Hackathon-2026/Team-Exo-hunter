@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+  <title>Faculty Dashboard - AutoSoft AI Attendance</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Attendance CSS -->
+  <link rel="stylesheet" href="css/attendance-style.css">
+</head>
+<body>
+  <div id="approval-toast-container" style="position: fixed; top: 18px; right: 18px; z-index: 9999; display: flex; flex-direction: column; gap: 10px;"></div>
+  <div id="autosoft-attendance-app">
+    <div class="asa-layout-wrapper">
+      <!-- Sidebar Navigation -->
+      <aside class="asa-sidebar">
+        <div class="asa-sidebar-logo">
+          <span>Auto<span>Soft</span> <span style="font-size: 0.8rem; font-weight: 500; color: var(--asa-text-muted);">AI</span></span>
+        </div>
+        <ul class="asa-sidebar-menu">
+          <li class="asa-menu-item"><a href="faculty-dashboard.html" class="asa-menu-link active"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+          <li class="asa-menu-item"><a href="live-attendance.html" class="asa-menu-link"><i class="fa-solid fa-camera"></i> Live AI Scanner</a></li>
+          <li class="asa-menu-item"><a href="attendance-records.html" class="asa-menu-link"><i class="fa-solid fa-database"></i> Attendance Logs</a></li>
+          <li class="asa-menu-item"><a href="unrecognized-faces.html" class="asa-menu-link"><i class="fa-solid fa-face-rolling-eyes"></i> Unresolved Queue</a></li>
+          <li class="asa-menu-item"><a href="reports.html" class="asa-menu-link"><i class="fa-solid fa-file-pdf"></i> Reports Desk</a></li>
+          <li class="asa-menu-item"><a href="classroom-analytics.html" class="asa-menu-link"><i class="fa-solid fa-brain"></i> Analytics</a></li>
+          <li class="asa-menu-item"><a href="privacy.html" class="asa-menu-link"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a></li>
+          <li class="asa-menu-item" style="margin-top: 30px; border-top: 1px solid var(--asa-border); padding-top: 15px;"><a href="../" class="asa-menu-link"><i class="fa-solid fa-arrow-left-long"></i> Back to Main Portal</a></li>
+          <li class="asa-menu-item"><a href="#" onclick="window.asaAuth.logout()" class="asa-menu-link" style="color: var(--asa-danger);"><i class="fa-solid fa-power-off"></i> Sign Out</a></li>
+        </ul>
+      </aside>
+
+      <!-- Main Dashboard view -->
+      <main class="asa-main-content">
+        <!-- Header Banner -->
+        <header class="asa-header">
+          <div class="asa-header-title">
+            <h1>Faculty Portal</h1>
+            <p>Configure classes, start classroom camera scanners, and verify attendance sheets.</p>
+          </div>
+          <div class="asa-header-meta">
+            <div class="asa-user-badge"><i class="fa-solid fa-chalkboard-user"></i> <span id="faculty-session-name">Faculty</span></div>
+          </div>
+        </header>
+
+        <!-- Stats Widgets -->
+        <section class="asa-stats-grid">
+          <div class="asa-stat-card">
+            <div class="asa-stat-icon cyan"><i class="fa-solid fa-calendar-day"></i></div>
+            <div class="asa-stat-details">
+              <h3>2</h3>
+              <p>Classes Assigned Today</p>
+            </div>
+          </div>
+
+          <div class="asa-stat-card" style="cursor: pointer;" onclick="window.location.href='unrecognized-faces.html'">
+            <div class="asa-stat-icon warning"><i class="fa-solid fa-face-rolling-eyes"></i></div>
+            <div class="asa-stat-details">
+              <h3 id="stat-pending-unrecognized">0</h3>
+              <p>Unresolved Face Matches</p>
+            </div>
+          </div>
+
+          <div class="asa-stat-card">
+            <div class="asa-stat-icon green"><i class="fa-solid fa-square-poll-vertical"></i></div>
+            <div class="asa-stat-details">
+              <h3 id="stat-faculty-avg-rate">0%</h3>
+              <p>Avg. Attendance Rate</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="asa-card" style="margin-top: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 20px;">
+            <div>
+              <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 6px;"><i class="fa-solid fa-user-shield" style="color: var(--asa-primary);"></i> Pending Student Approvals</h3>
+              <p style="color: var(--asa-text-muted); font-size: 0.9rem;">Approve new registrations so students can start attendance access.</p>
+            </div>
+            <div class="asa-user-badge" id="pending-approval-count-badge">0 Pending</div>
+          </div>
+          <div id="pending-approval-list" style="display: flex; flex-direction: column; gap: 12px;"></div>
+        </section>
+
+        <!-- Active Class Sessions list -->
+        <section class="asa-card">
+          <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 20px;"><i class="fa-solid fa-calendar-check" style="color: var(--asa-primary);"></i> Assigned Class Sessions - Today</h3>
+          
+          <div style="display: flex; flex-direction: column; gap: 20px;" id="assigned-sessions-container">
+            <!-- Dynamic periods populate here -->
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Javascript Core & Auth Libraries -->
+  <script src="js/attendance-app.js"></script>
+  <script src="js/attendance-auth.js"></script>
+  <script>
+    // Enforce Faculty guard
+    window.asaAuth.requireRole(['Faculty', 'Admin']);
+
+    function showApprovalToast(message, type = 'success') {
+      const container = document.getElementById('approval-toast-container');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      toast.style.minWidth = '260px';
+      toast.style.maxWidth = '320px';
+      toast.style.padding = '12px 14px';
+      toast.style.borderRadius = '12px';
+      toast.style.background = type === 'success' ? 'rgba(16, 185, 129, 0.16)' : 'rgba(239, 68, 68, 0.16)';
+      toast.style.border = `1px solid ${type === 'success' ? 'rgba(16, 185, 129, 0.3)' : 'rgba(239, 68, 68, 0.3)'}`;
+      toast.style.color = type === 'success' ? 'var(--asa-success)' : 'var(--asa-danger)';
+      toast.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.2)';
+      toast.style.fontSize = '0.9rem';
+      toast.style.fontWeight = '700';
+      toast.innerHTML = `<div>${message}</div>`;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3200);
+    }
+
+    function loadPendingApprovals() {
+      const pendingStudents = window.asaDB.get("asa_students").filter(s => s.status === "Pending Approval" || s.approvalStatus === "Pending");
+      const countBadge = document.getElementById('pending-approval-count-badge');
+      const list = document.getElementById('pending-approval-list');
+
+      if (countBadge) {
+        countBadge.innerText = `${pendingStudents.length} Pending`;
+      }
+
+      if (!list) return;
+
+      if (pendingStudents.length === 0) {
+        list.innerHTML = '<div style="padding: 18px; border: 1px dashed var(--asa-border); border-radius: 12px; color: var(--asa-text-muted); text-align: center;">No student registrations are awaiting review.</div>';
+        return;
+      }
+
+      list.innerHTML = pendingStudents.map(student => `
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 16px; border: 1px solid var(--asa-border); border-radius: 12px; background: rgba(255,255,255,0.02); flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 12px; flex: 1; min-width: 260px;">
+            <div style="width: 64px; height: 64px; border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.05); border: 1px solid var(--asa-border); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              ${student.faceImage
+                ? `<img src="${student.faceImage}" alt="Student face" style="width: 100%; height: 100%; object-fit: cover;">`
+                : `<i class="fa-solid fa-user-circle" style="font-size: 1.6rem; color: var(--asa-text-muted);"></i>`}
+            </div>
+            <div>
+              <div style="font-weight: 700; color: #fff;">${student.fullName}</div>
+              <div style="font-size: 0.82rem; color: var(--asa-text-muted); margin-top: 4px;">${student.rollNo} • ${student.branch} • ${student.email}</div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="asa-btn asa-btn-primary" style="padding: 8px 12px; font-size: 0.82rem;" onclick="approvePendingStudent('${student.id}')"><i class="fa-solid fa-check"></i> Approve</button>
+            <button class="asa-btn asa-btn-secondary" style="padding: 8px 12px; font-size: 0.82rem; border-color: rgba(239, 68, 68, 0.25); color: var(--asa-danger);" onclick="rejectPendingStudent('${student.id}')"><i class="fa-solid fa-xmark"></i> Reject</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function approvePendingStudent(studentId) {
+      const students = window.asaDB.get("asa_students");
+      const student = students.find(s => s.id === studentId);
+      if (!student) return;
+      student.status = "Active";
+      student.approvalStatus = "Approved";
+      window.asaDB.save("asa_students", students);
+      localStorage.setItem('asa_last_approval_notice', JSON.stringify({
+        studentId: student.id,
+        status: 'Approved',
+        message: 'Your registration has been approved. You can now use the attendance system.'
+      }));
+      loadPendingApprovals();
+      showApprovalToast(`Student ${student.fullName} has been approved.`, 'success');
+    }
+
+    function rejectPendingStudent(studentId) {
+      const students = window.asaDB.get("asa_students");
+      const student = students.find(s => s.id === studentId);
+      if (!student) return;
+      student.status = "Rejected";
+      student.approvalStatus = "Rejected";
+      window.asaDB.save("asa_students", students);
+      localStorage.setItem('asa_last_approval_notice', JSON.stringify({
+        studentId: student.id,
+        status: 'Rejected',
+        message: 'Your registration request was not approved. Please contact faculty/admin for assistance.'
+      }));
+      loadPendingApprovals();
+      showApprovalToast(`Student ${student.fullName} has been rejected.`, 'error');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Set session name
+      const session = window.asaAuth.getSession();
+      if (session) {
+        document.getElementById('faculty-session-name').innerText = session.name;
+      }
+
+      loadPendingApprovals();
+
+      // Load pending unrecognized alerts count
+      const unrecognized = window.asaDB.get("asa_unrecognized").filter(u => u.status === "Pending");
+      document.getElementById('stat-pending-unrecognized').innerText = unrecognized.length;
+
+      // Load average attendance rate
+      const history = window.asaDB.get("asa_history");
+      let totalRateSum = 0;
+      history.forEach(h => totalRateSum += h.attendanceRate);
+      const avgRate = history.length > 0 ? Math.round(totalRateSum / history.length) : 0;
+      document.getElementById('stat-faculty-avg-rate').innerText = `${avgRate}%`;
+
+      // Load Today's Class Sessions dynamically based on Day of Week
+      const timetable = JSON.parse(localStorage.getItem('asa_timetable') || '{}');
+      const currentDay = new Date().getDay(); // 0 = Sunday, 1 = Monday ... 6 = Saturday
+      const todaySessions = timetable[currentDay] || [];
+
+      const container = document.getElementById('assigned-sessions-container');
+      container.innerHTML = '';
+
+      if (todaySessions.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 40px; color: var(--asa-text-muted);">
+            <i class="fa-solid fa-mug-hot" style="font-size: 2rem; display: block; margin-bottom: 10px; opacity: 0.3;"></i>
+            No class sessions assigned for today. Enjoy your recess!
+          </div>
+        `;
+      } else {
+        todaySessions.forEach(session => {
+          const div = document.createElement('div');
+          div.setAttribute('style', 'background: rgba(255, 255, 255, 0.02); border: 1px solid var(--asa-border); border-radius: 16px; padding: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;');
+          div.innerHTML = `
+            <div style="line-height: 1.5;">
+              <span style="font-size: 0.78rem; background: rgba(0, 229, 255, 0.08); color: var(--asa-primary); border: 1px solid rgba(0, 229, 255, 0.2); padding: 2px 8px; border-radius: 4px; font-weight: 700; text-transform: uppercase;">${session.time}</span>
+              <h4 style="font-size: 1.2rem; font-weight: 700; color: #fff; margin-top: 8px;">B.Tech CSE – Semester IV (Sec A+B Combined)</h4>
+              <p style="color: var(--asa-text-muted); font-size: 0.9rem;"><i class="fa-solid fa-book" style="margin-right: 4px;"></i> ${session.subject} (Code: ${session.code})</p>
+              <p style="color: var(--asa-primary); font-size: 0.8rem; font-weight: 600; margin-top: 4px;"><i class="fa-solid fa-user-tie" style="margin-right: 4px;"></i> Faculty: ${session.faculty}</p>
+            </div>
+            <div style="display: flex; gap: 12px;">
+              <a href="live-attendance.html?class=CL-01&subject=${session.code}" class="asa-btn asa-btn-primary"><i class="fa-solid fa-video"></i> Start AI Scanner</a>
+              <a href="attendance-records.html?class=CL-01&subject=${session.subject}" class="asa-btn asa-btn-secondary"><i class="fa-solid fa-database"></i> Logs</a>
+            </div>
+          `;
+          container.appendChild(div);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

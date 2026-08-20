@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+  <title>Reports Desk - AutoSoft AI Attendance</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- jsPDF CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- Custom Attendance CSS -->
+  <link rel="stylesheet" href="css/attendance-style.css">
+</head>
+<body>
+  <div id="autosoft-attendance-app">
+    <!-- Toast notifications -->
+    <div id="autosoft-attendance-app-toast-container"></div>
+
+    <div class="asa-layout-wrapper">
+      <!-- Sidebar Navigation -->
+      <aside class="asa-sidebar">
+        <div class="asa-sidebar-logo">
+          <span>Auto<span>Soft</span> <span style="font-size: 0.8rem; font-weight: 500; color: var(--asa-text-muted);">AI</span></span>
+        </div>
+        <ul class="asa-sidebar-menu">
+          <li class="asa-menu-item"><a href="faculty-dashboard.html" class="asa-menu-link" id="nav-dash-link"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+          <li class="asa-menu-item"><a href="live-attendance.html" class="asa-menu-link"><i class="fa-solid fa-camera"></i> Live AI Scanner</a></li>
+          <li class="asa-menu-item"><a href="attendance-records.html" class="asa-menu-link"><i class="fa-solid fa-database"></i> Attendance Logs</a></li>
+          <li class="asa-menu-item"><a href="unrecognized-faces.html" class="asa-menu-link"><i class="fa-solid fa-face-rolling-eyes"></i> Unresolved Queue</a></li>
+          <li class="asa-menu-item"><a href="reports.html" class="asa-menu-link active"><i class="fa-solid fa-file-pdf"></i> Reports Desk</a></li>
+          <li class="asa-menu-item"><a href="classroom-analytics.html" class="asa-menu-link"><i class="fa-solid fa-brain"></i> Analytics</a></li>
+          <li class="asa-menu-item"><a href="privacy.html" class="asa-menu-link"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a></li>
+          <li class="asa-menu-item" style="margin-top: 30px; border-top: 1px solid var(--asa-border); padding-top: 15px;"><a href="../" class="asa-menu-link"><i class="fa-solid fa-arrow-left-long"></i> Back to Main Portal</a></li>
+          <li class="asa-menu-item"><a href="#" onclick="window.asaAuth.logout()" class="asa-menu-link" style="color: var(--asa-danger);"><i class="fa-solid fa-power-off"></i> Sign Out</a></li>
+        </ul>
+      </aside>
+
+      <!-- Main Reports Content -->
+      <main class="asa-main-content">
+        <!-- Header Banner -->
+        <header class="asa-header">
+          <div class="asa-header-title">
+            <h1>Reports & Distribution Desk</h1>
+            <p>Generate certified PDF classroom attendance logs and compile WhatsApp summaries.</p>
+          </div>
+          <div class="asa-header-meta">
+            <div class="asa-user-badge"><i class="fa-solid fa-file-pdf"></i> REPORT SERVICES</div>
+          </div>
+        </header>
+
+        <section class="asa-grid-2col" style="grid-template-columns: 0.9fr 1.1fr;">
+          <!-- Left Column - Selection & PDF Generation -->
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div class="asa-card" style="padding: 24px;">
+              <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 20px;"><i class="fa-solid fa-calendar-check" style="color: var(--asa-primary);"></i> Select Scan Session</h3>
+              
+              <div class="asa-input-group">
+                <label class="asa-input-label">Attendance History Session</label>
+                <select id="report-session-select" class="asa-select" onchange="handleSessionChange()">
+                  <option value="" disabled selected>-- Select Session --</option>
+                </select>
+              </div>
+
+              <!-- Selection summary preview -->
+              <div id="session-summary-box" style="display: none; background: rgba(255,255,255,0.02); border: 1px solid var(--asa-border); border-radius: 12px; padding: 18px; line-height: 1.5; font-size: 0.88rem; color: var(--asa-text-muted); margin-bottom: 20px;">
+                <p><strong>Class:</strong> <span style="color:#fff;" id="sum-class">-</span></p>
+                <p><strong>Subject:</strong> <span style="color:#fff;" id="sum-subj">-</span></p>
+                <p><strong>Faculty:</strong> <span style="color:#fff;" id="sum-fac">-</span></p>
+                <p><strong>Total Strength:</strong> <span style="color:#fff;" id="sum-total">0</span></p>
+                <p><strong>Present Count:</strong> <span style="color: var(--asa-success); font-weight:700;" id="sum-present">0</span></p>
+                <p><strong>Absent Count:</strong> <span style="color: var(--asa-danger); font-weight:700;" id="sum-absent">0</span></p>
+                <p><strong>Attendance Rate:</strong> <span style="color: var(--asa-primary); font-weight:700;" id="sum-rate">0%</span></p>
+              </div>
+
+              <button class="asa-btn asa-btn-primary" style="width: 100%; padding: 14px;" id="pdf-btn" onclick="triggerPdfDownload()" disabled>
+                <i class="fa-solid fa-file-pdf"></i> Generate & Download PDF Report
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Column - WhatsApp Sharing -->
+          <div class="asa-card" style="padding: 30px;">
+            <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 12px;"><i class="fa-solid fa-share-nodes" style="color: var(--asa-primary);"></i> WhatsApp Summary Distribution</h3>
+            <p style="color: var(--asa-text-muted); font-size: 0.85rem; margin-bottom: 20px; line-height: 1.4;">Format attendance details into a text report and open it directly in a WhatsApp conversation thread.</p>
+
+            <form onsubmit="shareOnWhatsApp(event)">
+              <div class="asa-input-group">
+                <label class="asa-input-label">Supervisor / Faculty Name</label>
+                <input type="text" id="wa-faculty-name" class="asa-input" placeholder="e.g. Dr. Ayush Raj" required>
+              </div>
+
+              <div class="asa-input-group">
+                <label class="asa-input-label">Receiver WhatsApp Number</label>
+                <input type="tel" id="wa-number" class="asa-input" placeholder="e.g. 919931079287" required>
+              </div>
+
+              <div class="asa-input-group">
+                <label class="asa-input-label">Attendance Message Body</label>
+                <textarea id="wa-message-body" class="asa-input" rows="7" style="resize: vertical; font-family: var(--asa-font); font-size: 0.88rem;" placeholder="Select a session first to auto-generate message summary..." required></textarea>
+              </div>
+
+              <!-- Disclaimer warning -->
+              <div style="background: rgba(0, 229, 255, 0.03); border: 1px solid rgba(0, 229, 255, 0.1); border-radius: 10px; padding: 12px; margin-bottom: 20px; font-size: 0.78rem; line-height: 1.4; color: var(--asa-text-muted);">
+                <i class="fa-solid fa-circle-exclamation" style="color: var(--asa-primary); margin-right: 4px;"></i> 
+                <strong> Biometric PDF Delivery Note:</strong> For automatic PDF document delivery, WhatsApp Business Cloud API and a secure backend will be required in the production version.
+              </div>
+
+              <button type="submit" class="asa-btn asa-btn-secondary" style="width: 100%; border-color: rgba(16, 185, 129, 0.25); color: var(--asa-success); padding: 14px;" id="wa-btn" disabled>
+                <i class="fa-brands fa-whatsapp"></i> Open WhatsApp & Share Report
+              </button>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Javascript Core, Auth, Reports & PDF Libraries -->
+  <script src="js/attendance-app.js"></script>
+  <script src="js/attendance-auth.js"></script>
+  <script src="js/report-generator.js"></script>
+  <script>
+    // Enforce guard
+    window.asaAuth.requireRole(['Faculty', 'Admin']);
+
+    let activeSession = null;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Set session link
+      const session = window.asaAuth.getSession();
+      if (session) {
+        if (session.role === 'Admin') {
+          const link = document.getElementById('nav-dash-link');
+          link.href = "admin-dashboard.html";
+        }
+        document.getElementById('wa-faculty-name').value = session.name;
+      }
+
+      // Populate history session dropdown
+      const history = window.asaDB.get("asa_history");
+      const select = document.getElementById('report-session-select');
+      
+      history.forEach(h => {
+        const option = document.createElement('option');
+        option.value = h.id;
+        option.innerText = `${h.className} (${h.date}) – Rate: ${h.attendanceRate}%`;
+        select.appendChild(option);
+      });
+    });
+
+    function handleSessionChange() {
+      const select = document.getElementById('report-session-select');
+      const sessionId = select.value;
+      const history = window.asaDB.get("asa_history");
+      activeSession = history.find(h => h.id === sessionId);
+
+      if (activeSession) {
+        // Render preview summary
+        document.getElementById('sum-class').innerText = activeSession.className;
+        document.getElementById('sum-subj').innerText = activeSession.subjectName;
+        document.getElementById('sum-fac').innerText = activeSession.facultyName;
+        document.getElementById('sum-total').innerText = activeSession.totalStudents;
+        document.getElementById('sum-present').innerText = activeSession.presentCount;
+        document.getElementById('sum-absent').innerText = activeSession.absentCount;
+        document.getElementById('sum-rate').innerText = `${activeSession.attendanceRate}%`;
+        document.getElementById('session-summary-box').style.display = 'block';
+
+        // Enable buttons
+        document.getElementById('pdf-btn').disabled = false;
+        document.getElementById('wa-btn').disabled = false;
+
+        // Compile WhatsApp text template
+        compileWhatsAppMessage();
+      }
+    }
+
+    function compileWhatsAppMessage() {
+      if (!activeSession) return;
+      const facultyName = document.getElementById('wa-faculty-name').value || activeSession.facultyName;
+      const text = `🎓 *AutoSoft AI Smart Attendance Summary*\n\n` +
+        `*Class:* ${activeSession.className}\n` +
+        `*Subject:* ${activeSession.subjectName}\n` +
+        `*Date:* ${activeSession.date}\n` +
+        `*Faculty Name:* ${facultyName}\n\n` +
+        `*Total Strength:* ${activeSession.totalStudents}\n` +
+        `*Present Students:* ${activeSession.presentCount}\n` +
+        `*Absent Students:* ${activeSession.absentCount}\n` +
+        `*Attendance Rate:* ${activeSession.attendanceRate}%\n\n` +
+        `_(Student logs uploaded to portals. PDF reports compiled on dashboard.)_\n` +
+        `*Powered by AutoSoft Solutions*`;
+      
+      document.getElementById('wa-message-body').value = text;
+    }
+
+    // Recompile message when faculty name changes
+    document.getElementById('wa-faculty-name').addEventListener('input', compileWhatsAppMessage);
+
+    function triggerPdfDownload() {
+      if (!activeSession) return;
+      
+      // Load student logs for that session from database
+      const logs = window.asaDB.get("asa_logs");
+      const students = window.asaDB.get("asa_students");
+
+      // Filter logs by date + subject
+      let sessionLogs = logs.filter(l => l.date === activeSession.date && l.subjectName === activeSession.subjectName);
+
+      // If logs are empty, compile simulated list from branch/sem
+      if (sessionLogs.length === 0) {
+        // Cross reference students in that class
+        const targetStudents = students.filter(s => s.branch === "Computer Science" && s.semester === "Semester III");
+        sessionLogs = targetStudents.map((s, idx) => ({
+          studentName: s.fullName,
+          rollNo: s.rollNo,
+          detectionTime: idx < activeSession.presentCount ? "09:05 AM" : "-",
+          confidence: idx < activeSession.presentCount ? 95 : 0,
+          status: idx < activeSession.presentCount ? "Present" : "Absent"
+        }));
+      }
+
+      triggerToast('Compiling A4 PDF Document layout...', 'warning');
+      setTimeout(() => {
+        const filename = window.asaReports.generatePDF(activeSession, sessionLogs);
+        triggerToast(`Download started: ${filename}`, 'success');
+      }, 1000);
+    }
+
+    function shareOnWhatsApp(e) {
+      e.preventDefault();
+      const num = document.getElementById('wa-number').value.trim();
+      const msg = document.getElementById('wa-message-body').value;
+
+      triggerToast('Formatting message template. Opening WhatsApp thread...', 'success');
+      setTimeout(() => {
+        const waUrl = `https://wa.me/${num}?text=${encodeURIComponent(msg)}`;
+        window.open(waUrl, '_blank');
+      }, 800);
+    }
+
+    function triggerToast(message, type = 'success') {
+      const container = document.getElementById('autosoft-attendance-app-toast-container');
+      const toast = document.createElement('div');
+      toast.className = `asa-toast ${type}`;
+      toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation'}"></i> ${message}`;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
+    }
+  </script>
+</body>
+</html>
