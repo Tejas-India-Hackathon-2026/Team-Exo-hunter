@@ -8,7 +8,6 @@ interface NavbarProps {
   onAuthClick?: (mode: 'login' | 'signup') => void;
   user?: { name: string; email: string; role: 'student' | 'college' } | null;
   onLogout?: () => void;
-  onDashboardClick?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ 
@@ -16,8 +15,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   activeSection, 
   onAuthClick,
   user,
-  onLogout,
-  onDashboardClick
+  onLogout
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -97,10 +95,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="hidden md:flex items-center gap-3">
             {user ? (
               <div className="flex items-center gap-3 bg-slate-900/80 border border-slate-800 px-3 py-1.5 rounded-xl">
-                <div 
-                  className={`flex items-center gap-2 ${user.role === 'student' && onDashboardClick ? 'cursor-pointer hover:opacity-85 transition-opacity' : ''}`}
-                  onClick={() => user.role === 'student' && onDashboardClick && onDashboardClick()}
-                >
+                <div className="flex items-center gap-2">
                   <div className="w-7 h-7 rounded-lg bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 flex items-center justify-center font-bold text-xs">
                     {user.name.charAt(0)}
                   </div>
@@ -109,14 +104,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                     <div className="text-[10px] text-emerald-400 font-mono capitalize">{user.role}</div>
                   </div>
                 </div>
-                {user.role === 'student' && onDashboardClick && (
-                  <button
-                    onClick={onDashboardClick}
-                    className="text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white px-2.5 py-1 rounded-lg transition-colors cursor-pointer"
-                  >
-                    Portal
-                  </button>
-                )}
                 {onLogout && (
                   <button
                     onClick={onLogout}
@@ -180,27 +167,17 @@ export const Navbar: React.FC<NavbarProps> = ({
             
             <div className="pt-4 pb-2 px-3 space-y-2">
               {user ? (
-                <div className="flex flex-col gap-2.5 p-3 rounded-xl bg-slate-900 border border-slate-800">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <User className="w-4 h-4 text-indigo-400" />
-                      <span className="text-sm font-semibold text-white">{user.name} ({user.role})</span>
-                    </div>
-                    {onLogout && (
-                      <button
-                        onClick={onLogout}
-                        className="text-xs text-rose-400 font-semibold cursor-pointer"
-                      >
-                        Logout
-                      </button>
-                    )}
+                <div className="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-800">
+                  <div className="flex items-center gap-2">
+                    <User className="w-4 h-4 text-indigo-400" />
+                    <span className="text-sm font-semibold text-white">{user.name}</span>
                   </div>
-                  {user.role === 'student' && onDashboardClick && (
+                  {onLogout && (
                     <button
-                      onClick={() => { setIsOpen(false); onDashboardClick(); }}
-                      className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold transition-colors cursor-pointer text-center"
+                      onClick={onLogout}
+                      className="text-xs text-rose-400 font-semibold cursor-pointer"
                     >
-                      Go to Student Portal
+                      Logout
                     </button>
                   )}
                 </div>

@@ -124,20 +124,17 @@ export const LandingPage = () => {
           setAuthToast('Signed out successfully.');
           setTimeout(() => setAuthToast(null), 3000);
         }}
-        onDashboardClick={() => navigate('/student')}
       />
 
       {/* Hero Section */}
       <Hero 
         onStudentsClick={() => {
-          if (currentUser?.role === 'student') {
-            navigate('/student');
-          } else {
-            setAuthMode('login');
-            setAuthModalOpen(true);
-          }
+          handleNavigate('students');
+          setModalType('student');
+          resetSimulations();
         }} 
         onCollegesClick={() => {
+          handleNavigate('colleges');
           setModalType('college');
           resetSimulations();
         }} 
@@ -146,14 +143,12 @@ export const LandingPage = () => {
       {/* Solution Cards */}
       <SolutionCards 
         onStudentsClick={() => {
-          if (currentUser?.role === 'student') {
-            navigate('/student');
-          } else {
-            setAuthMode('login');
-            setAuthModalOpen(true);
-          }
+          handleNavigate('students');
+          setModalType('student');
+          resetSimulations();
         }} 
         onCollegesClick={() => {
+          handleNavigate('colleges');
           setModalType('college');
           resetSimulations();
         }} 
@@ -165,12 +160,8 @@ export const LandingPage = () => {
       {/* Student Features Preview */}
       <StudentFeatures 
         onCtaClick={() => {
-          if (currentUser?.role === 'student') {
-            navigate('/student');
-          } else {
-            setAuthMode('login');
-            setAuthModalOpen(true);
-          }
+          setModalType('student');
+          resetSimulations();
         }} 
       />
 
