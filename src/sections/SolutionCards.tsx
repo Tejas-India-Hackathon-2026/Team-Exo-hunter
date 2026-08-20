@@ -103,7 +103,7 @@ export const SolutionCards: React.FC<SolutionCardsProps> = ({
                 icon={<ArrowRight className="w-4 h-4" />}
                 className="w-full sm:w-auto shadow-lg shadow-sky-500/20"
               >
-                Explore Smart Campus
+                Explore Smart Attendance
               </Button>
             </div>
           </Card>
