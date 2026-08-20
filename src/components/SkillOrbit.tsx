@@ -3,7 +3,7 @@ import { Settings, Laptop, Cpu, Compass, Bell } from 'lucide-react';
 
 export const SkillOrbit: React.FC = () => {
   return (
-    <div className="w-full h-full min-h-[300px] rounded-xl border border-slate-800 bg-slate-900/60 backdrop-blur-md p-6 relative overflow-hidden dark-grid-bg select-none shadow-lg shadow-black/45">
+    <div className="w-full h-full min-h-[210px] rounded-xl border border-slate-800 bg-slate-900/60 backdrop-blur-md p-6 relative overflow-hidden dark-grid-bg select-none shadow-lg shadow-black/45">
       
       {/* 📡 Diagnostic Labels (Top-Left & Bottom-Right) */}
       <div className="absolute top-4 left-4 text-[9px] font-mono font-bold tracking-widest text-slate-500 uppercase">
