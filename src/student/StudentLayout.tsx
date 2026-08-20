@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import { Outlet, useNavigate, useLocation, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, MessageSquareText, Target, Map, CalendarDays,
   Briefcase, FolderKanban, TrendingUp, UserCircle, Sparkles,
-  Menu, ChevronRight, LogOut, AlertTriangle, CheckCircle2
+  Menu, ChevronRight, LogOut, AlertTriangle, CheckCircle2,
+  HelpCircle, ArrowLeft
 } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -21,9 +22,25 @@ const NAV_ITEMS = [
 export const StudentLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [showBackConfirmModal, setShowBackConfirmModal] = useState(false);
   const [logoutToast, setLogoutToast] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Browser back navigation interception guard
+  useEffect(() => {
+    window.history.pushState({ protected: true }, '');
+
+    const handlePopState = () => {
+      window.history.pushState({ protected: true }, '');
+      setShowBackConfirmModal(true);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
 
   const isActive = (path: string) => {
     if (path === '/student/dashboard') {
@@ -38,6 +55,11 @@ export const StudentLayout = () => {
     setTimeout(() => {
       navigate('/');
     }, 900);
+  };
+
+  const handleConfirmBack = () => {
+    setShowBackConfirmModal(false);
+    navigate('/');
   };
 
   return (
@@ -59,14 +81,17 @@ export const StudentLayout = () => {
       `}>
         {/* Sidebar Header */}
         <div className="p-4 border-b border-slate-800">
-          <Link to="/" className="flex items-center gap-2 group">
+          <button 
+            onClick={() => setShowBackConfirmModal(true)} 
+            className="flex items-center gap-2 group cursor-pointer text-left w-full"
+          >
             <div className="p-1.5 rounded-lg bg-indigo-600 text-white flex items-center justify-center shadow-lg shadow-indigo-600/35 group-hover:scale-105 transition-transform">
               <Sparkles className="w-5 h-5" />
             </div>
             <span className="text-lg font-bold tracking-tight text-white">
               DISHA <span className="text-indigo-400">AI</span>
             </span>
-          </Link>
+          </button>
           <p className="text-[10px] text-slate-500 mt-1 uppercase tracking-widest font-semibold">Student Portal</p>
         </div>
 
@@ -155,6 +180,40 @@ export const StudentLayout = () => {
           })}
         </div>
       </nav>
+      {/* Back to Home Navigation Confirmation Modal */}
+      {showBackConfirmModal && (
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
+          <div className="bg-slate-900 rounded-2xl border border-slate-800 shadow-2xl max-w-sm w-full p-6 text-center animate-in zoom-in-95 duration-200">
+            <div className="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-amber-500/20">
+              <HelpCircle className="w-6 h-6" />
+            </div>
+            
+            <h3 className="text-base font-bold text-white mb-2">
+              Leave Student Workspace?
+            </h3>
+            
+            <p className="text-xs text-slate-400 leading-relaxed mb-6">
+              Kya aap sach me wapas Home page par jana chahte hain? Aap kabhi bhi login karke apne dashboard par wapas aa sakte hain.
+            </p>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowBackConfirmModal(false)}
+                className="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300 transition-colors cursor-pointer"
+              >
+                No, Stay Here
+              </button>
+              <button
+                onClick={handleConfirmBack}
+                className="flex-1 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-xs font-bold text-white shadow-lg shadow-indigo-600/30 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Yes, Go Back</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Log Out Confirmation Pop-up Modal */}
       {showLogoutModal && (
@@ -202,3 +261,4 @@ export const StudentLayout = () => {
     </div>
   );
 };
+
