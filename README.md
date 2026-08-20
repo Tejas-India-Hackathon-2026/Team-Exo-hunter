@@ -96,8 +96,43 @@ npm run lint
 
 ---
 
+## 🌟 Milestone 2: Student DISHA Guidance Module (Completed)
+
+We have built the student-facing guidance module as specified in Milestone 2. 
+
+### Key Features Implemented:
+1. **Student Dashboard (`/student/dashboard`)**:
+   - Welcome greeting customized dynamically by time of day.
+   - Quick search input "Ask DISHA anything..." which links directly to the AI Assistant.
+   - Suggested prompts chips for fast navigation.
+   - Summary cards displaying target goals, roadmap status, planner actions, and metrics.
+2. **Student Profile (`/student/profile`)**:
+   - Save and retrieve profile attributes: Name, Course, Branch, Semester, Skills, Interests, Career Goal, Available Study Hours, and Experience Level.
+   - Saves persistent data directly to `localStorage`.
+3. **DISHA AI Chat Assistant (`/student/disha-ai`)**:
+   - Premium chat interface supporting message templates, markdown highlights, and quick questions.
+   - Structured mock AI response system (`mockAiService.ts`) setup to be cleanly swappable with real LLM API pipelines later.
+4. **Personalized Roadmap (`/student/roadmap`)**:
+   - A step-by-step career timeline showing completed, active, and upcoming milestones.
+   - Real-time progress bar computing milestones completed.
+5. **Study Planner (`/student/study-planner`)**:
+   - Daily task checklist showing priorities (High, Medium, Low) and categories.
+   - Syncs checklist status to local storage.
+   - Weekly goals grid tracking study metrics.
+6. **Career Guidance (`/student/career`)**:
+   - Expanding cards for 6 default tech careers (AI/ML, Web Dev, Cloud, Data Science, etc.).
+   - Lists prerequisites, target paths, portfolio projects, and preparation guides.
+7. **Project Guidance (`/student/projects`)**:
+   - Hand-picked project recommendation deck filtered by difficulty and skill requirements.
+8. **Progress Tracker (`/student/progress`)**:
+   - Interactive SVG stats, study streak trackers, weekly hours distributions, and skills heatmaps.
+9. **Responsive Sidebar Layout (`/student`)**:
+   - Premium sidebar navigation on desktop transitioning to an intuitive bottom navigation layout on mobile.
+
+---
+
 ## 🔮 Future Roadmap
 
-* **Milestone 1 (Current):** Establish modern, scalable React/Vite/Tailwind framework and build a premium landing page with interactive simulator previews for judge review.
-* **Milestone 2 (Student Core):** Integrate backend LLM pipelines to generate real roadmap graphs dynamically based on user prompts. Add markdown study notes parsers.
-* **Milestone 3 (Smart Campus Edge):** Embed local face detection logic in the client utilizing TensorFlow.js or a Python FastAPI camera server.
+* **Milestone 1 (Completed):** Establish modern, scalable React/Vite/Tailwind framework and build a premium landing page with interactive simulator previews.
+* **Milestone 2 (Completed):** Complete the Student DISHA Guidance Module using local states, mocks, and full storage integrations.
+* **Milestone 3 (Future):** Embed local face detection logic in the client utilizing TensorFlow.js or a Python FastAPI camera server.
