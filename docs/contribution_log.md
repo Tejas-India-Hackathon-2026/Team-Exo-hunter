@@ -7,3 +7,4 @@
 * Commit #7: docs: document edge attendance simulation parameters - Completed on 08/20/2026 19:06:36
 * Commit #8: refactor: format SolutionCards import declarations - Completed on 08/20/2026 19:06:37
 * Commit #9: style: refine neon glow border shades on student cards - Completed on 08/20/2026 19:06:37
+* Commit #10: docs: add details for local startup commands - Completed on 08/20/2026 19:06:38
