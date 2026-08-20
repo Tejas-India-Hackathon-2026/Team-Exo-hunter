@@ -49,7 +49,7 @@ export async function getAiResponse(userMessage: string, customApiKey?: string):
   }
 
   const apiKey = customApiKey;
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${apiKey}`;
 
   try {
     const response = await fetch(url, {
@@ -152,7 +152,7 @@ export async function generateDynamicRoadmap(
     ];
   }
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${customApiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${customApiKey}`;
   const prompt = `Generate a customized 9-step learning roadmap for a student targeting the career goal: "${careerGoal}".
 The student currently has these skills: ${JSON.stringify(currentSkills)}.
 Return the roadmap as a JSON array of 9 steps. Each step must have exactly this JSON format:
@@ -211,7 +211,7 @@ export async function generateDynamicStudyPlan(
     ];
   }
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${customApiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${customApiKey}`;
   const prompt = `Generate a customized list of 6 study tasks for a student targeting "${careerGoal}" with ${studyHours} hours of daily study.
 Return the tasks as a JSON array of 6 objects. Each object must have exactly this JSON format:
 {
