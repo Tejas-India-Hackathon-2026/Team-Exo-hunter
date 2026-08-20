@@ -61,3 +61,5 @@
     }
   };
 })();
+
+// Credentials parameters constraints
