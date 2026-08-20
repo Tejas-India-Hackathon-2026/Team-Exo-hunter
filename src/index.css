@@ -137,3 +137,28 @@ body {
   background-size: 200% 200%;
   animation: glow-flow 4s linear infinite;
 }
+
+/* Orbit animations for interactive education skill synapses */
+@keyframes orbit-1 {
+  0% { transform: rotate(0deg) translate(95px) rotate(0deg); }
+  100% { transform: rotate(360deg) translate(95px) rotate(-360deg); }
+}
+@keyframes orbit-2 {
+  0% { transform: rotate(120deg) translate(95px) rotate(-120deg); }
+  100% { transform: rotate(480deg) translate(95px) rotate(-480deg); }
+}
+@keyframes orbit-3 {
+  0% { transform: rotate(240deg) translate(95px) rotate(-240deg); }
+  100% { transform: rotate(600deg) translate(95px) rotate(-600deg); }
+}
+
+.animate-orbit-1 {
+  animation: orbit-1 12s linear infinite;
+}
+.animate-orbit-2 {
+  animation: orbit-2 15s linear infinite;
+}
+.animate-orbit-3 {
+  animation: orbit-3 18s linear infinite;
+}
+
