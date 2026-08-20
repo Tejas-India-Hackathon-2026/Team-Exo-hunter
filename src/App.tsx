@@ -31,6 +31,7 @@ function App() {
         <Route path="projects" element={<ProjectGuidance />} />
         <Route path="progress" element={<Progress />} />
         <Route path="profile" element={<StudentProfile />} />
+        <Route path="smart-attendance" element={<Dashboard />} />
       </Route>
     </Routes>
   );
