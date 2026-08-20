@@ -315,19 +315,42 @@ export const LandingPage = () => {
 
                       {/* Simulator Results Output */}
                       {roadmapOutput && (
-                        <div className="p-4 rounded-xl bg-slate-950 border border-slate-800/80 font-mono text-xs text-indigo-300 space-y-3 shadow-inner animate-in slide-in-from-bottom-2 duration-300">
-                          <div className="flex justify-between items-center text-[10px] text-indigo-400 border-b border-indigo-900/50 pb-2">
+                        <div className="space-y-2 animate-in slide-in-from-bottom-2 duration-300">
+                          <div className="flex justify-between items-center text-[10px] text-indigo-400 font-mono px-1 pb-1 border-b border-indigo-900/40">
                             <span>// ROADMAP OUTPUT</span>
-                            <span className="text-emerald-400 font-bold uppercase">READY</span>
+                            <span className="text-emerald-400 font-bold uppercase tracking-widest">SUCCESS</span>
                           </div>
-                          <div className="space-y-2 text-left">
-                            {roadmapOutput.map((step, idx) => (
-                              <div key={idx} className="flex gap-2 leading-relaxed">
-                                <span className="text-indigo-400 font-semibold">{idx + 1}.</span>
-                                <span className="text-indigo-100">{step}</span>
+                          {roadmapOutput.map((step, idx) => (
+                            <div
+                              key={idx}
+                              className="group relative flex items-start gap-3 p-3 rounded-xl border border-slate-800 bg-slate-950/80
+                                         cursor-default transition-all duration-200 ease-out
+                                         hover:scale-[1.025] hover:-translate-y-0.5
+                                         hover:border-indigo-500/60 hover:bg-indigo-950/30
+                                         hover:shadow-lg hover:shadow-indigo-600/20"
+                            >
+                              {/* Step badge */}
+                              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-600/20 border border-indigo-500/40
+                                               flex items-center justify-center text-[10px] font-bold text-indigo-300
+                                               group-hover:bg-indigo-600/40 group-hover:border-indigo-400 transition-colors duration-200">
+                                {idx + 1}
+                              </span>
+                              {/* Step text */}
+                              <div className="flex-1 min-w-0">
+                                <p className="text-xs font-semibold text-slate-300 group-hover:text-white transition-colors duration-200 leading-relaxed">
+                                  {step}
+                                </p>
+                                <div className="mt-1.5 flex items-center gap-1.5">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500/60 group-hover:bg-indigo-400 transition-colors" />
+                                  <span className="text-[9px] font-mono text-slate-600 group-hover:text-indigo-400 transition-colors uppercase tracking-wider">
+                                    Goal {idx + 1}
+                                  </span>
+                                </div>
                               </div>
-                            ))}
-                          </div>
+                              {/* Right glow dot */}
+                              <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full mt-1 bg-slate-700 group-hover:bg-indigo-400 group-hover:shadow-sm group-hover:shadow-indigo-400/50 transition-all duration-200" />
+                            </div>
+                          ))}
                         </div>
                       )}
                     </div>
