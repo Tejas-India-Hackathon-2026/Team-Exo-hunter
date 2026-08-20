@@ -6,7 +6,6 @@ export interface AiMessage {
 }
 
 // ── Gemini API Configuration ─────────────────────────────────────
-const GEMINI_API_KEY = 'AIzaSyAKqTx1sBKJGR6GR3Yt5NFsniLbYGProWY';
 
 // System instruction that shapes DISHA's personality and expertise
 const DISHA_SYSTEM_PROMPT = `You are DISHA AI — an intelligent, friendly, and highly knowledgeable personal AI guidance assistant for students. Your full name stands for "Digital Intelligent Student Helper & Advisor".
@@ -34,6 +33,10 @@ You are speaking with a B.Tech Computer Science student interested in AI/ML and 
 let conversationHistory: Array<{ role: string; parts: Array<{ text: string }> }> = [];
 
 export async function getAiResponse(userMessage: string, customApiKey?: string): Promise<string> {
+  if (!customApiKey || !customApiKey.trim()) {
+    return "KEY_NOT_CONFIGURED";
+  }
+
   // Add user message to conversation history
   conversationHistory.push({
     role: 'user',
@@ -45,7 +48,7 @@ export async function getAiResponse(userMessage: string, customApiKey?: string):
     conversationHistory = conversationHistory.slice(-20);
   }
 
-  const apiKey = customApiKey || GEMINI_API_KEY;
+  const apiKey = customApiKey;
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
   try {

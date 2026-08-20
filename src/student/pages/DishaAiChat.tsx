@@ -196,7 +196,80 @@ export const DishaAiChat = () => {
                   : 'bg-slate-800/70 border border-indigo-500/15 text-slate-300 rounded-bl-md'
               }`}
             >
-              {renderContent(msg.content)}
+              {msg.content === 'KEY_NOT_CONFIGURED' ? (
+                <div className="space-y-3 p-1">
+                  <p className="font-bold text-white text-xs flex items-center gap-1.5">
+                    <Key className="w-4 h-4 text-indigo-400" />
+                    Set Gemini API Key to chat
+                  </p>
+                  <p className="text-slate-400 text-xs leading-normal">
+                    To enable smart chat replies, please paste your Google Gemini API Key below. This key is free and stays locally in your browser.
+                  </p>
+                  <div className="flex gap-2">
+                    <input
+                      type="password"
+                      placeholder="Paste AIzaSy... key here"
+                      id="inline-key-input"
+                      className="flex-1 px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-indigo-500 placeholder-slate-700"
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          const val = (e.target as HTMLInputElement).value.trim();
+                          if (val) {
+                            localStorage.setItem('disha-gemini-key', val);
+                            setApiKey(val);
+                            setMessages(prev => {
+                              const next = [...prev];
+                              next[next.length - 1] = {
+                                id: generateMessageId(),
+                                role: 'assistant',
+                                content: '🎉 API Key configured successfully! How can I help you today?',
+                                timestamp: new Date()
+                              };
+                              return next;
+                            });
+                          }
+                        }
+                      }}
+                    />
+                    <button
+                      onClick={() => {
+                        const inputEl = document.getElementById('inline-key-input') as HTMLInputElement;
+                        const val = inputEl?.value.trim();
+                        if (val) {
+                          localStorage.setItem('disha-gemini-key', val);
+                          setApiKey(val);
+                          setMessages(prev => {
+                            const next = [...prev];
+                            next[next.length - 1] = {
+                              id: generateMessageId(),
+                              role: 'assistant',
+                              content: '🎉 API Key configured successfully! How can I help you today?',
+                              timestamp: new Date()
+                            };
+                            return next;
+                          });
+                        }
+                      }}
+                      className="px-3.5 py-1.5 bg-indigo-650 hover:bg-indigo-600 text-white font-bold rounded-lg text-xs transition-colors cursor-pointer select-none"
+                    >
+                      Save
+                    </button>
+                  </div>
+                  <p className="text-[10px] text-slate-500">
+                    Get a free key from{' '}
+                    <a
+                      href="https://aistudio.google.com/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-indigo-400 hover:underline"
+                    >
+                      Google AI Studio ↗
+                    </a>
+                  </p>
+                </div>
+              ) : (
+                renderContent(msg.content)
+              )}
               <span className="block mt-2 text-[10px] opacity-40 text-right">
                 {msg.timestamp.toLocaleTimeString([], {
                   hour: '2-digit',
