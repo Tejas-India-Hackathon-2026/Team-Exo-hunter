@@ -26,12 +26,14 @@ export const Card: React.FC<CardProps> = ({
   footer,
 }) => {
   
+  // Neon glow border maps based on module classifications (indigo for Student, sky for Campus)
   const borderStyles = {
     default: 'border-slate-800/60 hover:border-indigo-500/30',
     indigo: 'border-indigo-500/20 hover:border-indigo-500/40 shadow-indigo-500/5',
     sky: 'border-sky-500/20 hover:border-sky-500/40 shadow-sky-500/5',
   };
 
+  // Assembling card layer visual classes with dark-glass filter
   const cardClasses = [
     'rounded-xl border transition-all duration-300 flex flex-col p-6',
     glass 
