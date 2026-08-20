@@ -96,8 +96,28 @@ npm run lint
 
 ---
 
+## 👥 Team Exo-Hunter (Tejas India Hackathon 2026)
+
+| Member | Role | Focus Areas | Live Status |
+| :--- | :--- | :--- | :---: |
+| **Member 01** | Lead Architect | System Design, React 19 Core, Cloud Infra | 🟢 Active |
+| **Member 02** | AI Systems Lead | Computer Vision, Face Recognition, Analytics | 🟢 Active |
+| **Jyoti (Member 03)** | Frontend & AI Guidance | Student Roadmaps, Interactive UI, Live Updates | 🟢 Active |
+
+---
+
+## 📡 Live Hackathon Progress & Updates
+
+* **🟢 [Active] Team Member 3 (Jyoti - `@jyotijio745-afk`):**
+  - Integrated interactive Team Exo-Hunter Showcase & Live Updates tracker.
+  - Linked dynamic navigation and active progress verification for evaluators and admins.
+  - Validated React 19 / Vite / Tailwind production build compatibility.
+
+---
+
 ## 🔮 Future Roadmap
 
 * **Milestone 1 (Current):** Establish modern, scalable React/Vite/Tailwind framework and build a premium landing page with interactive simulator previews for judge review.
 * **Milestone 2 (Student Core):** Integrate backend LLM pipelines to generate real roadmap graphs dynamically based on user prompts. Add markdown study notes parsers.
 * **Milestone 3 (Smart Campus Edge):** Embed local face detection logic in the client utilizing TensorFlow.js or a Python FastAPI camera server.
+
