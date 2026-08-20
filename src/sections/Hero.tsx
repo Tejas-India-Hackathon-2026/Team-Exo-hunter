@@ -153,9 +153,6 @@ export const Hero: React.FC<HeroProps> = ({ onStudentsClick, onCollegesClick }) 
 
           <div className="relative rounded-xl border border-slate-800 bg-slate-950 overflow-hidden shadow-inner flex flex-col aspect-video md:h-[480px] w-full text-left">
             
-            {/* 🔴 Scanline laser sweep line */}
-            <div className="absolute left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-indigo-500/40 to-transparent pointer-events-none z-20 scan-laser" />
-
             {/* Window chrome bar */}
             <div className="bg-slate-900 border-b border-slate-800/80 px-4 py-3 flex items-center justify-between z-10">
               <div className="flex items-center gap-2">
@@ -201,7 +198,7 @@ export const Hero: React.FC<HeroProps> = ({ onStudentsClick, onCollegesClick }) 
               </div>
 
               {/* Main Content Area */}
-              <div className="col-span-12 md:col-span-9 p-4 md:p-6 flex flex-col justify-between overflow-y-auto">
+              <div className="col-span-12 md:col-span-9 p-4 md:p-6 flex flex-col justify-between overflow-hidden">
                 <div className="space-y-5">
                   {/* Dashboard Header */}
                   <div className="flex justify-between items-start border-b border-slate-900 pb-3">
