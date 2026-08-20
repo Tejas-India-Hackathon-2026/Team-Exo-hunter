@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Compass, Brain, GraduationCap, Cpu, Terminal } from 'lucide-react';
 import { Button } from '../components/Button';
+import { SkillOrbit } from '../components/SkillOrbit';
 
 interface HeroProps {
   onStudentsClick: () => void;
@@ -200,19 +201,9 @@ export const Hero: React.FC<HeroProps> = ({ onStudentsClick, onCollegesClick }) 
                       </p>
                     </div>
 
-                    {/* Progress Chart Mock */}
-                    <div className="p-3.5 rounded-lg bg-slate-900/60 border border-slate-800 space-y-2">
-                      <div className="font-semibold text-[10px] text-white flex justify-between">
-                        <span>Roadmap Completion</span>
-                        <span className="text-indigo-400">65%</span>
-                      </div>
-                      <div className="w-full bg-slate-900 h-2 rounded-full overflow-hidden border border-slate-800">
-                        <div className="bg-indigo-500 h-full rounded-full w-2/3 shadow-glow" />
-                      </div>
-                      <div className="text-[9px] text-slate-500 flex justify-between">
-                        <span>12 of 18 competencies matched</span>
-                        <span>Next test in: 2 days</span>
-                      </div>
+                    {/* Interactive Skills Orbit Synapses (Replaces static chart) */}
+                    <div className="min-h-[220px] flex items-center justify-center">
+                      <SkillOrbit />
                     </div>
                   </div>
 
