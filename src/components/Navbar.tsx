@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Sparkles, ArrowRight } from 'lucide-react';
+import { Menu, X, Sparkles, ArrowRight, LogOut, User } from 'lucide-react';
 import { Button } from './Button';
 
 interface NavbarProps {
   onNavigate: (sectionId: string) => void;
   activeSection: string;
+  onAuthClick?: (mode: 'login' | 'signup') => void;
+  user?: { name: string; email: string; role: 'student' | 'college' } | null;
+  onLogout?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onNavigate, activeSection }) => {
+export const Navbar: React.FC<NavbarProps> = ({ 
+  onNavigate, 
+  activeSection, 
+  onAuthClick,
+  user,
+  onLogout
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -72,17 +81,48 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, activeSection }) => 
             ))}
           </div>
 
-          {/* Desktop CTA */}
-          <div className="hidden md:flex items-center">
-            <Button
-              variant="primary"
-              size="sm"
-              icon={<ArrowRight className="w-4 h-4" />}
-              onClick={() => onNavigate('students')}
-              className="shadow-lg shadow-indigo-600/20"
-            >
-              Get Started
-            </Button>
+          {/* Desktop Auth / CTA */}
+          <div className="hidden md:flex items-center gap-3">
+            {user ? (
+              <div className="flex items-center gap-3 bg-slate-900/80 border border-slate-800 px-3 py-1.5 rounded-xl">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-lg bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 flex items-center justify-center font-bold text-xs">
+                    {user.name.charAt(0)}
+                  </div>
+                  <div className="text-left leading-tight">
+                    <div className="text-xs font-semibold text-white truncate max-w-[100px]">{user.name}</div>
+                    <div className="text-[10px] text-emerald-400 font-mono capitalize">{user.role}</div>
+                  </div>
+                </div>
+                {onLogout && (
+                  <button
+                    onClick={onLogout}
+                    title="Sign Out"
+                    className="p-1 text-slate-400 hover:text-rose-400 transition-colors cursor-pointer"
+                  >
+                    <LogOut className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
+            ) : (
+              <>
+                <button
+                  onClick={() => onAuthClick ? onAuthClick('login') : onNavigate('students')}
+                  className="text-xs font-semibold text-slate-300 hover:text-white px-3 py-2 transition-colors cursor-pointer"
+                >
+                  Sign In
+                </button>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  icon={<ArrowRight className="w-4 h-4" />}
+                  onClick={() => onAuthClick ? onAuthClick('signup') : onNavigate('students')}
+                  className="shadow-lg shadow-indigo-600/20"
+                >
+                  Get Started
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -114,16 +154,42 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigate, activeSection }) => 
                 {item.label}
               </button>
             ))}
-            <div className="pt-4 pb-2 px-3">
-              <Button
-                variant="primary"
-                size="md"
-                className="w-full shadow-lg shadow-indigo-600/20"
-                icon={<ArrowRight className="w-4 h-4" />}
-                onClick={() => handleClick('students')}
-              >
-                Get Started
-              </Button>
+            
+            <div className="pt-4 pb-2 px-3 space-y-2">
+              {user ? (
+                <div className="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-800">
+                  <div className="flex items-center gap-2">
+                    <User className="w-4 h-4 text-indigo-400" />
+                    <span className="text-sm font-semibold text-white">{user.name}</span>
+                  </div>
+                  {onLogout && (
+                    <button
+                      onClick={onLogout}
+                      className="text-xs text-rose-400 font-semibold cursor-pointer"
+                    >
+                      Logout
+                    </button>
+                  )}
+                </div>
+              ) : (
+                <>
+                  <button
+                    onClick={() => { setIsOpen(false); onAuthClick && onAuthClick('login'); }}
+                    className="w-full py-2.5 rounded-lg bg-slate-900 text-slate-200 font-semibold text-xs border border-slate-800 cursor-pointer"
+                  >
+                    Sign In
+                  </button>
+                  <Button
+                    variant="primary"
+                    size="md"
+                    className="w-full shadow-lg shadow-indigo-600/20"
+                    icon={<ArrowRight className="w-4 h-4" />}
+                    onClick={() => { setIsOpen(false); onAuthClick && onAuthClick('signup'); }}
+                  >
+                    Get Started (Sign Up)
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </div>
