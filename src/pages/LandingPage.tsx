@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Navbar } from '../components/Navbar';
+import { AuthModal } from '../components/AuthModal';
 import { Hero } from '../sections/Hero';
 import { SolutionCards } from '../sections/SolutionCards';
 import { HowItWorks } from '../sections/HowItWorks';
@@ -10,7 +11,7 @@ import { Footer } from '../components/Footer';
 import { CAREER_TRACKS, QUIZ_SAMPLES } from '../data/landingData';
 import { 
   X, Sparkles, Brain, Award, ShieldAlert, Scan, 
-  BarChart3, FileText, Check, HelpCircle
+  BarChart3, FileText, Check, HelpCircle, CheckCircle2
 } from 'lucide-react';
 
 export const LandingPage = () => {
@@ -18,6 +19,12 @@ export const LandingPage = () => {
   const [modalType, setModalType] = useState<'student' | 'college' | null>(null);
   const [studentTab, setStudentTab] = useState<'roadmap' | 'quiz' | 'notes'>('roadmap');
   
+  // Auth state
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
+  const [currentUser, setCurrentUser] = useState<{ name: string; email: string; role: 'student' | 'college' } | null>(null);
+  const [authToast, setAuthToast] = useState<string | null>(null);
+
   // Interactive Simulator States
   const [studentRole, setStudentRole] = useState('fullstack');
   const [generatingRoadmap, setGeneratingRoadmap] = useState(false);
@@ -99,10 +106,23 @@ export const LandingPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans relative">
       
-      {/* Sticky Header Navbar */}
-      <Navbar onNavigate={handleNavigate} activeSection={activeSection} />
+      {/* Sticky Header Navbar with Auth Support */}
+      <Navbar 
+        onNavigate={handleNavigate} 
+        activeSection={activeSection}
+        onAuthClick={(mode) => {
+          setAuthMode(mode);
+          setAuthModalOpen(true);
+        }}
+        user={currentUser}
+        onLogout={() => {
+          setCurrentUser(null);
+          setAuthToast('Signed out successfully.');
+          setTimeout(() => setAuthToast(null), 3000);
+        }}
+      />
 
       {/* Hero Section */}
       <Hero 
@@ -503,6 +523,26 @@ export const LandingPage = () => {
         </div>
       )}
 
+      {/* Auth Modal (Login / Sign Up) */}
+      <AuthModal
+        isOpen={authModalOpen}
+        initialMode={authMode}
+        onClose={() => setAuthModalOpen(false)}
+        onSuccess={(userData) => {
+          setCurrentUser(userData);
+          setAuthToast(`🎉 Welcome to DISHA AI, ${userData.name}! Signed in as ${userData.role}.`);
+          setTimeout(() => setAuthToast(null), 4500);
+        }}
+      />
+
+      {/* Floating Auth Toast Notification */}
+      {authToast && (
+        <div className="fixed bottom-6 right-6 z-50 p-4 rounded-xl bg-slate-900 border border-emerald-500/50 shadow-2xl text-xs text-emerald-300 flex items-center gap-2.5 animate-in slide-in-from-bottom-5 duration-300">
+          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+          <span>{authToast}</span>
+        </div>
+      )}
+
     </div>
   );
-}
+};

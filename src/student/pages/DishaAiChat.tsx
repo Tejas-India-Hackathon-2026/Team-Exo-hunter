@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback, type FormEvent, type KeyboardEvent } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Sparkles, Send, Bot, Loader2 } from 'lucide-react';
 import { SUGGESTED_PROMPTS } from '../data/studentData';
 import {
@@ -43,6 +44,7 @@ export const DishaAiChat = () => {
   const [messages, setMessages] = useState<AiMessage[]>([WELCOME_MESSAGE]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -93,6 +95,14 @@ export const DishaAiChat = () => {
     },
     [input, isLoading],
   );
+
+  useEffect(() => {
+    const q = searchParams.get('q');
+    if (q) {
+      handleSend(q);
+      setSearchParams({}, { replace: true });
+    }
+  }, [searchParams, handleSend, setSearchParams]);
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
