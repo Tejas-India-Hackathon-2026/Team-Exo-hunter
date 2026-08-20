@@ -532,35 +532,30 @@ export const LandingPage = () => {
         onClose={() => setAuthModalOpen(false)}
         onSuccess={(userData) => {
           setCurrentUser(userData);
-          setAuthToast(`🎉 Welcome to DISHA AI, ${userData.name}! Signed in as ${userData.role}.`);
-          
-          if (userData.role === 'student') {
-            try {
-              const saved = window.localStorage.getItem('disha-student-profile');
-              const profile = saved ? JSON.parse(saved) : {
-                name: 'Arjun Sharma',
-                course: 'B.Tech',
-                branch: 'Computer Science & Engineering',
-                semester: '5th Semester',
-                skills: ['Python', 'JavaScript', 'HTML/CSS', 'React', 'SQL'],
-                interests: ['Artificial Intelligence', 'Web Development', 'Data Science'],
-                careerGoal: 'AI/ML Engineer',
-                studyHours: 4,
-                experienceLevel: 'intermediate',
-              };
-              profile.name = userData.name;
-              window.localStorage.setItem('disha-student-profile', JSON.stringify(profile));
-            } catch (e) {
-              console.error('Error syncing profile name:', e);
-            }
+          try {
+            const savedRaw = localStorage.getItem('disha-student-profile');
+            const currentProfile = savedRaw ? JSON.parse(savedRaw) : {};
+            localStorage.setItem('disha-student-profile', JSON.stringify({
+              name: userData.name || 'Student Learner',
+              course: currentProfile.course || 'B.Tech',
+              branch: currentProfile.branch || 'Computer Science & Engineering',
+              semester: currentProfile.semester || '5th Semester',
+              skills: currentProfile.skills || ['Python', 'JavaScript', 'React', 'TypeScript', 'SQL'],
+              interests: currentProfile.interests || ['Artificial Intelligence', 'Fullstack Development', 'Cloud Computing'],
+              careerGoal: currentProfile.careerGoal || 'AI/ML Engineer',
+              studyHours: currentProfile.studyHours || 4,
+              experienceLevel: currentProfile.experienceLevel || 'intermediate',
+            }));
+          } catch (err) {
+            console.error('Storage sync error:', err);
           }
-
+          setAuthToast(`🎉 Welcome to DISHA AI, ${userData.name}! Signed in as ${userData.role}.`);
           setTimeout(() => {
             setAuthToast(null);
             if (userData.role === 'student') {
               navigate('/student');
             }
-          }, 1200);
+          }, 1000);
         }}
       />
 
