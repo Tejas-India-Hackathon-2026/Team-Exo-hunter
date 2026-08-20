@@ -108,7 +108,7 @@ export const ExploreSmartSystems = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <span className="p-3 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20"><Activity className="w-5 h-5" /></span>
-                <span className="text-[9px] font-bold text-rose-400 bg-rose-950/80 px-2.5 py-1 rounded-full border border-rose-500/30 uppercase tracking-wider">Mock View</span>
+                <span className="text-[9px] font-bold text-rose-400 bg-rose-950/80 px-2.5 py-1 rounded-full border border-rose-500/30 uppercase tracking-wider">Live Demo</span>
               </div>
               <h3 className="font-extrabold text-white text-lg tracking-tight">Smart Hospital Care</h3>
               <p className="text-xs text-slate-400 leading-relaxed">
@@ -116,10 +116,11 @@ export const ExploreSmartSystems = () => {
               </p>
             </div>
             <button
-              onClick={() => alert('Smart Hospital Dashboard is being integrated into the campus healthcare network.')}
-              className="w-full mt-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition-all cursor-pointer flex items-center justify-center"
+              onClick={() => navigate('/smart-hospital')}
+              className="w-full mt-6 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-rose-600/10"
             >
-              Launch Hospital HUD
+              <span>Launch Hospital HUD</span>
+              <span>➜</span>
             </button>
           </div>
 
@@ -128,7 +129,7 @@ export const ExploreSmartSystems = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <span className="p-3 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20"><Building2 className="w-5 h-5" /></span>
-                <span className="text-[9px] font-bold text-amber-400 bg-amber-950/80 px-2.5 py-1 rounded-full border border-amber-500/30 uppercase tracking-wider">Mock View</span>
+                <span className="text-[9px] font-bold text-amber-400 bg-amber-950/80 px-2.5 py-1 rounded-full border border-amber-500/30 uppercase tracking-wider">Live Demo</span>
               </div>
               <h3 className="font-extrabold text-white text-lg tracking-tight">Smart Admin Services</h3>
               <p className="text-xs text-slate-400 leading-relaxed">
@@ -136,10 +137,11 @@ export const ExploreSmartSystems = () => {
               </p>
             </div>
             <button
-              onClick={() => alert('Smart Administrative Services dashboard preview is loading.')}
-              className="w-full mt-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition-all cursor-pointer flex items-center justify-center"
+              onClick={() => navigate('/smart-admin')}
+              className="w-full mt-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-amber-600/10"
             >
-              Launch Admin Services
+              <span>Launch Admin Services</span>
+              <span>➜</span>
             </button>
           </div>
 
@@ -158,10 +160,11 @@ export const ExploreSmartSystems = () => {
               </p>
             </div>
             <button
-              onClick={() => alert('Smart Organization calendar synchronizer initialized.')}
-              className="w-full mt-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition-all cursor-pointer flex items-center justify-center"
+              onClick={() => navigate('/smart-organization')}
+              className="w-full mt-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-indigo-600/10"
             >
-              Configure Organization Schedules
+              <span>Configure Organization Schedules</span>
+              <span>➜</span>
             </button>
           </div>
 
