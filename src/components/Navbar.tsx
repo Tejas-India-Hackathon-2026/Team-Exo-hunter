@@ -126,7 +126,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   variant="primary"
                   size="sm"
                   icon={<ArrowRight className="w-4 h-4" />}
-                  onClick={() => handleClick('solutions')}
+                  onClick={() => onNavigate('solutions')}
                   className="shadow-lg shadow-indigo-600/20"
                 >
                   Get Started
@@ -184,7 +184,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               ) : (
                 <>
                   <button
-                    onClick={() => { setIsOpen(false); onAuthClick?.('login'); }}
+                    onClick={() => { setIsOpen(false); onAuthClick && onAuthClick('login'); }}
                     className="w-full py-2.5 rounded-lg bg-slate-900 text-slate-200 font-semibold text-xs border border-slate-800 cursor-pointer"
                   >
                     Sign In
@@ -194,7 +194,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     size="md"
                     className="w-full shadow-lg shadow-indigo-600/20"
                     icon={<ArrowRight className="w-4 h-4" />}
-                    onClick={() => handleClick('solutions')}
+                    onClick={() => { setIsOpen(false); onNavigate('solutions'); }}
                   >
                     Get Started
                   </Button>

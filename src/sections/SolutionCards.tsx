@@ -13,7 +13,7 @@ export const SolutionCards: React.FC<SolutionCardsProps> = ({
   onCollegesClick,
 }) => {
   return (
-    <section id="solutions" className="py-20 bg-slate-950 relative border-t border-b border-slate-900">
+    <section id="solutions" className="py-20 bg-slate-950 relative border-t border-b border-slate-900 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -103,7 +103,7 @@ export const SolutionCards: React.FC<SolutionCardsProps> = ({
                 icon={<ArrowRight className="w-4 h-4" />}
                 className="w-full sm:w-auto shadow-lg shadow-sky-500/20"
               >
-                Explore Smart Attendance
+                Explore Smart Campus
               </Button>
             </div>
           </Card>
