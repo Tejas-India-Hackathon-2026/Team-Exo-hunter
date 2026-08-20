@@ -161,36 +161,36 @@ export const HOW_IT_WORKS_STEPS: StepItem[] = [
   {
     number: '01',
     title: 'Understand',
-    subtitle: 'Where you are',
-    description: 'Input your current skills, background, projects, and target fields to establish a baseline profile.',
+    subtitle: 'Where You Are',
+    description: 'Input your current skillset, academic background, and interests to establish your baseline profile.',
     iconName: 'UserRound'
   },
   {
     number: '02',
     title: 'Goal',
-    subtitle: 'Define success',
-    description: 'Choose your desired role (e.g., AI Researcher, Fullstack Lead) or define a custom dream career destination.',
+    subtitle: 'Define Success',
+    description: 'Choose your target role (e.g. AI Engineer, Fullstack Dev) or set a custom dream career destination.',
     iconName: 'Target'
   },
   {
     number: '03',
     title: 'Roadmap',
-    subtitle: 'Plan the path',
-    description: 'DISHA maps out the exact tools, books, videos, and documentation needed to build your skills.',
+    subtitle: 'Plan The Path',
+    description: 'DISHA generates a structured, milestone-driven learning path tailored to bridge your exact skill gaps.',
     iconName: 'Map'
   },
   {
     number: '04',
     title: 'Action',
     subtitle: 'Build & Learn',
-    description: 'Develop structured portfolio projects, read custom AI-curated guides, and write production-grade code.',
+    description: 'Execute daily study tasks, build real-world portfolio projects, and master key technologies step-by-step.',
     iconName: 'Play'
   },
   {
     number: '05',
     title: 'Progress',
-    subtitle: 'Track milestones',
-    description: 'Take adaptive quizzes, run mock reviews, and watch your metrics climb as you prepare to land your role.',
+    subtitle: 'Track Milestones',
+    description: 'Validate knowledge through adaptive quizzes, monitor weekly metrics, and achieve your career goals.',
     iconName: 'Award'
   }
 ];
