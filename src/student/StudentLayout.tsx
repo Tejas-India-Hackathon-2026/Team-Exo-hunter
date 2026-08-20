@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation, Link } from 'react-router-dom';
 import {
   LayoutDashboard, MessageSquareText, Target, Map, CalendarDays,
   Briefcase, FolderKanban, TrendingUp, UserCircle, Sparkles,
@@ -124,33 +124,65 @@ export const StudentLayout = () => {
           })}
         </nav>
 
-        {/* Sidebar Footer with Log Out */}
+        {/* Sidebar Footer with Back to Home */}
         <div className="p-4 border-t border-slate-800">
           <button
-            onClick={() => setShowLogoutModal(true)}
-            className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-rose-400 hover:text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 transition-all cursor-pointer shadow-sm group"
+            onClick={() => setShowBackConfirmModal(true)}
+            className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:text-white bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 transition-all cursor-pointer shadow-sm group"
           >
-            <LogOut className="w-4 h-4 text-rose-400 group-hover:-translate-x-0.5 transition-transform" />
-            <span>Log Out</span>
+            <ArrowLeft className="w-4 h-4 text-indigo-400 group-hover:-translate-x-0.5 transition-transform" />
+            <span>Back to Home</span>
           </button>
         </div>
       </aside>
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col min-h-screen">
-        {/* Top bar (mobile) */}
-        <header className="md:hidden sticky top-0 z-30 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 px-4 py-3 flex items-center justify-between">
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer"
-          >
-            <Menu className="w-5 h-5" />
-          </button>
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-indigo-400" />
-            <span className="text-sm font-bold text-white">DISHA <span className="text-indigo-400">AI</span></span>
+        {/* Top bar (Desktop & Mobile) */}
+        <header className="sticky top-0 z-30 bg-slate-950/85 backdrop-blur-md border-b border-slate-800/80 px-4 md:px-8 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+            <div className="hidden md:flex items-center gap-2 text-xs font-semibold text-slate-400">
+              <Link to="/" className="hover:text-white transition-colors">DISHA AI</Link>
+              <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
+              <span>Student Portal</span>
+              <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
+              <span className="text-indigo-400 capitalize">
+                {location.pathname.split('/').pop() || 'Dashboard'}
+              </span>
+            </div>
+            <div className="md:hidden flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-indigo-400" />
+              <span className="text-sm font-bold text-white">DISHA <span className="text-indigo-400">AI</span></span>
+            </div>
           </div>
-          <div className="w-9" /> {/* Spacer for centering */}
+
+          {/* Right Header Area: Student Profile & Top Log Out Button */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-xl">
+              <div className="w-6 h-6 rounded-lg bg-indigo-600/30 border border-indigo-500/40 text-indigo-300 flex items-center justify-center font-bold text-xs">
+                S
+              </div>
+              <span className="text-xs font-medium text-slate-200 hidden sm:inline">
+                Student Account
+              </span>
+            </div>
+
+            {/* Dedicated Top Right Log Out Button */}
+            <button
+              onClick={() => setShowLogoutModal(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-rose-400 hover:text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 transition-all cursor-pointer shadow-sm group"
+              title="Sign Out"
+            >
+              <LogOut className="w-3.5 h-3.5 text-rose-400 group-hover:-translate-x-0.5 transition-transform" />
+              <span>Log Out</span>
+            </button>
+          </div>
         </header>
 
         {/* Page Content */}
