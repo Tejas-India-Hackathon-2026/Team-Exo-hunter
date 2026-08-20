@@ -1,14 +1,3 @@
-// =============================================
-// MOCK AI SERVICE — Clearly separated for future
-// real API integration (e.g., OpenAI, Gemini)
-// =============================================
-// 
-// NOTE: This is a mock service. No real AI API is used.
-// To integrate a real API later, replace the `getAiResponse`
-// function body with an actual API call. The interface
-// remains the same.
-// =============================================
-
 export interface AiMessage {
   id: string;
   role: 'user' | 'assistant';
@@ -16,12 +5,8 @@ export interface AiMessage {
   timestamp: Date;
 }
 
-/**
- * Simulates an AI response with a delay.
- * Replace this function body with a real API call for production.
- */
 export async function getAiResponse(userMessage: string): Promise<string> {
-  // Simulate network delay
+  // Simulate API delay
   await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
 
   const msg = userMessage.toLowerCase();

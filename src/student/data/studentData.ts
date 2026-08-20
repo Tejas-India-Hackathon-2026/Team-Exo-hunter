@@ -1,8 +1,3 @@
-// =============================================
-// STUDENT DATA — Demo/Mock Data for Milestone 2
-// =============================================
-
-// --- Student Profile Types & Defaults ---
 export interface StudentProfileData {
   name: string;
   course: string;

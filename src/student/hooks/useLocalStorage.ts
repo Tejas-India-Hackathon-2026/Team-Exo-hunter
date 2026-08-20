@@ -1,9 +1,5 @@
 import { useState } from 'react';
 
-/**
- * Custom hook to sync state with localStorage.
- * Provides persistent state across page reloads.
- */
 export function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T | ((prev: T) => T)) => void] {
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
