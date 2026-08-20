@@ -36,11 +36,9 @@ export const Hero: React.FC<HeroProps> = ({ onStudentsClick, onCollegesClick }) 
   const [logIndex, setLogIndex] = useState(0);
 
   // Dynamic floating starry particles in background
-  const [particles, setParticles] = useState<{ id: number; left: string; top: string; size: string; delay: string; duration: string; color: string }[]>([]);
-
-  useEffect(() => {
+  const [particles] = useState<{ id: number; left: string; top: string; size: string; delay: string; duration: string; color: string }[]>(() => {
     // Generate 18 subtle floating data nodes
-    const generated = Array.from({ length: 18 }).map((_, i) => ({
+    return Array.from({ length: 18 }).map((_, i) => ({
       id: i,
       left: `${(i * 5.5) + (Math.random() * 2)}%`, // Spaced out across 100% width to prevent stacking
       top: `${Math.random() * 65 + 10}%`,
@@ -49,8 +47,7 @@ export const Hero: React.FC<HeroProps> = ({ onStudentsClick, onCollegesClick }) 
       duration: `${Math.random() * 10 + 6}s`,
       color: Math.random() > 0.5 ? 'bg-indigo-500/20' : 'bg-sky-400/20'
     }));
-    setParticles(generated);
-  }, []);
+  });
 
   // Live Logs Simulator Hook
   useEffect(() => {
