@@ -11,6 +11,7 @@ import { StudyPlanner } from './student/pages/StudyPlanner';
 import { CareerGuidance } from './student/pages/CareerGuidance';
 import { ProjectGuidance } from './student/pages/ProjectGuidance';
 import { Progress } from './student/pages/Progress';
+import { ExploreSmartSystems } from './pages/ExploreSmartSystems';
 
 import './App.css';
 
@@ -26,6 +27,7 @@ function App() {
     <Routes>
       {/* Milestone 1 — Landing Page (fully preserved) */}
       <Route path="/" element={<LandingPage />} />
+      <Route path="/explore-smart-systems" element={<ExploreSmartSystems />} />
 
       {/* Milestone 2 — Student DISHA Module */}
       <Route path="/student" element={<StudentLayout />}>

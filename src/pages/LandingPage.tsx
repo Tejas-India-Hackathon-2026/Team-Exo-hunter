@@ -98,9 +98,7 @@ export const LandingPage = () => {
           resetSimulations();
         }} 
         onCollegesClick={() => {
-          handleNavigate('colleges');
-          setModalType('college');
-          resetSimulations();
+          navigate('/explore-smart-systems');
         }} 
       />
 
@@ -112,9 +110,7 @@ export const LandingPage = () => {
           resetSimulations();
         }} 
         onCollegesClick={() => {
-          handleNavigate('colleges');
-          setModalType('college');
-          resetSimulations();
+          navigate('/explore-smart-systems');
         }} 
       />
 
@@ -129,8 +125,7 @@ export const LandingPage = () => {
       {/* Smart Campus Features Preview (For Colleges) */}
       <CampusFeatures 
         onCtaClick={() => {
-          setModalType('college');
-          resetSimulations();
+          navigate('/explore-smart-systems');
         }} 
       />
 
