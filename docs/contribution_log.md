@@ -22,3 +22,4 @@
 * Commit #22: docs: update deployment troubleshooting guide - Completed on 08/20/2026 19:06:45
 * Commit #23: refactor: organize data folder hierarchy - Completed on 08/20/2026 19:06:45
 * Commit #24: style: refine focus ring borders for accessibility - Completed on 08/20/2026 19:06:46
+* Commit #25: docs: document security scanner Pi integration setup - Completed on 08/20/2026 19:06:47
