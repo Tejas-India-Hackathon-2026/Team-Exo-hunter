@@ -1,30 +1,9 @@
 import { Map, CheckCircle2, Circle } from 'lucide-react';
-import { useLocalStorage } from '../hooks/useLocalStorage';
-import { DEFAULT_PROFILE, CAREER_OPTIONS } from '../data/studentData';
+import { ROADMAP_STEPS } from '../data/studentData';
 
 export const Roadmap = () => {
-  const [profile] = useLocalStorage('disha-student-profile', DEFAULT_PROFILE);
-
-  // Find the selected career path options
-  const activeCareer = CAREER_OPTIONS.find(c => c.title === profile.careerGoal) || CAREER_OPTIONS[0];
-
-  // Dynamically map active career's learningPath into structured steps
-  const steps = activeCareer.learningPath.map((pathName, index) => {
-    // First 2 steps are marked completed, 3rd is active/current, remaining are upcoming (for nice interactive simulator feel)
-    const status: 'completed' | 'current' | 'upcoming' = 
-      index < 2 ? 'completed' : index === 2 ? 'current' : 'upcoming';
-    
-    return {
-      id: index + 1,
-      title: pathName,
-      description: `Master key concepts, algorithms, and practical implementations of ${pathName.toLowerCase()} as part of your ${activeCareer.title} track.`,
-      status,
-      skills: [pathName.split(' ')[0] || 'Core', activeCareer.requiredSkills[index] || 'Engineering'],
-    };
-  });
-
-  const completedSteps = steps.filter(step => step.status === 'completed').length;
-  const progressPercent = Math.round((completedSteps / steps.length) * 100);
+  const completedSteps = ROADMAP_STEPS.filter(step => step.status === 'completed').length;
+  const progressPercent = Math.round((completedSteps / ROADMAP_STEPS.length) * 100);
 
   return (
     <div className="space-y-8 animate-in fade-in duration-300 max-w-4xl">
@@ -36,7 +15,7 @@ export const Roadmap = () => {
             Your DISHA Roadmap
           </h1>
           <p className="text-slate-400 text-sm mt-1">
-            Currently tracking: <span className="text-indigo-400 font-bold">{activeCareer.title}</span>
+            Follow this customized step-by-step path to achieve your career goal.
           </p>
         </div>
 
@@ -53,14 +32,14 @@ export const Roadmap = () => {
             />
           </div>
           <p className="text-[10px] text-slate-500 text-right">
-            {completedSteps} of {steps.length} steps completed
+            {completedSteps} of {ROADMAP_STEPS.length} steps completed
           </p>
         </div>
       </div>
 
       {/* Roadmap Timeline */}
       <div className="relative pl-6 md:pl-10 space-y-8 before:absolute before:left-[19px] md:before:left-[33px] before:top-2 before:bottom-2 before:w-[2px] before:bg-slate-800">
-        {steps.map((step) => {
+        {ROADMAP_STEPS.map((step) => {
           const isCompleted = step.status === 'completed';
           const isCurrent = step.status === 'current';
 
