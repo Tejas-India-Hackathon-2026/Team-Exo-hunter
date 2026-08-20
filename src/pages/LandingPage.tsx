@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
 import { AuthModal } from '../components/AuthModal';
 import { Hero } from '../sections/Hero';
@@ -15,6 +16,7 @@ import {
 } from 'lucide-react';
 
 export const LandingPage = () => {
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('home');
   const [modalType, setModalType] = useState<'student' | 'college' | null>(null);
   const [studentTab, setStudentTab] = useState<'roadmap' | 'quiz' | 'notes'>('roadmap');
@@ -531,7 +533,12 @@ export const LandingPage = () => {
         onSuccess={(userData) => {
           setCurrentUser(userData);
           setAuthToast(`🎉 Welcome to DISHA AI, ${userData.name}! Signed in as ${userData.role}.`);
-          setTimeout(() => setAuthToast(null), 4500);
+          setTimeout(() => {
+            setAuthToast(null);
+            if (userData.role === 'student') {
+              navigate('/student');
+            }
+          }, 1200);
         }}
       />
 
