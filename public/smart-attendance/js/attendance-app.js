@@ -142,3 +142,5 @@
 })();
 
 // Config options initialized
+
+// Bootstrap validation checks
