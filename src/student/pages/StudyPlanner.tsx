@@ -1,11 +1,14 @@
-import { CalendarDays, CheckCircle2, Circle, Target } from 'lucide-react';
+import { useState } from 'react';
+import { CalendarDays, CheckCircle2, Circle, Target, Sparkles, Loader2 } from 'lucide-react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import {
   DEFAULT_TASKS,
   DEFAULT_WEEKLY_GOALS,
+  DEFAULT_PROFILE,
   type StudyTask,
   type WeeklyGoal,
 } from '../data/studentData';
+import { generateDynamicStudyPlan } from '../services/mockAiService';
 
 const priorityConfig = {
   high: { label: 'High', bg: 'bg-rose-500/20', text: 'text-rose-400', border: 'border-rose-500/30' },
@@ -14,8 +17,30 @@ const priorityConfig = {
 };
 
 export const StudyPlanner = () => {
+  const [profile] = useLocalStorage('disha-student-profile', DEFAULT_PROFILE);
   const [tasks, setTasks] = useLocalStorage<StudyTask[]>('disha-study-tasks', DEFAULT_TASKS);
   const [goals] = useLocalStorage<WeeklyGoal[]>('disha-weekly-goals', DEFAULT_WEEKLY_GOALS);
+  const [generating, setGenerating] = useState(false);
+
+  const apiKey = localStorage.getItem('disha-gemini-key') || '';
+
+  const handleAiGenerateTasks = async () => {
+    setGenerating(true);
+    try {
+      const generatedTasks = await generateDynamicStudyPlan(
+        profile.careerGoal,
+        profile.studyHours,
+        apiKey
+      );
+      if (Array.isArray(generatedTasks) && generatedTasks.length > 0) {
+        setTasks(generatedTasks);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setGenerating(false);
+    }
+  };
 
   const completedCount = tasks.filter((t) => t.completed).length;
 
@@ -26,14 +51,37 @@ export const StudyPlanner = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 px-4 py-10 sm:px-6 lg:px-8">
+    <div className="bg-slate-950 py-4">
       <div className="mx-auto max-w-5xl space-y-10">
         {/* Page Header */}
-        <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-500/20">
-            <CalendarDays className="h-6 w-6 text-indigo-400" />
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-900 pb-5">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-500/20">
+              <CalendarDays className="h-6 w-6 text-indigo-400" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold tracking-tight text-white">Study Planner</h1>
+              <p className="text-slate-500 text-xs mt-0.5">Based on: <strong className="text-indigo-400">{profile.careerGoal}</strong> ({profile.studyHours}h daily)</p>
+            </div>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-white">Study Planner</h1>
+
+          <button
+            onClick={handleAiGenerateTasks}
+            disabled={generating}
+            className="flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg bg-indigo-650 hover:bg-indigo-600 text-xs font-semibold text-white transition-all disabled:opacity-50 cursor-pointer shadow-md select-none self-start sm:self-auto"
+          >
+            {generating ? (
+              <>
+                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                <span>Generating custom tasks...</span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="w-3.5 h-3.5 text-indigo-200" />
+                <span>AI Re-generate Tasks</span>
+              </>
+            )}
+          </button>
         </div>
 
         {/* ── Today's Tasks ── */}

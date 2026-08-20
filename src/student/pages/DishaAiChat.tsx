@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback, type FormEvent, type KeyboardEvent } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Sparkles, Send, Bot, Loader2 } from 'lucide-react';
+import { Sparkles, Send, Bot, Loader2, Key, X } from 'lucide-react';
 import { SUGGESTED_PROMPTS } from '../data/studentData';
 import {
   getAiResponse,
@@ -46,6 +46,11 @@ export const DishaAiChat = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
+  // API Key States
+  const [apiKey, setApiKey] = useState<string>(() => localStorage.getItem('disha-gemini-key') || '');
+  const [tempKey, setTempKey] = useState(apiKey);
+  const [showKeyModal, setShowKeyModal] = useState(false);
+
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -72,7 +77,8 @@ export const DishaAiChat = () => {
       setIsLoading(true);
 
       try {
-        const reply = await getAiResponse(trimmed);
+        const savedKey = localStorage.getItem('disha-gemini-key') || '';
+        const reply = await getAiResponse(trimmed, savedKey);
         const assistantMsg: AiMessage = {
           id: generateMessageId(),
           role: 'assistant',
@@ -120,21 +126,35 @@ export const DishaAiChat = () => {
   return (
     <div className="flex flex-col h-full min-h-0 bg-slate-950 text-slate-200">
       {/* ── Header ──────────────────────────────────────────────── */}
-      <header className="flex-shrink-0 flex items-center gap-3 px-6 py-4 border-b border-slate-800/60 bg-slate-900/80 backdrop-blur-md">
-        <div className="p-2 rounded-xl bg-indigo-500/15 text-indigo-400">
-          <Sparkles className="w-6 h-6" />
+      <header className="flex-shrink-0 flex items-center justify-between px-6 py-4 border-b border-slate-800/60 bg-slate-900/80 backdrop-blur-md">
+        <div className="flex items-center gap-3">
+          <div className="p-2 rounded-xl bg-indigo-500/15 text-indigo-400 flex-shrink-0">
+            <Sparkles className="w-6 h-6" />
+          </div>
+          <div>
+            <h1 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+              DISHA AI
+              <span className="hidden sm:inline font-normal text-slate-400">
+                — Your Personal AI Guide
+              </span>
+            </h1>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Ask me about careers, study plans, skills &amp; more
+            </p>
+          </div>
         </div>
-        <div>
-          <h1 className="text-xl font-bold tracking-tight text-white">
-            DISHA AI{' '}
-            <span className="font-normal text-slate-400">
-              — Your Personal AI Guide
-            </span>
-          </h1>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Ask me about careers, study plans, skills &amp; more
-          </p>
-        </div>
+
+        {/* API Key Configuration */}
+        <button
+          onClick={() => {
+            setTempKey(apiKey);
+            setShowKeyModal(true);
+          }}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-800 hover:border-slate-700 bg-slate-900 text-xs font-semibold text-slate-300 hover:text-white transition-colors cursor-pointer select-none"
+        >
+          <Key className="w-3.5 h-3.5 text-indigo-400" />
+          <span>{apiKey ? 'API Key Saved' : 'Set Gemini Key'}</span>
+        </button>
       </header>
 
       {/* ── Suggested prompts ───────────────────────────────────── */}
@@ -227,6 +247,87 @@ export const DishaAiChat = () => {
           <Send className="w-5 h-5" />
         </button>
       </form>
+
+      {/* ── Key Settings Modal ────────────────────────────────────── */}
+      {showKeyModal && (
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
+          <div className="bg-slate-900 rounded-2xl border border-slate-800 shadow-2xl max-w-md w-full overflow-hidden flex flex-col animate-in zoom-in-95 duration-200 text-slate-200">
+            {/* Modal Header */}
+            <div className="bg-slate-950 p-5 border-b border-slate-800/80 flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-lg bg-indigo-600/20 border border-indigo-500/30 text-indigo-400">
+                  <Key className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-white">Configure Gemini API Key</h3>
+                  <p className="text-[11px] text-slate-400">Enable custom AI recommendations &amp; chat responses</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowKeyModal(false)}
+                className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-900 transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6 space-y-4">
+              <p className="text-xs text-slate-400 leading-relaxed">
+                By default, DISHA AI uses a prototype API key. Enter your personal **Google Gemini API Key** for unlimited, custom responses.
+              </p>
+              <div className="space-y-1.5">
+                <label className="block text-[11px] font-semibold text-slate-400">
+                  Gemini API Key
+                </label>
+                <input
+                  type="password"
+                  value={tempKey}
+                  onChange={(e) => setTempKey(e.target.value)}
+                  placeholder="Paste your AIzaSy... key here"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 focus:border-indigo-500 focus:outline-none text-xs text-white placeholder-slate-650"
+                />
+              </div>
+
+              <div className="flex items-center justify-between text-[11px] pt-1">
+                <a
+                  href="https://aistudio.google.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-indigo-400 hover:underline font-medium"
+                >
+                  Get a free key from Google AI Studio ↗
+                </a>
+                {apiKey && (
+                  <button
+                    onClick={() => {
+                      localStorage.removeItem('disha-gemini-key');
+                      setApiKey('');
+                      setTempKey('');
+                      setShowKeyModal(false);
+                    }}
+                    className="text-rose-450 hover:underline cursor-pointer"
+                  >
+                    Clear Saved Key
+                  </button>
+                )}
+              </div>
+
+              <button
+                onClick={() => {
+                  localStorage.setItem('disha-gemini-key', tempKey.trim());
+                  setApiKey(tempKey.trim());
+                  setShowKeyModal(false);
+                }}
+                disabled={!tempKey.trim()}
+                className="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-all disabled:opacity-50 cursor-pointer mt-2"
+              >
+                Save Key &amp; Connect
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

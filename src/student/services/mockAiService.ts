@@ -7,7 +7,6 @@ export interface AiMessage {
 
 // ── Gemini API Configuration ─────────────────────────────────────
 const GEMINI_API_KEY = 'AIzaSyAKqTx1sBKJGR6GR3Yt5NFsniLbYGProWY';
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 // System instruction that shapes DISHA's personality and expertise
 const DISHA_SYSTEM_PROMPT = `You are DISHA AI — an intelligent, friendly, and highly knowledgeable personal AI guidance assistant for students. Your full name stands for "Digital Intelligent Student Helper & Advisor".
@@ -34,10 +33,7 @@ You are speaking with a B.Tech Computer Science student interested in AI/ML and 
 // Conversation history for context-aware responses
 let conversationHistory: Array<{ role: string; parts: Array<{ text: string }> }> = [];
 
-/**
- * Send a message to the Gemini API and get DISHA's response
- */
-export async function getAiResponse(userMessage: string): Promise<string> {
+export async function getAiResponse(userMessage: string, customApiKey?: string): Promise<string> {
   // Add user message to conversation history
   conversationHistory.push({
     role: 'user',
@@ -49,8 +45,11 @@ export async function getAiResponse(userMessage: string): Promise<string> {
     conversationHistory = conversationHistory.slice(-20);
   }
 
+  const apiKey = customApiKey || GEMINI_API_KEY;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
   try {
-    const response = await fetch(GEMINI_API_URL, {
+    const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -118,4 +117,120 @@ I'll be back online shortly! 🔄`;
  */
 export function generateMessageId(): string {
   return `msg-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+}
+
+export async function generateDynamicRoadmap(
+  careerGoal: string,
+  currentSkills: string[],
+  customApiKey?: string
+): Promise<any[]> {
+  if (!customApiKey) {
+    return [
+      { id: 1, title: 'Current Level Assessment', description: 'Understand your baseline skills and knowledge gaps', status: 'completed', skills: ['Self Assessment', 'Profile Setup'] },
+      { id: 2, title: 'Programming Fundamentals', description: `Master core programming and structures for ${careerGoal}`, status: 'completed', skills: currentSkills.slice(0, 3) },
+      { id: 3, title: 'Data Structures & Algorithms', description: 'Arrays, Trees, Graphs, Sorting, and Dynamic Programming', status: 'completed', skills: ['DSA', 'Problem Solving'] },
+      { id: 4, title: 'Specialized Foundations', description: `Deep dive into key concepts required for ${careerGoal}`, status: 'current', skills: ['Core Theory', 'Math Foundations'] },
+      { id: 5, title: 'Advanced Frameworks & Libraries', description: 'Hands-on practice with industry-standard packages', status: 'upcoming', skills: ['Frameworks', 'Practical Labs'] },
+      { id: 6, title: 'System Architecture', description: `Design and optimize scalable systems for ${careerGoal}`, status: 'upcoming', skills: ['Architecture', 'Best Practices'] },
+      { id: 7, title: 'Projects & Portfolio', description: 'Build 3-5 real-world projects for your portfolio', status: 'upcoming', skills: ['Portfolio', 'GitHub'] },
+      { id: 8, title: 'Internship Preparation', description: 'Resume, mock interviews, and coding rounds', status: 'upcoming', skills: ['Resume', 'Interview Prep'] },
+      { id: 9, title: 'Ready for Role', description: `Apply and land your dream ${careerGoal} position`, status: 'upcoming', skills: ['Career Ready'] },
+    ];
+  }
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${customApiKey}`;
+  const prompt = `Generate a customized 9-step learning roadmap for a student targeting the career goal: "${careerGoal}".
+The student currently has these skills: ${JSON.stringify(currentSkills)}.
+Return the roadmap as a JSON array of 9 steps. Each step must have exactly this JSON format:
+{
+  "id": number,
+  "title": "Step Title",
+  "description": "Short description of what the student should learn in this step.",
+  "status": "completed" | "current" | "upcoming",
+  "skills": ["Skill1", "Skill2"]
+}
+Set the first 3 steps status as "completed", step 4 status as "current", and the remaining 5 steps as "upcoming".
+Return ONLY the raw JSON array, without any markdown formatting or backticks.`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { responseMimeType: 'application/json' }
+      })
+    });
+    if (!response.ok) throw new Error('API error');
+    const data = await response.json();
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    return JSON.parse(text);
+  } catch (error) {
+    console.error('Roadmap generation error, using fallback:', error);
+    return [
+      { id: 1, title: 'Current Level Assessment', description: 'Understand your baseline skills and knowledge gaps', status: 'completed', skills: ['Self Assessment', 'Profile Setup'] },
+      { id: 2, title: 'Programming Fundamentals', description: `Master core programming and structures for ${careerGoal}`, status: 'completed', skills: currentSkills.slice(0, 3) },
+      { id: 3, title: 'Data Structures & Algorithms', description: 'Arrays, Trees, Graphs, Sorting, and Dynamic Programming', status: 'completed', skills: ['DSA', 'Problem Solving'] },
+      { id: 4, title: 'Specialized Foundations', description: `Deep dive into key concepts required for ${careerGoal}`, status: 'current', skills: ['Core Theory', 'Math Foundations'] },
+      { id: 5, title: 'Advanced Frameworks & Libraries', description: 'Hands-on practice with industry-standard packages', status: 'upcoming', skills: ['Frameworks', 'Practical Labs'] },
+      { id: 6, title: 'System Architecture', description: `Design and optimize scalable systems for ${careerGoal}`, status: 'upcoming', skills: ['Architecture', 'Best Practices'] },
+      { id: 7, title: 'Projects & Portfolio', description: 'Build 3-5 real-world projects for your portfolio', status: 'upcoming', skills: ['Portfolio', 'GitHub'] },
+      { id: 8, title: 'Internship Preparation', description: 'Resume, mock interviews, and coding rounds', status: 'upcoming', skills: ['Resume', 'Interview Prep'] },
+      { id: 9, title: 'Ready for Role', description: `Apply and land your dream ${careerGoal} position`, status: 'upcoming', skills: ['Career Ready'] },
+    ];
+  }
+}
+
+export async function generateDynamicStudyPlan(
+  careerGoal: string,
+  studyHours: number,
+  customApiKey?: string
+): Promise<any[]> {
+  if (!customApiKey) {
+    return [
+      { id: 't1', title: `Study ${careerGoal} core theory chapter 1`, priority: 'high', completed: false, category: 'Theory' },
+      { id: 't2', title: 'Solve 3 DSA problems on LeetCode', priority: 'high', completed: false, category: 'Practice' },
+      { id: 't3', title: 'Watch tutorial on advanced frameworks', priority: 'medium', completed: true, category: 'Frameworks' },
+      { id: 't4', title: 'Build a small prototype project component', priority: 'medium', completed: false, category: 'Projects' },
+      { id: 't5', title: 'Push updated project code to GitHub', priority: 'low', completed: true, category: 'Projects' },
+      { id: 't6', title: 'Review study notes and summarize key concepts', priority: 'medium', completed: false, category: 'Review' },
+    ];
+  }
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${customApiKey}`;
+  const prompt = `Generate a customized list of 6 study tasks for a student targeting "${careerGoal}" with ${studyHours} hours of daily study.
+Return the tasks as a JSON array of 6 objects. Each object must have exactly this JSON format:
+{
+  "id": "t1",
+  "title": "Task Description",
+  "priority": "high" | "medium" | "low",
+  "completed": boolean,
+  "category": "Practice" | "Theory" | "Projects" | "Review"
+}
+Return ONLY the raw JSON array, without any markdown formatting or backticks.`;
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { responseMimeType: 'application/json' }
+      })
+    });
+    if (!response.ok) throw new Error('API error');
+    const data = await response.json();
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    return JSON.parse(text);
+  } catch (error) {
+    console.error('Study plan generation error, using fallback:', error);
+    return [
+      { id: 't1', title: `Study ${careerGoal} core theory chapter 1`, priority: 'high', completed: false, category: 'Theory' },
+      { id: 't2', title: 'Solve 3 DSA problems on LeetCode', priority: 'high', completed: false, category: 'Practice' },
+      { id: 't3', title: 'Watch tutorial on advanced frameworks', priority: 'medium', completed: true, category: 'Frameworks' },
+      { id: 't4', title: 'Build a small prototype project component', priority: 'medium', completed: false, category: 'Projects' },
+      { id: 't5', title: 'Push updated project code to GitHub', priority: 'low', completed: true, category: 'Projects' },
+      { id: 't6', title: 'Review study notes and summarize key concepts', priority: 'medium', completed: false, category: 'Review' },
+    ];
+  }
 }

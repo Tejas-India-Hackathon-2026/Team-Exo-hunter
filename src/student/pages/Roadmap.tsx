@@ -1,27 +1,33 @@
-import { Map, CheckCircle2, Circle } from 'lucide-react';
+import { useState } from 'react';
+import { Map, CheckCircle2, Circle, Sparkles, Loader2 } from 'lucide-react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { DEFAULT_PROFILE, CAREER_OPTIONS } from '../data/studentData';
+import { ROADMAP_STEPS, DEFAULT_PROFILE, type RoadmapStep } from '../data/studentData';
+import { generateDynamicRoadmap } from '../services/mockAiService';
 
 export const Roadmap = () => {
   const [profile] = useLocalStorage('disha-student-profile', DEFAULT_PROFILE);
+  const [steps, setSteps] = useLocalStorage<RoadmapStep[]>('disha-roadmap-steps', ROADMAP_STEPS);
+  const [generating, setGenerating] = useState(false);
 
-  // Find the selected career path options
-  const activeCareer = CAREER_OPTIONS.find(c => c.title === profile.careerGoal) || CAREER_OPTIONS[0];
+  const apiKey = localStorage.getItem('disha-gemini-key') || '';
 
-  // Dynamically map active career's learningPath into structured steps
-  const steps = activeCareer.learningPath.map((pathName, index) => {
-    // First 2 steps are marked completed, 3rd is active/current, remaining are upcoming (for nice interactive simulator feel)
-    const status: 'completed' | 'current' | 'upcoming' = 
-      index < 2 ? 'completed' : index === 2 ? 'current' : 'upcoming';
-    
-    return {
-      id: index + 1,
-      title: pathName,
-      description: `Master key concepts, algorithms, and practical implementations of ${pathName.toLowerCase()} as part of your ${activeCareer.title} track.`,
-      status,
-      skills: [pathName.split(' ')[0] || 'Core', activeCareer.requiredSkills[index] || 'Engineering'],
-    };
-  });
+  const handleAiGenerate = async () => {
+    setGenerating(true);
+    try {
+      const generatedSteps = await generateDynamicRoadmap(
+        profile.careerGoal,
+        profile.skills,
+        apiKey
+      );
+      if (Array.isArray(generatedSteps) && generatedSteps.length > 0) {
+        setSteps(generatedSteps);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setGenerating(false);
+    }
+  };
 
   const completedSteps = steps.filter(step => step.status === 'completed').length;
   const progressPercent = Math.round((completedSteps / steps.length) * 100);
@@ -30,14 +36,31 @@ export const Roadmap = () => {
     <div className="space-y-8 animate-in fade-in duration-300 max-w-4xl">
       {/* Header with overall progress */}
       <div className="bg-slate-900/60 backdrop-blur-md border border-slate-800 rounded-2xl p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div>
+        <div className="space-y-3">
           <h1 className="text-3xl font-extrabold text-white tracking-tight flex items-center gap-2">
             <Map className="w-8 h-8 text-indigo-400" />
             Your DISHA Roadmap
           </h1>
-          <p className="text-slate-400 text-sm mt-1">
-            Currently tracking: <span className="text-indigo-400 font-bold">{activeCareer.title}</span>
+          <p className="text-slate-400 text-sm">
+            Target Goal: <strong className="text-indigo-300">{profile.careerGoal}</strong>
           </p>
+          <button
+            onClick={handleAiGenerate}
+            disabled={generating}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-indigo-650 hover:bg-indigo-600 text-xs font-semibold text-white transition-all disabled:opacity-50 cursor-pointer shadow-md select-none"
+          >
+            {generating ? (
+              <>
+                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                <span>Generating custom roadmap...</span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="w-3.5 h-3.5 text-indigo-200" />
+                <span>AI Re-generate Roadmap</span>
+              </>
+            )}
+          </button>
         </div>
 
         {/* Progress Bar Display */}
