@@ -1,159 +1,102 @@
 # DISHA AI 🌟
-
 **Your Direction. Your Growth. Your Future.**
 
-DISHA AI is a premium, AI-powered platform built for **students** and **colleges/campuses**. It acts as a comprehensive student guidance system and a next-generation smart campus operations solution.
+[![React](https://img.shields.io/badge/React-19.2-61DAFB?style=flat&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.0-3178C6?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-8.2-646CFF?style=flat&logo=vite)](https://vitejs.dev/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind-v4.3-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
+[![Hackathon](https://img.shields.io/badge/Hackathon-Tejas%20India%202026-FF6B6B?style=flat)]()
+
+DISHA AI is an intelligent dual-sided ecosystem engineered for **students** and **colleges/campuses**. It combines personalized AI career guidance with real-time smart campus automated operations.
 
 ---
 
 ## 📌 Problem Statement
 
-1. **For Students:** The modern educational landscape is overflowing with documentation, tutorials, and career options. However, students lack a structured, personalized path to map their current competencies to professional job roles. Learning is often fragmented and lacks direction.
-2. **For Colleges & Smart Campuses:** Colleges still rely on outdated, manual processes for student attendance, security validation, and classroom analytics. These manual processes waste valuable lecture time, compromise security, and fail to provide early intervention insights for struggling students.
+1. **For Students:** Modern education is fragmented. Students struggle to identify skill baselines, map structured paths to industry standards, and receive diagnostic feedback on projects and interviews.
+2. **For Colleges & Campuses:** Outdated manual roll-calls and fragmented administrative workflows consume class hours, cause security bottlenecks, and fail to provide early intervention insights.
 
 ---
 
-## 💡 The Solution
-
-DISHA AI bridges this gap with a dual-sided ecosystem:
-
-### 1. Student Guidance System (Primary Identity)
-Helps students answer: *Where am I now? What is my goal? What skills do I need? What should I build and learn next?*
-* **Understand:** Establish a baseline profile by assessing current skills and background.
-* **Goal:** Choose or define custom career destinations (e.g., Fullstack Developer, AI Researcher).
-* **Roadmap:** Generate structured learning plans with curated resources.
-* **Action:** Build real-world portfolio projects and practice adaptive assessments.
-* **Progress:** Monitor metrics and track alignment with market expectations.
-
-### 2. College & Smart Campus Solutions (Campus Extension)
-Introduces modern edge-AI logic to digitize campus administrative operations.
-* **AI Face Detection:** Low-latency localized identification of students.
-* **Smart Attendance:** Automated geofenced or camera-based roll call systems.
-* **Student Analytics:** Engagement and academic dashboards to spot at-risk profiles early.
-* **Campus AI Assistant:** A 24/7 assistant trained on campus regulations, course catalogs, and circulars.
-
----
-
-## 🛠 Technology Stack
-
-* **Frontend Framework:** React 19 (TypeScript)
-* **Build Tool:** Vite 8
-* **Styling Engine:** Tailwind CSS v4 (native Vite integration)
-* **Icon Library:** Lucide React (premium SVG icon set)
-* **Linter:** Oxlint (high-performance lint compiler)
-
----
-
-## 📁 Repository Structure
+## 💡 System Architecture
 
 ```text
-src/
-├── components/          # Reusable UI component blocks
-│   ├── Button.tsx       # Standardized premium buttons (primary, secondary, etc.)
-│   ├── Card.tsx         # Soft glassmorphic containers with hover states
-│   ├── Navbar.tsx       # Responsive navigation header
-│   └── Footer.tsx       # Standardized footers with hackathon badges
-├── data/                # Static data models to keep files tidy
-│   └── landingData.ts   # Navigation, features, and timeline configs
-├── sections/            # Component-level landing page layout segments
-│   ├── Hero.tsx         # Modern hero layout with dashboard code-mockup
-│   ├── SolutionCards.tsx# Dual module cards (Student vs. Smart Campus)
-│   ├── HowItWorks.tsx   # Connective 5-step flow roadmap
-│   ├── StudentFeatures.tsx# 8 student feature preview grid + interactive simulator hook
-│   └── CampusFeatures.tsx # 4 smart campus preview grid + face recognition camera mock
-├── App.tsx              # Application layout controller and simulator states
-├── index.css            # Tailwind CSS configuration and glassmorphic designs
-└── main.tsx             # Root react app launcher
-```
-
----
-
-## 🚀 How to Run the Project
-
-### Prerequisites
-Make sure you have Node.js (v18+) and npm installed.
-
-### 1. Install Dependencies
-```bash
-npm install
-```
-
-### 2. Run the Development Server
-```bash
-npm run dev
-```
-*Open [http://localhost:5173](http://localhost:5173) in your browser.*
-
-### 3. Build for Production
-```bash
-npm run build
-```
-
-### 4. Run Linter Check
-```bash
-npm run lint
++-------------------------------------------------------------------------+
+|                               DISHA AI PLATFORM                         |
++-------------------------------------------------------------------------+
+                                    |
+          +-------------------------+-------------------------+
+          |                                                   |
+          v                                                   v
++-----------------------------+             +-----------------------------+
+|    STUDENT GUIDANCE CORE    |             |    SMART CAMPUS EXTENSION   |
++-----------------------------+             +-----------------------------+
+| - Dynamic Career Roadmaps   |             | - Edge Facial ID Scanner    |
+| - AI Skill Gap Diagnostic   |             | - Automated Roll-Call Hud   |
+| - Smart Markdown Notes      |             | - Classroom Engagement HUD  |
+| - Resume Job Matcher        |             | - Campus Circular AI Bot    |
++-----------------------------+             +-----------------------------+
+          |                                                   |
+          +-------------------------+-------------------------+
+                                    |
+                                    v
++-------------------------------------------------------------------------+
+|                  CORE ENGINE (React 19 + TypeScript + Edge AI)           |
++-------------------------------------------------------------------------+
 ```
 
 ---
 
 ## 👥 Team Exo-Hunter (Tejas India Hackathon 2026)
 
-| Member | Name | Role | Focus Areas | Live Status |
+| Member No. | Name | Role | Focus Areas | Live Status |
 | :---: | :--- | :--- | :--- | :---: |
-| **01** | **Ayush Raj** *(Lead)* | Lead Architect | System Design, React 19 Core, Backend | 🟢 Active |
-| **02** | **Gungun** | AI Systems Lead | Computer Vision, Face Recognition, Analytics | 🟢 Active |
-| **03** | **Jyoti** | Frontend & AI Guidance | Student Roadmaps, Interactive UI, Simulators | 🟢 Active |
-| **04** | **Shubhanshu** | Cloud Infra & QA | CI/CD, Deployment, UI/UX Auditing | 🟢 Active |
+| **01** | **Ayush Raj** *(Lead)* | Lead Architect & Fullstack Systems | System Architecture, React 19 Core, Backend | 🟢 Active |
+| **02** | **Gungun** | AI & Smart Campus Logic Specialist | Computer Vision, Face Recognition, Analytics | 🟢 Active |
+| **03** | **Jyoti** | Frontend & Student AI Guidance Lead | React / TypeScript, Tailwind CSS v4, Simulators | 🟢 Active |
+| **04** | **Shubhanshu** | Cloud Infra, DevOps & UI/UX Specialist | CI/CD, Deployment, UI/UX Auditing, QA | 🟢 Active |
 
 ---
 
-## 📡 Live Hackathon Progress & Updates
+## 📡 Live Hackathon Progress & Commit History
 
-* **🟢 [Active] Team Exo-Hunter (Ayush Raj, Gungun, Jyoti, Shubhanshu):**
-  - Integrated full 4-member Team Exo-Hunter Showcase & Live Updates tracker in UI.
-  - Linked dynamic navigation and active progress verification for evaluators and admins.
-  - Validated React 19 / Vite / Tailwind production build compatibility.
-
----
-
-## 🌟 Milestone 2: Student DISHA Guidance Module (Completed)
-
-We have built the student-facing guidance module as specified in Milestone 2. 
-
-### Key Features Implemented:
-1. **Student Dashboard (`/student/dashboard`)**:
-   - Welcome greeting customized dynamically by time of day.
-   - Quick search input "Ask DISHA anything..." which links directly to the AI Assistant.
-   - Suggested prompts chips for fast navigation.
-   - Summary cards displaying target goals, roadmap status, planner actions, and metrics.
-2. **Student Profile (`/student/profile`)**:
-   - Save and retrieve profile attributes: Name, Course, Branch, Semester, Skills, Interests, Career Goal, Available Study Hours, and Experience Level.
-   - Saves persistent data directly to `localStorage`.
-3. **DISHA AI Chat Assistant (`/student/disha-ai`)**:
-   - Premium chat interface supporting message templates, markdown highlights, and quick questions.
-   - Structured mock AI response system (`mockAiService.ts`) setup to be cleanly swappable with real LLM API pipelines later.
-4. **Personalized Roadmap (`/student/roadmap`)**:
-   - A step-by-step career timeline showing completed, active, and upcoming milestones.
-   - Real-time progress bar computing milestones completed.
-5. **Study Planner (`/student/study-planner`)**:
-   - Daily task checklist showing priorities (High, Medium, Low) and categories.
-   - Syncs checklist status to local storage.
-   - Weekly goals grid tracking study metrics.
-6. **Career Guidance (`/student/career`)**:
-   - Expanding cards for 6 default tech careers (AI/ML, Web Dev, Cloud, Data Science, etc.).
-   - Lists prerequisites, target paths, portfolio projects, and preparation guides.
-7. **Project Guidance (`/student/projects`)**:
-   - Hand-picked project recommendation deck filtered by difficulty and skill requirements.
-8. **Progress Tracker (`/student/progress`)**:
-   - Interactive SVG stats, study streak trackers, weekly hours distributions, and skills heatmaps.
-9. **Responsive Sidebar Layout (`/student`)**:
-   - Premium sidebar navigation on desktop transitioning to an intuitive bottom navigation layout on mobile.
+* **🟢 `feat(student-guidance)`:** Added multi-track Career Roadmap generator (Fullstack, AI/ML, DevOps, UI/UX).
+* **🟢 `feat(quiz-engine)`:** Added interactive skill diagnostic assessment with instant gap feedback.
+* **🟢 `feat(smart-notes)`:** Integrated lecture markdown notes generator and spaced-repetition cards.
+* **🟢 `feat(smart-campus)`:** Integrated real-time camera HUD recognition simulation & attendance metrics.
+* **🟢 `feat(team-showcase)`:** Added full 4-member Team Exo-Hunter interactive showcase with status badges.
+* **🟢 `chore(build)`:** Verified production build with 0 TypeScript/linter errors.
 
 ---
 
-## 🔮 Future Roadmap
+## 🛠 Technology Stack
 
-* **Milestone 1 (Completed):** Establish modern, scalable React/Vite/Tailwind framework and build a premium landing page with interactive simulator previews.
-* **Milestone 2 (Completed):** Complete the Student DISHA Guidance Module using local states, mocks, and full storage integrations.
-* **Milestone 3 (Future):** Embed local face detection logic in the client utilizing TensorFlow.js or a Python FastAPI camera server.
+* **Frontend Framework:** React 19 (TypeScript)
+* **Build Engine:** Vite 8
+* **Styling Engine:** Tailwind CSS v4 (native Vite integration)
+* **Iconography:** Lucide React (premium SVG icon system)
+* **Linting & Code Quality:** Oxlint
 
+---
+
+## 🚀 How to Run the Project Locally
+
+```bash
+# 1. Install Dependencies
+npm install
+
+# 2. Run Development Server
+npm run dev
+
+# 3. Build for Production
+npm run build
+```
+*Local dev server runs on `http://localhost:5173/`.*
+
+---
+
+## 🔮 Roadmap Milestones
+
+* **Milestone 1 (Hackathon MVP):** High-fidelity interactive React 19 UI with multi-track simulators, dynamic roadmap calculator, face recognition HUD, and team roster.
+* **Milestone 2 (Backend AI Integration):** Connect live LLM prompt chains (LangChain / Gemini API) and RAG document parsers.
+* **Milestone 3 (Edge Device Deployment):** Connect Raspberry Pi / camera hardware via WebSocket streams to central attendance server.
