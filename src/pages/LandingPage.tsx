@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Navbar } from '../components/Navbar';
 import { AuthModal } from '../components/AuthModal';
 import { Hero } from '../sections/Hero';
@@ -15,6 +16,7 @@ import {
 } from 'lucide-react';
 
 export const LandingPage = () => {
+  const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('home');
   const [modalType, setModalType] = useState<'student' | 'college' | null>(null);
   const [studentTab, setStudentTab] = useState<'roadmap' | 'quiz' | 'notes'>('roadmap');
@@ -530,8 +532,30 @@ export const LandingPage = () => {
         onClose={() => setAuthModalOpen(false)}
         onSuccess={(userData) => {
           setCurrentUser(userData);
+          try {
+            const savedRaw = localStorage.getItem('disha-student-profile');
+            const currentProfile = savedRaw ? JSON.parse(savedRaw) : {};
+            localStorage.setItem('disha-student-profile', JSON.stringify({
+              name: userData.name || 'Student Learner',
+              course: currentProfile.course || 'B.Tech',
+              branch: currentProfile.branch || 'Computer Science & Engineering',
+              semester: currentProfile.semester || '5th Semester',
+              skills: currentProfile.skills || ['Python', 'JavaScript', 'React', 'TypeScript', 'SQL'],
+              interests: currentProfile.interests || ['Artificial Intelligence', 'Fullstack Development', 'Cloud Computing'],
+              careerGoal: currentProfile.careerGoal || 'AI/ML Engineer',
+              studyHours: currentProfile.studyHours || 4,
+              experienceLevel: currentProfile.experienceLevel || 'intermediate',
+            }));
+          } catch (err) {
+            console.error('Storage sync error:', err);
+          }
           setAuthToast(`🎉 Welcome to DISHA AI, ${userData.name}! Signed in as ${userData.role}.`);
-          setTimeout(() => setAuthToast(null), 4500);
+          setTimeout(() => {
+            setAuthToast(null);
+            if (userData.role === 'student') {
+              navigate('/student');
+            }
+          }, 1000);
         }}
       />
 

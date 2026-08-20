@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: './',
+  base: '/Team-Exo-hunter/',
   plugins: [
     react(),
     tailwindcss(),
@@ -14,4 +14,3 @@ export default defineConfig({
     allowedHosts: true,
   },
 })
-
