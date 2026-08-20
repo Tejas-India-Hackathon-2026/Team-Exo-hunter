@@ -5,191 +5,112 @@ export interface AiMessage {
   timestamp: Date;
 }
 
+// ── Gemini API Configuration ─────────────────────────────────────
+const GEMINI_API_KEY = 'AIzaSyAKqTx1sBKJGR6GR3Yt5NFsniLbYGProWY';
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+// System instruction that shapes DISHA's personality and expertise
+const DISHA_SYSTEM_PROMPT = `You are DISHA AI — an intelligent, friendly, and highly knowledgeable personal AI guidance assistant for students. Your full name stands for "Digital Intelligent Student Helper & Advisor".
+
+Your core capabilities:
+- Career path guidance and personalized roadmaps for students
+- Study plan generation based on goals, semester, and interests
+- Skill gap analysis and learning recommendations
+- Project ideas matched to student's learning stage
+- Resume, interview, and internship preparation tips
+- General knowledge and academic subject help
+
+Behavior guidelines:
+- Be warm, encouraging, and motivational
+- Use emojis sparingly but effectively (🎯 📚 💡 🛠️ 📊)
+- Format responses with **bold headers** and bullet points for readability
+- Keep responses concise but informative (under 300 words unless the topic needs depth)
+- When a student asks something outside academics/career, still answer helpfully but gently steer back to their growth
+- Always end with a follow-up question or suggestion to keep the conversation going
+- If asked who made you, say you were built by Team Exo-Hunter for the Tejas India Hackathon 2026
+
+You are speaking with a B.Tech Computer Science student interested in AI/ML and Fullstack Development.`;
+
+// Conversation history for context-aware responses
+let conversationHistory: Array<{ role: string; parts: Array<{ text: string }> }> = [];
+
+/**
+ * Send a message to the Gemini API and get DISHA's response
+ */
 export async function getAiResponse(userMessage: string): Promise<string> {
-  // Simulate API delay
-  await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
+  // Add user message to conversation history
+  conversationHistory.push({
+    role: 'user',
+    parts: [{ text: userMessage }],
+  });
 
-  const msg = userMessage.toLowerCase();
-
-  // Pattern-matching mock responses
-  if (msg.includes('ai engineer') || msg.includes('artificial intelligence')) {
-    return `Great question! To become an AI Engineer, here's a structured path:
-
-**1. Foundation (Months 1-3)**
-• Master Python programming and data structures
-• Learn Linear Algebra, Probability & Statistics
-
-**2. Core ML (Months 3-6)**
-• Study supervised & unsupervised learning with Scikit-learn
-• Practice on Kaggle datasets and competitions
-
-**3. Deep Learning (Months 6-9)**
-• Learn PyTorch or TensorFlow
-• Build projects: image classifiers, NLP models
-
-**4. Specialization (Months 9-12)**
-• Choose: NLP, Computer Vision, or Reinforcement Learning
-• Build a portfolio with 3-5 real-world projects
-
-**5. Career Prep**
-• Contribute to open-source AI projects
-• Prepare for ML system design interviews
-
-Would you like me to create a detailed study plan for any of these phases?`;
+  // Keep only last 20 messages to avoid token limits
+  if (conversationHistory.length > 20) {
+    conversationHistory = conversationHistory.slice(-20);
   }
 
-  if (msg.includes('study plan') || msg.includes('exam')) {
-    return `Here's a personalized study plan based on your profile:
+  try {
+    const response = await fetch(GEMINI_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        system_instruction: {
+          parts: [{ text: DISHA_SYSTEM_PROMPT }],
+        },
+        contents: conversationHistory,
+        generationConfig: {
+          temperature: 0.8,
+          topP: 0.95,
+          topK: 40,
+          maxOutputTokens: 1024,
+        },
+        safetySettings: [
+          { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_ONLY_HIGH' },
+          { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_ONLY_HIGH' },
+          { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_ONLY_HIGH' },
+          { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_ONLY_HIGH' },
+        ],
+      }),
+    });
 
-📅 **Weekly Study Plan**
+    if (!response.ok) {
+      const errorBody = await response.text();
+      console.error('Gemini API error:', response.status, errorBody);
+      throw new Error(`API returned ${response.status}`);
+    }
 
-**Monday - Wednesday: Core Subjects**
-• 2 hrs: Mathematics (Linear Algebra focus)
-• 1 hr: DSA practice (2-3 LeetCode problems)
-• 1 hr: Theory revision
+    const data = await response.json();
 
-**Thursday - Friday: Practical Skills**
-• 2 hrs: ML/Python hands-on coding
-• 1 hr: Project work
-• 1 hr: Research paper reading
+    // Extract the text from Gemini's response
+    const aiText =
+      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "I'm having trouble generating a response right now. Please try again!";
 
-**Saturday: Projects & Practice**
-• 3 hrs: Portfolio project development
-• 1 hr: Code review and documentation
+    // Add assistant response to conversation history
+    conversationHistory.push({
+      role: 'model',
+      parts: [{ text: aiText }],
+    });
 
-**Sunday: Review & Rest**
-• 1 hr: Week summary & next week planning
-• Rest and recharge!
+    return aiText;
+  } catch (error) {
+    console.error('DISHA AI Error:', error);
 
-💡 **Tip:** Focus on understanding over memorization. Build something with every concept you learn.`;
+    // Remove the failed user message from history
+    conversationHistory.pop();
+
+    return `⚠️ I'm having trouble connecting to my AI engine right now.
+
+**Possible reasons:**
+• Internet connection issue
+• API service temporarily unavailable
+
+**What you can do:**
+• Check your internet connection and try again
+• Try rephrasing your question
+
+I'll be back online shortly! 🔄`;
   }
-
-  if (msg.includes('skill') || msg.includes('learn')) {
-    return `Based on your current profile as a CSE student targeting AI/ML, here are the skills you should prioritize:
-
-🔴 **High Priority (Learn Now)**
-• Mathematics: Linear Algebra, Probability, Calculus
-• Python advanced: NumPy, Pandas, Matplotlib
-• Machine Learning fundamentals
-
-🟡 **Medium Priority (Next Quarter)**
-• Deep Learning with PyTorch
-• Natural Language Processing basics
-• SQL & data engineering
-
-🟢 **Good to Have (Build Over Time)**
-• Cloud deployment (AWS/GCP)
-• Docker & containerization
-• MLOps fundamentals
-
-📊 **Your Current Skill Gaps:**
-You have a strong web dev foundation. Focus on strengthening your math and ML theory to bridge the gap to AI engineering.`;
-  }
-
-  if (msg.includes('project')) {
-    return `Here are some project recommendations matched to your learning stage:
-
-🟢 **Beginner-Friendly (Start Here)**
-1. **Student Performance Predictor** — Use classification to predict grades based on study patterns
-2. **Sentiment Analyzer** — Analyze product reviews using NLP
-
-🟡 **Intermediate (Build Next)**
-3. **AI Resume Analyzer** — Match resumes to job descriptions using NLP
-4. **Attendance Analytics Dashboard** — Visualize campus data
-
-🔴 **Advanced (Challenge Yourself)**
-5. **Campus AI Assistant** — RAG-based chatbot trained on college data
-6. **Face Recognition System** — Real-time face detection for attendance
-
-💡 **Tip:** Start with project #1, document it well on GitHub, and write a blog post about your approach. This builds your portfolio significantly!`;
-  }
-
-  if (msg.includes('career') || msg.includes('suitable')) {
-    return `Based on your profile analysis, here are your top career matches:
-
-🥇 **AI/ML Engineer** — 92% match
-Your programming skills + interest in AI make this an excellent fit. Focus on mathematics and ML theory.
-
-🥈 **Data Scientist** — 85% match
-Strong Python + SQL foundation. Build statistics and visualization skills.
-
-🥉 **Software Developer** — 80% match
-You already have web dev skills. Strengthen DSA and system design.
-
-📊 **Why AI/ML Engineer is #1 for you:**
-• You have Python proficiency ✅
-• You're interested in AI ✅
-• Your semester allows time for deep learning ✅
-• Growing market demand 📈
-
-Would you like to explore the detailed roadmap for any of these careers?`;
-  }
-
-  if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey')) {
-    return `Hello! 👋 I'm DISHA, your personal AI guidance assistant.
-
-I can help you with:
-• 🎯 Career path guidance and roadmaps
-• 📚 Personalized study plans
-• 💡 Skill recommendations
-• 🛠️ Project suggestions
-• 📊 Progress tracking tips
-
-What would you like to explore today?`;
-  }
-
-  if (msg.includes('internship')) {
-    return `Here's your internship preparation strategy:
-
-**3-Month Action Plan:**
-
-📋 **Month 1: Foundation**
-• Complete 100 LeetCode problems (Easy + Medium)
-• Build 2 portfolio projects with clean documentation
-• Create/update LinkedIn & GitHub profiles
-
-📋 **Month 2: Applications**
-• Research target companies and their tech stacks
-• Customize resume for each application
-• Practice mock interviews (technical + HR)
-
-📋 **Month 3: Interview Prep**
-• System design basics
-• ML-specific interview questions
-• Behavioral STAR format answers
-
-🎯 **Top Platforms for AI/ML Internships:**
-• LinkedIn, AngelList, Internshala
-• Company career pages (Google, Microsoft, Amazon)
-• Research lab positions at IITs/IISc
-
-Would you like me to help you prepare for a specific type of internship?`;
-  }
-
-  // Default response
-  return `That's a great question! Let me help you with that.
-
-Based on your profile as a **${getTimeBasedGreeting()}** CSE student interested in AI/ML, I'd recommend:
-
-1. **Stay focused** on your current roadmap step
-2. **Practice daily** — even 30 minutes of coding helps
-3. **Build projects** that demonstrate your skills
-4. **Network** with peers and mentors in your field
-
-Would you like me to dive deeper into any specific topic? I can help with:
-• Career guidance 🎯
-• Study planning 📚
-• Skill development 💡
-• Project ideas 🛠️
-
-Just ask me anything!`;
-}
-
-function getTimeBasedGreeting(): string {
-  const hour = new Date().getHours();
-  if (hour < 12) return 'morning';
-  if (hour < 17) return 'afternoon';
-  return 'evening';
 }
 
 /**
