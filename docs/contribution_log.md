@@ -34,3 +34,4 @@
 * Commit #34: refactor: standardize function declarations inside student portal - Completed on 08/20/2026 19:17:13
 * Commit #35: style: clean up duplicate Tailwind margin properties - Completed on 08/20/2026 19:17:13
 * Commit #36: refactor: remove redundant console info inside router hooks - Completed on 08/20/2026 19:17:14
+* Commit #37: style: update scrollbar glow behavior on mobile layout - Completed on 08/20/2026 19:17:15
