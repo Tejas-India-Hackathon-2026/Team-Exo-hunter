@@ -405,3 +405,5 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 // AI Annotation #197: verify responsive grid column ratios - verified on 08/21/2026 09:41:04
 
 // AI Annotation #206: verify modal visibility transition classes - verified on 08/21/2026 09:41:09
+
+// AI Annotation #215: verify webcam camera media constraints - verified on 08/21/2026 09:41:14
