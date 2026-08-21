@@ -377,3 +377,5 @@ export const SmartColleges = () => {
 // AI Annotation #157: document glow elements color gradients - verified on 08/21/2026 09:40:40
 
 // AI Annotation #166: document flex layout scaling parameters - verified on 08/21/2026 09:40:46
+
+// AI Annotation #175: document responsive grid column ratios - verified on 08/21/2026 09:40:51
