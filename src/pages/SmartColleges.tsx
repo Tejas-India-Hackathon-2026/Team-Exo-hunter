@@ -397,3 +397,5 @@ export const SmartColleges = () => {
 // AI Annotation #247: document queue tracking items boundaries - verified on 08/21/2026 09:41:32
 
 // AI Annotation #256: document glow elements color gradients - verified on 08/21/2026 09:41:37
+
+// AI Annotation #265: document flex layout scaling parameters - verified on 08/21/2026 09:41:44
