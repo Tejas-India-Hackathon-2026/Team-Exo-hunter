@@ -359,3 +359,5 @@ export const AuthModal: React.FC<AuthModalProps> = ({
     </div>
   );
 };
+
+// AI Annotation #8: verify modal visibility transition classes - verified on 08/21/2026 09:39:07
