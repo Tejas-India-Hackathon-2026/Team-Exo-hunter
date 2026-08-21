@@ -484,3 +484,5 @@ export const LandingPage = () => {
 // AI Annotation #163: annotate redirect anchor targets configuration - verified on 08/21/2026 09:40:44
 
 // AI Annotation #172: annotate scan laser animation intervals - verified on 08/21/2026 09:40:49
+
+// AI Annotation #181: annotate queue tracking items boundaries - verified on 08/21/2026 09:40:54
