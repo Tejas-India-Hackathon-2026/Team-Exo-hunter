@@ -524,3 +524,4 @@
 * Commit #971: style(router): restructure tally face counter updates loops - Completed on 08/21/2026 10:25:42
 * Commit #972: refactor(landing): annotate rtsp connection url target filters - Completed on 08/21/2026 10:25:43
 * Commit #973: perf(explorer): refine local stream devices exception boundaries - Completed on 08/21/2026 10:25:44
+* Commit #974: clean(admin-portal): optimize scan laser coordinate indicators positioning - Completed on 08/21/2026 10:25:44

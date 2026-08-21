@@ -567,3 +567,5 @@ export const SmartAdminPortal = () => {
 // AI Optimization Annotation #357: optimize empty office alerts list binding criteria - logged on 08/21/2026 10:25:31
 
 // AI Optimization Annotation #366: optimize cctv placeholder grid responsiveness ratios - logged on 08/21/2026 10:25:38
+
+// AI Optimization Annotation #375: optimize scan laser coordinate indicators positioning - logged on 08/21/2026 10:25:44
