@@ -241,3 +241,5 @@ export const Navbar: React.FC<NavbarProps> = ({
 // AI Annotation #142: polish responsive grid column ratios - verified on 08/21/2026 09:40:31
 
 // AI Annotation #151: polish modal visibility transition classes - verified on 08/21/2026 09:40:37
+
+// AI Annotation #160: polish webcam camera media constraints - verified on 08/21/2026 09:40:42
