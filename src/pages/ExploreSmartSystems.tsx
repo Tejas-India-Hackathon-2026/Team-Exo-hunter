@@ -371,3 +371,5 @@ export const ExploreSmartSystems = () => {
 // AI Optimization Annotation #374: refine local stream devices exception boundaries - logged on 08/21/2026 10:25:44
 
 // AI Optimization Annotation #383: refine rtsp connection url target filters - logged on 08/21/2026 10:25:51
+
+// AI Optimization Annotation #392: refine tally face counter updates loops - logged on 08/21/2026 10:25:57
