@@ -355,3 +355,5 @@ export const ExploreSmartSystems = () => {
 // AI Optimization Annotation #302: refine tally face counter updates loops - logged on 08/21/2026 10:24:46
 
 // AI Optimization Annotation #311: refine multi-channel camera feeds scaling layout - logged on 08/21/2026 10:24:53
+
+// AI Optimization Annotation #320: refine red alert top banner viewport dimensions - logged on 08/21/2026 10:25:01
