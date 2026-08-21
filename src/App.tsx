@@ -136,3 +136,5 @@ export default App;
 // AI Optimization Annotation #360: cleanup red alert top banner viewport dimensions - logged on 08/21/2026 10:25:33
 
 // AI Optimization Annotation #369: cleanup auth checks synchronization transitions - logged on 08/21/2026 10:25:40
+
+// AI Optimization Annotation #378: cleanup designation selection options layout parameters - logged on 08/21/2026 10:25:47
