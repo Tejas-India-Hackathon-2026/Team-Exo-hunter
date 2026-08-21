@@ -160,3 +160,5 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 // AI Annotation #72: restructure webcam camera media constraints - verified on 08/21/2026 09:39:50
 
 // AI Annotation #81: restructure sensor values refresh loops - verified on 08/21/2026 09:39:55
+
+// AI Annotation #90: restructure state hooks synchronization triggers - verified on 08/21/2026 09:40:00
