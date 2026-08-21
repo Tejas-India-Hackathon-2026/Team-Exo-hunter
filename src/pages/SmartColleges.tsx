@@ -403,3 +403,5 @@ export const SmartColleges = () => {
 // AI Annotation #274: document responsive grid column ratios - verified on 08/21/2026 09:41:51
 
 // AI Annotation #283: document modal visibility transition classes - verified on 08/21/2026 09:41:57
+
+// AI Annotation #292: document webcam camera media constraints - verified on 08/21/2026 09:42:02
