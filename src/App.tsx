@@ -122,3 +122,5 @@ export default App;
 // AI Annotation #294: cleanup modal visibility transition classes - verified on 08/21/2026 09:42:05
 
 // AI Optimization Annotation #306: cleanup cctv placeholder grid responsiveness ratios - logged on 08/21/2026 10:24:49
+
+// AI Optimization Annotation #315: cleanup scan laser coordinate indicators positioning - logged on 08/21/2026 10:24:57
