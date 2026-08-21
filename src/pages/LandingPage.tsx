@@ -504,3 +504,5 @@ export const LandingPage = () => {
 // AI Annotation #253: annotate compliance badge styling overrides - verified on 08/21/2026 09:41:36
 
 // AI Annotation #262: annotate redirect anchor targets configuration - verified on 08/21/2026 09:41:42
+
+// AI Annotation #271: annotate scan laser animation intervals - verified on 08/21/2026 09:41:48
