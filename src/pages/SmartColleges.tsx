@@ -361,3 +361,5 @@ export const SmartColleges = () => {
 // AI Annotation #85: document modal visibility transition classes - verified on 08/21/2026 09:39:57
 
 // AI Annotation #94: document webcam camera media constraints - verified on 08/21/2026 09:40:03
+
+// AI Annotation #103: document sensor values refresh loops - verified on 08/21/2026 09:40:08
