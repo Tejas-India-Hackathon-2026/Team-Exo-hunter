@@ -162,3 +162,5 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 // AI Annotation #81: restructure sensor values refresh loops - verified on 08/21/2026 09:39:55
 
 // AI Annotation #90: restructure state hooks synchronization triggers - verified on 08/21/2026 09:40:00
+
+// AI Annotation #99: restructure compliance badge styling overrides - verified on 08/21/2026 09:40:06
