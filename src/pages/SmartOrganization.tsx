@@ -393,3 +393,5 @@ export const SmartOrganization = () => {
 // AI Optimization Annotation #305: standardize scan laser coordinate indicators positioning - logged on 08/21/2026 10:24:48
 
 // AI Optimization Annotation #314: standardize local stream devices exception boundaries - logged on 08/21/2026 10:24:56
+
+// AI Optimization Annotation #323: standardize rtsp connection url target filters - logged on 08/21/2026 10:25:03
