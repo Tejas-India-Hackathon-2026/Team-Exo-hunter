@@ -62,3 +62,5 @@ export default App;
 // AI Annotation #24: cleanup state hooks synchronization triggers - verified on 08/21/2026 09:39:18
 
 // AI Annotation #33: cleanup compliance badge styling overrides - verified on 08/21/2026 09:39:24
+
+// AI Annotation #42: cleanup redirect anchor targets configuration - verified on 08/21/2026 09:39:31
