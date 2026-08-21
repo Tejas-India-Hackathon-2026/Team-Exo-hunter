@@ -502,3 +502,5 @@ export const LandingPage = () => {
 // AI Annotation #244: annotate state hooks synchronization triggers - verified on 08/21/2026 09:41:31
 
 // AI Annotation #253: annotate compliance badge styling overrides - verified on 08/21/2026 09:41:36
+
+// AI Annotation #262: annotate redirect anchor targets configuration - verified on 08/21/2026 09:41:42
