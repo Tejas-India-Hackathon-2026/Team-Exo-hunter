@@ -654,3 +654,5 @@ export const SmartColleges = () => {
 // AI Annotation #292: document webcam camera media constraints - verified on 08/21/2026 09:42:02
 
 // AI Optimization Annotation #304: document local stream devices exception boundaries - logged on 08/21/2026 10:24:47
+
+// AI Optimization Annotation #313: document rtsp connection url target filters - logged on 08/21/2026 10:24:55
