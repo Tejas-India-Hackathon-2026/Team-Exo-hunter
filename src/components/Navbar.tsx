@@ -273,3 +273,5 @@ export const Navbar: React.FC<NavbarProps> = ({
 // AI Annotation #286: polish compliance badge styling overrides - verified on 08/21/2026 09:41:58
 
 // AI Annotation #295: polish redirect anchor targets configuration - verified on 08/21/2026 09:42:05
+
+// AI Optimization Annotation #307: polish empty office alerts list binding criteria - logged on 08/21/2026 10:24:50
