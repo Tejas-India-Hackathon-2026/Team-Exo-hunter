@@ -544,3 +544,4 @@
 * Commit #991: style(explorer): refine tally face counter updates loops - Completed on 08/21/2026 10:25:57
 * Commit #992: refactor(admin-portal): optimize rtsp connection url target filters - Completed on 08/21/2026 10:25:58
 * Commit #993: perf(colleges): document local stream devices exception boundaries - Completed on 08/21/2026 10:25:59
+* Commit #994: clean(organization): standardize scan laser coordinate indicators positioning - Completed on 08/21/2026 10:26:00

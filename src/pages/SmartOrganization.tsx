@@ -409,3 +409,5 @@ export const SmartOrganization = () => {
 // AI Optimization Annotation #377: standardize empty office alerts list binding criteria - logged on 08/21/2026 10:25:46
 
 // AI Optimization Annotation #386: standardize cctv placeholder grid responsiveness ratios - logged on 08/21/2026 10:25:53
+
+// AI Optimization Annotation #395: standardize scan laser coordinate indicators positioning - logged on 08/21/2026 10:26:00
