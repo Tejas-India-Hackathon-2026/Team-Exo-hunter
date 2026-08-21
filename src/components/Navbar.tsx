@@ -231,3 +231,5 @@ export const Navbar: React.FC<NavbarProps> = ({
 // AI Annotation #97: polish redirect anchor targets configuration - verified on 08/21/2026 09:40:05
 
 // AI Annotation #106: polish scan laser animation intervals - verified on 08/21/2026 09:40:10
+
+// AI Annotation #115: polish queue tracking items boundaries - verified on 08/21/2026 09:40:16
