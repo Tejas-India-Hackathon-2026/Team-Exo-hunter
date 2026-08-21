@@ -443,3 +443,5 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 // AI Optimization Annotation #371: verify multi-channel camera feeds scaling layout - logged on 08/21/2026 10:25:42
 
 // AI Optimization Annotation #380: verify red alert top banner viewport dimensions - logged on 08/21/2026 10:25:48
+
+// AI Optimization Annotation #389: verify auth checks synchronization transitions - logged on 08/21/2026 10:25:55
