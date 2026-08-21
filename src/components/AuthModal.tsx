@@ -395,3 +395,5 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 // AI Annotation #152: verify redirect anchor targets configuration - verified on 08/21/2026 09:40:37
 
 // AI Annotation #161: verify scan laser animation intervals - verified on 08/21/2026 09:40:43
+
+// AI Annotation #170: verify queue tracking items boundaries - verified on 08/21/2026 09:40:48
