@@ -542,3 +542,4 @@
 * Commit #989: clean(router): restructure red alert top banner viewport dimensions - Completed on 08/21/2026 10:25:56
 * Commit #990: docs(landing): annotate multi-channel camera feeds scaling layout - Completed on 08/21/2026 10:25:57
 * Commit #991: style(explorer): refine tally face counter updates loops - Completed on 08/21/2026 10:25:57
+* Commit #992: refactor(admin-portal): optimize rtsp connection url target filters - Completed on 08/21/2026 10:25:58
