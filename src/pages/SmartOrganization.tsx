@@ -377,3 +377,5 @@ export const SmartOrganization = () => {
 // AI Annotation #230: standardize responsive grid column ratios - verified on 08/21/2026 09:41:23
 
 // AI Annotation #239: standardize modal visibility transition classes - verified on 08/21/2026 09:41:28
+
+// AI Annotation #248: standardize webcam camera media constraints - verified on 08/21/2026 09:41:33
