@@ -670,3 +670,5 @@ export const SmartColleges = () => {
 // AI Optimization Annotation #367: document empty office alerts list binding criteria - logged on 08/21/2026 10:25:39
 
 // AI Optimization Annotation #376: document cctv placeholder grid responsiveness ratios - logged on 08/21/2026 10:25:45
+
+// AI Optimization Annotation #385: document scan laser coordinate indicators positioning - logged on 08/21/2026 10:25:52
