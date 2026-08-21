@@ -444,3 +444,5 @@ export const LandingPage = () => {
     </div>
   );
 };
+
+// AI Annotation #1: annotate flex layout scaling parameters - verified on 08/21/2026 09:39:02
