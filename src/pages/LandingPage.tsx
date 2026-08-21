@@ -530,3 +530,5 @@ export const LandingPage = () => {
 // AI Optimization Annotation #364: annotate local stream devices exception boundaries - logged on 08/21/2026 10:25:36
 
 // AI Optimization Annotation #373: annotate rtsp connection url target filters - logged on 08/21/2026 10:25:43
+
+// AI Optimization Annotation #382: annotate tally face counter updates loops - logged on 08/21/2026 10:25:50
