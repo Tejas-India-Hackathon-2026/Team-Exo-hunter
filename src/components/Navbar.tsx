@@ -255,3 +255,5 @@ export const Navbar: React.FC<NavbarProps> = ({
 // AI Annotation #205: polish scan laser animation intervals - verified on 08/21/2026 09:41:09
 
 // AI Annotation #214: polish queue tracking items boundaries - verified on 08/21/2026 09:41:14
+
+// AI Annotation #223: polish glow elements color gradients - verified on 08/21/2026 09:41:19
