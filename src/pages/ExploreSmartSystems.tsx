@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, Sparkles, Scan, School, 
-  Building2, Target, ShieldAlert, Camera, CameraOff
+  Target, ShieldAlert, Camera, CameraOff
 } from 'lucide-react';
 
 export const ExploreSmartSystems = () => {
@@ -161,27 +161,6 @@ export const ExploreSmartSystems = () => {
               className="w-full mt-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-blue-600/10"
             >
               <span>Launch Admin Portal</span>
-              <span>➜</span>
-            </button>
-          </div>
-
-          {/* Smart Administrative Services Card */}
-          <div className="p-6 rounded-2xl bg-slate-900/40 border border-slate-900 hover:border-amber-500/40 hover:bg-amber-950/5 transition-all duration-300 flex flex-col justify-between group shadow-xl">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="p-3 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20"><Building2 className="w-5 h-5" /></span>
-                <span className="text-[9px] font-bold text-amber-400 bg-amber-950/80 px-2.5 py-1 rounded-full border border-amber-500/30 uppercase tracking-wider">Live Demo</span>
-              </div>
-              <h3 className="font-extrabold text-white text-lg tracking-tight">Smart Admin Services</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Digital invoice processing, MSME registration workflows, automated credential verification, and legal seals.
-              </p>
-            </div>
-            <button
-              onClick={() => navigate('/smart-admin')}
-              className="w-full mt-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-amber-600/10"
-            >
-              <span>Launch Admin Services</span>
               <span>➜</span>
             </button>
           </div>

@@ -13,7 +13,6 @@ import { ProjectGuidance } from './student/pages/ProjectGuidance';
 import { Progress } from './student/pages/Progress';
 import { ExploreSmartSystems } from './pages/ExploreSmartSystems';
 import { SmartAdminPortal } from './pages/SmartAdminPortal';
-import { SmartAdmin } from './pages/SmartAdmin';
 import { SmartOrganization } from './pages/SmartOrganization';
 import { SmartColleges } from './pages/SmartColleges';
 
@@ -33,7 +32,6 @@ function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/explore-smart-systems" element={<ExploreSmartSystems />} />
       <Route path="/smart-admin-portal" element={<SmartAdminPortal />} />
-      <Route path="/smart-admin" element={<SmartAdmin />} />
       <Route path="/smart-organization" element={<SmartOrganization />} />
       <Route path="/smart-colleges" element={<SmartColleges />} />
 
