@@ -438,3 +438,4 @@
 * Commit #831: style(colleges): apply overlay colors to mock camera laser lines - Completed on 08/21/2026 10:14:01
 * Commit #832: refactor(colleges): link checkin events with face scanner outputs - Completed on 08/21/2026 10:14:02
 * Commit #833: style(colleges): polish layout sizing inside surveillance page - Completed on 08/21/2026 10:14:03
+* Commit #834: refactor(colleges): hook camera stream controls with stop disconnect - Completed on 08/21/2026 10:14:03
