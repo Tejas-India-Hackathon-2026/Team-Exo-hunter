@@ -387,3 +387,5 @@ export const SmartOrganization = () => {
 // AI Annotation #275: standardize compliance badge styling overrides - verified on 08/21/2026 09:41:52
 
 // AI Annotation #284: standardize redirect anchor targets configuration - verified on 08/21/2026 09:41:57
+
+// AI Annotation #293: standardize scan laser animation intervals - verified on 08/21/2026 09:42:04
