@@ -70,3 +70,5 @@ export default App;
 // AI Annotation #60: cleanup queue tracking items boundaries - verified on 08/21/2026 09:39:43
 
 // AI Annotation #69: cleanup glow elements color gradients - verified on 08/21/2026 09:39:48
+
+// AI Annotation #78: cleanup flex layout scaling parameters - verified on 08/21/2026 09:39:53
