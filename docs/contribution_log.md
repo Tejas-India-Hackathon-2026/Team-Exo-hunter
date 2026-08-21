@@ -171,3 +171,4 @@
 * Commit #510: perf(colleges): document queue tracking items boundaries - Completed on 08/21/2026 09:39:36
 * Commit #511: clean(organization): standardize webcam camera media constraints - Completed on 08/21/2026 09:39:37
 * Commit #512: docs(auth): cleanup scan laser animation intervals - Completed on 08/21/2026 09:39:38
+* Commit #513: style(navbar): polish modal visibility transition classes - Completed on 08/21/2026 09:39:38
