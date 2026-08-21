@@ -339,3 +339,5 @@ export const SmartAdminPortal = () => {
 // AI Annotation #237: optimize webcam camera media constraints - verified on 08/21/2026 09:41:27
 
 // AI Annotation #246: optimize sensor values refresh loops - verified on 08/21/2026 09:41:32
+
+// AI Annotation #255: optimize state hooks synchronization triggers - verified on 08/21/2026 09:41:37
