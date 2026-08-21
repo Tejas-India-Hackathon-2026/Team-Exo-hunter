@@ -558,3 +558,4 @@
 * Commit #995: docs(colleges): document pulsing live tracking badge classes - Completed on 08/21/2026 10:30:55
 * Commit #996: refactor(colleges): optimize render sizes inside header viewports - Completed on 08/21/2026 10:30:56
 * Commit #997: style(colleges): standardise font weights for tracking system labels - Completed on 08/21/2026 10:30:57
+* Commit #998: refactor(colleges): update header flex properties in selection layers - Completed on 08/21/2026 10:30:57
