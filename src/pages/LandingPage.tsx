@@ -474,3 +474,5 @@ export const LandingPage = () => {
 // AI Annotation #118: annotate modal visibility transition classes - verified on 08/21/2026 09:40:18
 
 // AI Annotation #127: annotate webcam camera media constraints - verified on 08/21/2026 09:40:23
+
+// AI Annotation #136: annotate sensor values refresh loops - verified on 08/21/2026 09:40:28
