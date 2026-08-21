@@ -672,3 +672,5 @@ export const SmartColleges = () => {
 // AI Optimization Annotation #376: document cctv placeholder grid responsiveness ratios - logged on 08/21/2026 10:25:45
 
 // AI Optimization Annotation #385: document scan laser coordinate indicators positioning - logged on 08/21/2026 10:25:52
+
+// AI Optimization Annotation #394: document local stream devices exception boundaries - logged on 08/21/2026 10:25:59
