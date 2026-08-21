@@ -389,3 +389,5 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 // AI Annotation #125: verify sensor values refresh loops - verified on 08/21/2026 09:40:22
 
 // AI Annotation #134: verify state hooks synchronization triggers - verified on 08/21/2026 09:40:27
+
+// AI Annotation #143: verify compliance badge styling overrides - verified on 08/21/2026 09:40:32
