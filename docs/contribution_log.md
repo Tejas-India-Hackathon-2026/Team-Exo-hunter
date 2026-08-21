@@ -492,3 +492,4 @@
 * Commit #939: clean(colleges): document red alert top banner viewport dimensions - Completed on 08/21/2026 10:25:15
 * Commit #940: docs(organization): standardize multi-channel camera feeds scaling layout - Completed on 08/21/2026 10:25:16
 * Commit #941: style(auth): cleanup tally face counter updates loops - Completed on 08/21/2026 10:25:17
+* Commit #942: refactor(navbar): polish rtsp connection url target filters - Completed on 08/21/2026 10:25:17
