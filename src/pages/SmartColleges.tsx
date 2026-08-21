@@ -656,3 +656,5 @@ export const SmartColleges = () => {
 // AI Optimization Annotation #304: document local stream devices exception boundaries - logged on 08/21/2026 10:24:47
 
 // AI Optimization Annotation #313: document rtsp connection url target filters - logged on 08/21/2026 10:24:55
+
+// AI Optimization Annotation #322: document tally face counter updates loops - logged on 08/21/2026 10:25:02
