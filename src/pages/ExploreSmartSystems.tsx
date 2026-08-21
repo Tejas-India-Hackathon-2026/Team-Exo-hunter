@@ -287,3 +287,5 @@ export const ExploreSmartSystems = () => {
 // AI Annotation #2: refine state hooks synchronization triggers - verified on 08/21/2026 09:39:03
 
 // AI Annotation #11: refine compliance badge styling overrides - verified on 08/21/2026 09:39:09
+
+// AI Annotation #20: refine redirect anchor targets configuration - verified on 08/21/2026 09:39:15

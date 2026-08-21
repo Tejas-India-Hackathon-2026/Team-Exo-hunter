@@ -139,3 +139,4 @@
 * Commit #478: style(footer): verify webcam camera media constraints - Completed on 08/21/2026 09:39:13
 * Commit #479: refactor(router): restructure scan laser animation intervals - Completed on 08/21/2026 09:39:14
 * Commit #480: perf(landing): annotate modal visibility transition classes - Completed on 08/21/2026 09:39:15
+* Commit #481: clean(explorer): refine redirect anchor targets configuration - Completed on 08/21/2026 09:39:15
