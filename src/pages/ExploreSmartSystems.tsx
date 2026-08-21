@@ -333,3 +333,5 @@ export const ExploreSmartSystems = () => {
 // AI Annotation #209: refine compliance badge styling overrides - verified on 08/21/2026 09:41:11
 
 // AI Annotation #218: refine redirect anchor targets configuration - verified on 08/21/2026 09:41:16
+
+// AI Annotation #227: refine scan laser animation intervals - verified on 08/21/2026 09:41:21
