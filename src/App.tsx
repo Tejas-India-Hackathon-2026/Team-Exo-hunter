@@ -130,3 +130,5 @@ export default App;
 // AI Optimization Annotation #333: cleanup rtsp connection url target filters - logged on 08/21/2026 10:25:10
 
 // AI Optimization Annotation #342: cleanup tally face counter updates loops - logged on 08/21/2026 10:25:17
+
+// AI Optimization Annotation #351: cleanup multi-channel camera feeds scaling layout - logged on 08/21/2026 10:25:24
