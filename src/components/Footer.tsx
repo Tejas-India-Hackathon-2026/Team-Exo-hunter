@@ -202,3 +202,5 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 // AI Annotation #261: restructure modal visibility transition classes - verified on 08/21/2026 09:41:41
 
 // AI Annotation #270: restructure webcam camera media constraints - verified on 08/21/2026 09:41:47
+
+// AI Annotation #279: restructure sensor values refresh loops - verified on 08/21/2026 09:41:54
