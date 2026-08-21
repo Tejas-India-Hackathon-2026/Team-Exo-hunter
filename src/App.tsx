@@ -66,3 +66,5 @@ export default App;
 // AI Annotation #42: cleanup redirect anchor targets configuration - verified on 08/21/2026 09:39:31
 
 // AI Annotation #51: cleanup scan laser animation intervals - verified on 08/21/2026 09:39:38
+
+// AI Annotation #60: cleanup queue tracking items boundaries - verified on 08/21/2026 09:39:43
