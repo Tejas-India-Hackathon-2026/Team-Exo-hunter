@@ -377,3 +377,5 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 // AI Annotation #71: verify queue tracking items boundaries - verified on 08/21/2026 09:39:49
 
 // AI Annotation #80: verify glow elements color gradients - verified on 08/21/2026 09:39:54
+
+// AI Annotation #89: verify flex layout scaling parameters - verified on 08/21/2026 09:39:59
