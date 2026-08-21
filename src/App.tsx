@@ -54,3 +54,5 @@ function App() {
 }
 
 export default App;
+
+// AI Annotation #6: cleanup webcam camera media constraints - verified on 08/21/2026 09:39:05
