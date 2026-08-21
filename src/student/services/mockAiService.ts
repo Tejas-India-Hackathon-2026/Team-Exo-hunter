@@ -30,7 +30,7 @@ Behavior guidelines:
 You are speaking with a B.Tech Computer Science student interested in AI/ML and Fullstack Development.`;
 
 // ── Intelligent Contextual Fallback Response Engine ───────────────────
-function generateSmartFallback(prompt: string): string {
+export function generateSmartFallback(prompt: string): string {
   const q = prompt.toLowerCase();
 
   if (q.includes('ai') || q.includes('ml') || q.includes('machine learning') || q.includes('deep learning')) {
@@ -263,7 +263,24 @@ Here are actionable steps and best practices to help you succeed:
 🎯 *Let me know if you would like a detailed roadmap, project recommendations, or a daily task plan for this topic!*`;
 }
 
-export { generateSmartFallback };
+function cleanAndParseJson<T = any>(raw: string, fallback: T): T {
+  if (!raw || typeof raw !== 'string') return fallback;
+  try {
+    let cleaned = raw.trim();
+    if (cleaned.startsWith('```json')) {
+      cleaned = cleaned.slice(7);
+    } else if (cleaned.startsWith('```')) {
+      cleaned = cleaned.slice(3);
+    }
+    if (cleaned.endsWith('```')) {
+      cleaned = cleaned.slice(0, -3);
+    }
+    return JSON.parse(cleaned.trim());
+  } catch (e) {
+    console.warn('JSON parse error from AI response, using fallback:', e);
+    return fallback;
+  }
+}
 
 export async function getAiResponse(
   userMessage: string, 
@@ -273,49 +290,39 @@ export async function getAiResponse(
   const trimmed = userMessage.trim();
   if (!trimmed) return "Please ask a question to get guidance.";
 
+  const apiKey = customApiKey?.trim() || localStorage.getItem('disha-gemini-key')?.trim() || '';
+
   // If no API key is provided, use our intelligent contextual fallback
-  if (!customApiKey || !customApiKey.trim()) {
+  if (!apiKey) {
     return generateSmartFallback(trimmed);
   }
 
   // Sanitize and ensure strict alternating user/model history for Gemini API
-  const sanitizedContents: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }> = [];
+  const contents: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }> = [];
 
-  for (const m of history) {
-    if (!m.content || m.content === 'KEY_NOT_CONFIGURED') continue;
+  let expectedRole: 'user' | 'model' = 'user';
+  for (const m of history.slice(-10)) {
+    const text = m.content?.trim();
+    if (!text || text === 'KEY_NOT_CONFIGURED') continue;
     const role: 'user' | 'model' = m.role === 'user' ? 'user' : 'model';
-
-    // Gemini requires alternating roles. If consecutive same roles occur, combine their text.
-    if (sanitizedContents.length > 0 && sanitizedContents[sanitizedContents.length - 1].role === role) {
-      sanitizedContents[sanitizedContents.length - 1].parts[0].text += `\n\n${m.content}`;
-    } else {
-      sanitizedContents.push({
-        role,
-        parts: [{ text: m.content }],
-      });
+    if (role === expectedRole) {
+      contents.push({ role, parts: [{ text }] });
+      expectedRole = expectedRole === 'user' ? 'model' : 'user';
     }
   }
 
-  // Ensure first message is user role (if history started with assistant welcome message)
-  if (sanitizedContents.length > 0 && sanitizedContents[0].role === 'model') {
-    sanitizedContents.shift();
+  // Ensure last item before current prompt is model, or reset
+  if (contents.length > 0 && contents[contents.length - 1].role === 'user') {
+    contents.pop();
   }
 
-  // Add the current user prompt
-  if (sanitizedContents.length > 0 && sanitizedContents[sanitizedContents.length - 1].role === 'user') {
-    sanitizedContents[sanitizedContents.length - 1].parts[0].text += `\n\n${trimmed}`;
-  } else {
-    sanitizedContents.push({
-      role: 'user',
-      parts: [{ text: trimmed }],
-    });
-  }
+  // Add the current user prompt as the final turn
+  contents.push({
+    role: 'user',
+    parts: [{ text: trimmed }],
+  });
 
-  // Keep last 10 turns to avoid token limits
-  const contents = sanitizedContents.slice(-10);
-
-  const apiKey = customApiKey.trim();
-  const models = ['gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-2.0-flash-lite'];
+  const models = ['gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-1.5-pro'];
   let response: Response | null = null;
   let lastErrorStatus = 200;
   let lastErrorBody = '';
@@ -327,7 +334,7 @@ export async function getAiResponse(
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          system_instruction: {
+          systemInstruction: {
             parts: [{ text: DISHA_SYSTEM_PROMPT }],
           },
           contents: contents,
@@ -345,7 +352,7 @@ export async function getAiResponse(
       } else {
         lastErrorStatus = response.status;
         lastErrorBody = await response.text();
-        console.warn(`Model ${model} returned status ${response.status}`);
+        console.warn(`Gemini model ${model} returned status ${response.status}:`, lastErrorBody);
       }
     } catch (e) {
       console.warn(`Network error with model ${model}:`, e);
@@ -358,7 +365,7 @@ export async function getAiResponse(
       const data = await response.json();
       const aiText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
       if (aiText && aiText.trim()) {
-        return aiText;
+        return aiText.trim();
       }
     } catch (err) {
       console.error('Error parsing Gemini JSON response:', err);
@@ -366,7 +373,7 @@ export async function getAiResponse(
   }
 
   // If API failed due to invalid key, quota, or network, seamlessly use smart fallback
-  console.warn('Gemini API request failed. Falling back to intelligent response engine. Status:', lastErrorStatus, lastErrorBody);
+  console.warn('Gemini API request failed. Falling back to intelligent response engine. Status:', lastErrorStatus);
   return generateSmartFallback(trimmed);
 }
 
@@ -382,19 +389,20 @@ export async function generateDynamicRoadmap(
   currentSkills: string[],
   customApiKey?: string
 ): Promise<any[]> {
-  if (!customApiKey) {
-    return [
-      { id: 1, title: 'Current Level Assessment', description: 'Understand your baseline skills and knowledge gaps', status: 'completed', skills: ['Self Assessment', 'Profile Setup'] },
-      { id: 2, title: 'Programming Fundamentals', description: `Master core programming and structures for ${careerGoal}`, status: 'completed', skills: currentSkills.slice(0, 3) },
-      { id: 3, title: 'Data Structures & Algorithms', description: 'Arrays, Trees, Graphs, Sorting, and Dynamic Programming', status: 'completed', skills: ['DSA', 'Problem Solving'] },
-      { id: 4, title: 'Specialized Foundations', description: `Deep dive into key concepts required for ${careerGoal}`, status: 'current', skills: ['Core Theory', 'Math Foundations'] },
-      { id: 5, title: 'Advanced Frameworks & Libraries', description: 'Hands-on practice with industry-standard packages', status: 'upcoming', skills: ['Frameworks', 'Practical Labs'] },
-      { id: 6, title: 'System Architecture', description: `Design and optimize scalable systems for ${careerGoal}`, status: 'upcoming', skills: ['Architecture', 'Best Practices'] },
-      { id: 7, title: 'Projects & Portfolio', description: 'Build 3-5 real-world projects for your portfolio', status: 'upcoming', skills: ['Portfolio', 'GitHub'] },
-      { id: 8, title: 'Internship Preparation', description: 'Resume, mock interviews, and coding rounds', status: 'upcoming', skills: ['Resume', 'Interview Prep'] },
-      { id: 9, title: 'Ready for Role', description: `Apply and land your dream ${careerGoal} position`, status: 'upcoming', skills: ['Career Ready'] },
-    ];
-  }
+  const fallback = [
+    { id: 1, title: 'Current Level Assessment', description: 'Understand your baseline skills and knowledge gaps', status: 'completed', skills: ['Self Assessment', 'Profile Setup'] },
+    { id: 2, title: 'Programming Fundamentals', description: `Master core programming and structures for ${careerGoal}`, status: 'completed', skills: currentSkills.slice(0, 3) },
+    { id: 3, title: 'Data Structures & Algorithms', description: 'Arrays, Trees, Graphs, Sorting, and Dynamic Programming', status: 'completed', skills: ['DSA', 'Problem Solving'] },
+    { id: 4, title: 'Specialized Foundations', description: `Deep dive into key concepts required for ${careerGoal}`, status: 'current', skills: ['Core Theory', 'Math Foundations'] },
+    { id: 5, title: 'Advanced Frameworks & Libraries', description: 'Hands-on practice with industry-standard packages', status: 'upcoming', skills: ['Frameworks', 'Practical Labs'] },
+    { id: 6, title: 'System Architecture', description: `Design and optimize scalable systems for ${careerGoal}`, status: 'upcoming', skills: ['Architecture', 'Best Practices'] },
+    { id: 7, title: 'Projects & Portfolio', description: 'Build 3-5 real-world projects for your portfolio', status: 'upcoming', skills: ['Portfolio', 'GitHub'] },
+    { id: 8, title: 'Internship Preparation', description: 'Resume, mock interviews, and coding rounds', status: 'upcoming', skills: ['Resume', 'Interview Prep'] },
+    { id: 9, title: 'Ready for Role', description: `Apply and land your dream ${careerGoal} position`, status: 'upcoming', skills: ['Career Ready'] },
+  ];
+
+  const apiKey = customApiKey?.trim() || localStorage.getItem('disha-gemini-key')?.trim() || '';
+  if (!apiKey) return fallback;
 
   const prompt = `Generate a customized 9-step learning roadmap for a student targeting the career goal: "${careerGoal}".
 The student currently has these skills: ${JSON.stringify(currentSkills)}.
@@ -409,11 +417,11 @@ Return the roadmap as a JSON array of 9 steps. Each step must have exactly this 
 Set the first 3 steps status as "completed", step 4 status as "current", and the remaining 5 steps as "upcoming".
 Return ONLY the raw JSON array, without any markdown formatting or backticks.`;
 
-  const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+  const models = ['gemini-1.5-flash', 'gemini-2.0-flash'];
   let response: Response | null = null;
 
   for (const model of models) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${customApiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
     try {
       response = await fetch(url, {
         method: 'POST',
@@ -430,23 +438,13 @@ Return ONLY the raw JSON array, without any markdown formatting or backticks.`;
   }
 
   try {
-    if (!response || !response.ok) throw new Error('All models failed');
+    if (!response || !response.ok) return fallback;
     const data = await response.json();
     const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-    return JSON.parse(text);
+    return cleanAndParseJson(text, fallback);
   } catch (error) {
     console.error('Roadmap generation error, using fallback:', error);
-    return [
-      { id: 1, title: 'Current Level Assessment', description: 'Understand your baseline skills and knowledge gaps', status: 'completed', skills: ['Self Assessment', 'Profile Setup'] },
-      { id: 2, title: 'Programming Fundamentals', description: `Master core programming and structures for ${careerGoal}`, status: 'completed', skills: currentSkills.slice(0, 3) },
-      { id: 3, title: 'Data Structures & Algorithms', description: 'Arrays, Trees, Graphs, Sorting, and Dynamic Programming', status: 'completed', skills: ['DSA', 'Problem Solving'] },
-      { id: 4, title: 'Specialized Foundations', description: `Deep dive into key concepts required for ${careerGoal}`, status: 'current', skills: ['Core Theory', 'Math Foundations'] },
-      { id: 5, title: 'Advanced Frameworks & Libraries', description: 'Hands-on practice with industry-standard packages', status: 'upcoming', skills: ['Frameworks', 'Practical Labs'] },
-      { id: 6, title: 'System Architecture', description: `Design and optimize scalable systems for ${careerGoal}`, status: 'upcoming', skills: ['Architecture', 'Best Practices'] },
-      { id: 7, title: 'Projects & Portfolio', description: 'Build 3-5 real-world projects for your portfolio', status: 'upcoming', skills: ['Portfolio', 'GitHub'] },
-      { id: 8, title: 'Internship Preparation', description: 'Resume, mock interviews, and coding rounds', status: 'upcoming', skills: ['Resume', 'Interview Prep'] },
-      { id: 9, title: 'Ready for Role', description: `Apply and land your dream ${careerGoal} position`, status: 'upcoming', skills: ['Career Ready'] },
-    ];
+    return fallback;
   }
 }
 
@@ -455,33 +453,34 @@ export async function generateDynamicStudyPlan(
   studyHours: number,
   customApiKey?: string
 ): Promise<any[]> {
-  if (!customApiKey) {
-    return [
-      { id: 't1', title: `Study ${careerGoal} core theory chapter 1`, priority: 'high', completed: false, category: 'Theory' },
-      { id: 't2', title: 'Solve 3 DSA problems on LeetCode', priority: 'high', completed: false, category: 'Practice' },
-      { id: 't3', title: 'Watch tutorial on advanced frameworks', priority: 'medium', completed: true, category: 'Frameworks' },
-      { id: 't4', title: 'Build a small prototype project component', priority: 'medium', completed: false, category: 'Projects' },
-      { id: 't5', title: 'Push updated project code to GitHub', priority: 'low', completed: true, category: 'Projects' },
-      { id: 't6', title: 'Review study notes and summarize key concepts', priority: 'medium', completed: false, category: 'Review' },
-    ];
-  }
+  const fallback = [
+    { id: 't1', title: `Study ${careerGoal} core theory chapter 1`, priority: 'high', completed: false, category: 'Theory' },
+    { id: 't2', title: 'Solve 3 DSA problems on LeetCode', priority: 'high', completed: false, category: 'Practice' },
+    { id: 't3', title: 'Watch tutorial on advanced frameworks', priority: 'medium', completed: true, category: 'Frameworks' },
+    { id: 't4', title: 'Build a small prototype project component', priority: 'medium', completed: false, category: 'Projects' },
+    { id: 't5', title: 'Push updated project code to GitHub', priority: 'low', completed: true, category: 'Projects' },
+    { id: 't6', title: 'Review study notes and summarize key concepts', priority: 'medium', completed: false, category: 'Review' },
+  ];
+
+  const apiKey = customApiKey?.trim() || localStorage.getItem('disha-gemini-key')?.trim() || '';
+  if (!apiKey) return fallback;
 
   const prompt = `Generate a customized list of 6 study tasks for a student targeting "${careerGoal}" with ${studyHours} hours of daily study.
-  Return the tasks as a JSON array of 6 objects. Each object must have exactly this JSON format:
-  {
-    "id": "t1",
-    "title": "Task Description",
-    "priority": "high" | "medium" | "low",
-    "completed": boolean,
-    "category": "Practice" | "Theory" | "Projects" | "Review"
-  }
-  Return ONLY the raw JSON array, without any markdown formatting or backticks.`;
+Return the tasks as a JSON array of 6 objects. Each object must have exactly this JSON format:
+{
+  "id": "t1",
+  "title": "Task Description",
+  "priority": "high" | "medium" | "low",
+  "completed": boolean,
+  "category": "Practice" | "Theory" | "Projects" | "Review"
+}
+Return ONLY the raw JSON array, without any markdown formatting or backticks.`;
 
-  const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+  const models = ['gemini-1.5-flash', 'gemini-2.0-flash'];
   let response: Response | null = null;
 
   for (const model of models) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${customApiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
     try {
       response = await fetch(url, {
         method: 'POST',
@@ -498,19 +497,12 @@ export async function generateDynamicStudyPlan(
   }
 
   try {
-    if (!response || !response.ok) throw new Error('All models failed');
+    if (!response || !response.ok) return fallback;
     const data = await response.json();
     const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-    return JSON.parse(text);
+    return cleanAndParseJson(text, fallback);
   } catch (error) {
     console.error('Study plan generation error, using fallback:', error);
-    return [
-      { id: 't1', title: `Study ${careerGoal} core theory chapter 1`, priority: 'high', completed: false, category: 'Theory' },
-      { id: 't2', title: 'Solve 3 DSA problems on LeetCode', priority: 'high', completed: false, category: 'Practice' },
-      { id: 't3', title: 'Watch tutorial on advanced frameworks', priority: 'medium', completed: true, category: 'Frameworks' },
-      { id: 't4', title: 'Build a small prototype project component', priority: 'medium', completed: false, category: 'Projects' },
-      { id: 't5', title: 'Push updated project code to GitHub', priority: 'low', completed: true, category: 'Projects' },
-      { id: 't6', title: 'Review study notes and summarize key concepts', priority: 'medium', completed: false, category: 'Review' },
-    ];
+    return fallback;
   }
 }
