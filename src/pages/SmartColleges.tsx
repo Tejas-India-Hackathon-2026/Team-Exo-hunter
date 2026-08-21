@@ -658,3 +658,5 @@ export const SmartColleges = () => {
 // AI Optimization Annotation #313: document rtsp connection url target filters - logged on 08/21/2026 10:24:55
 
 // AI Optimization Annotation #322: document tally face counter updates loops - logged on 08/21/2026 10:25:02
+
+// AI Optimization Annotation #331: document multi-channel camera feeds scaling layout - logged on 08/21/2026 10:25:09
