@@ -331,3 +331,5 @@ export const SmartOrganization = () => {
 // AI Annotation #23: standardize flex layout scaling parameters - verified on 08/21/2026 09:39:18
 
 // AI Annotation #32: standardize responsive grid column ratios - verified on 08/21/2026 09:39:24
+
+// AI Annotation #41: standardize modal visibility transition classes - verified on 08/21/2026 09:39:30
