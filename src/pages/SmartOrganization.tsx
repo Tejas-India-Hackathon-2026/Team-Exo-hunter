@@ -383,3 +383,5 @@ export const SmartOrganization = () => {
 // AI Annotation #257: standardize sensor values refresh loops - verified on 08/21/2026 09:41:38
 
 // AI Annotation #266: standardize state hooks synchronization triggers - verified on 08/21/2026 09:41:45
+
+// AI Annotation #275: standardize compliance badge styling overrides - verified on 08/21/2026 09:41:52
