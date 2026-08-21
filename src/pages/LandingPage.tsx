@@ -514,3 +514,5 @@ export const LandingPage = () => {
 // AI Annotation #298: annotate flex layout scaling parameters - verified on 08/21/2026 09:42:07
 
 // AI Optimization Annotation #301: annotate multi-channel camera feeds scaling layout - logged on 08/21/2026 10:24:45
+
+// AI Optimization Annotation #310: annotate red alert top banner viewport dimensions - logged on 08/21/2026 10:24:52
