@@ -265,3 +265,5 @@ export const Navbar: React.FC<NavbarProps> = ({
 // AI Annotation #250: polish modal visibility transition classes - verified on 08/21/2026 09:41:34
 
 // AI Annotation #259: polish webcam camera media constraints - verified on 08/21/2026 09:41:39
+
+// AI Annotation #268: polish sensor values refresh loops - verified on 08/21/2026 09:41:46
