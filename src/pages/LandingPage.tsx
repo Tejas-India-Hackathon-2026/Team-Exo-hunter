@@ -450,3 +450,5 @@ export const LandingPage = () => {
 // AI Annotation #10: annotate responsive grid column ratios - verified on 08/21/2026 09:39:08
 
 // AI Annotation #19: annotate modal visibility transition classes - verified on 08/21/2026 09:39:15
+
+// AI Annotation #28: annotate webcam camera media constraints - verified on 08/21/2026 09:39:21
