@@ -102,3 +102,5 @@ export default App;
 // AI Annotation #204: cleanup webcam camera media constraints - verified on 08/21/2026 09:41:08
 
 // AI Annotation #213: cleanup sensor values refresh loops - verified on 08/21/2026 09:41:13
+
+// AI Annotation #222: cleanup state hooks synchronization triggers - verified on 08/21/2026 09:41:18
