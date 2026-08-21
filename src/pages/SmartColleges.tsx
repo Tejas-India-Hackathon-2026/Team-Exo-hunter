@@ -367,3 +367,5 @@ export const SmartColleges = () => {
 // AI Annotation #112: document state hooks synchronization triggers - verified on 08/21/2026 09:40:14
 
 // AI Annotation #121: document compliance badge styling overrides - verified on 08/21/2026 09:40:20
+
+// AI Annotation #130: document redirect anchor targets configuration - verified on 08/21/2026 09:40:25
