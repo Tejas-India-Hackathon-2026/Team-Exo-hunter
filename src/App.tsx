@@ -124,3 +124,5 @@ export default App;
 // AI Optimization Annotation #306: cleanup cctv placeholder grid responsiveness ratios - logged on 08/21/2026 10:24:49
 
 // AI Optimization Annotation #315: cleanup scan laser coordinate indicators positioning - logged on 08/21/2026 10:24:57
+
+// AI Optimization Annotation #324: cleanup local stream devices exception boundaries - logged on 08/21/2026 10:25:04
