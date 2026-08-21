@@ -80,6 +80,53 @@ export const SmartColleges = () => {
     };
   }, []);
 
+  // 4 Cameras config states
+  const [camsConfig, setCamsConfig] = useState([
+    { id: 'CAM-01', name: 'Main Entrance Gate', source: 'Simulated', target: 'rtsp://192.168.1.100:554/gate1', status: 'Online', count: 148 },
+    { id: 'CAM-02', name: 'Hostel Entry Scanner', source: 'Simulated', target: 'rtsp://192.168.1.101:554/hostel', status: 'Online', count: 89 },
+    { id: 'CAM-03', name: 'Central Library Hall', source: 'Simulated', target: 'rtsp://192.168.1.102:554/library', status: 'Online', count: 54 },
+    { id: 'CAM-04', name: 'Canteen Hub surveillance', source: 'Simulated', target: 'rtsp://192.168.1.103:554/canteen', status: 'Online', count: 112 }
+  ]);
+
+  // Selected camera for configuration panel
+  const [activeConfigCam, setActiveConfigCam] = useState('CAM-01');
+  const [ipInput, setIpInput] = useState('192.168.1.100');
+  const [sourceType, setSourceType] = useState<'Simulated' | 'Webcam' | 'IP Camera'>('Simulated');
+
+  // Real-time counter ticker simulation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCamsConfig(prev => prev.map(cam => {
+        const shouldIncrement = Math.random() > 0.6;
+        return {
+          ...cam,
+          count: shouldIncrement ? cam.count + 1 : cam.count
+        };
+      }));
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleConfigSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setCamsConfig(prev => prev.map(cam => {
+      if (cam.id === activeConfigCam) {
+        if (sourceType === 'Webcam') {
+          startLocalCam();
+        } else {
+          stopLocalCam();
+        }
+        return {
+          ...cam,
+          source: sourceType,
+          target: sourceType === 'IP Camera' ? ipInput : 'Local Webcam stream',
+          status: 'Online'
+        };
+      }
+      return cam;
+    }));
+  };
+
   // Gate Logs State
   const [gateLogs, setGateLogs] = useState<GateLog[]>([
     { id: 'GL-901', name: 'Dr. Amit Patel', role: 'Teacher', gate: 'Faculty Gate', time: '07:50 AM', action: 'Entry' },
@@ -294,86 +341,148 @@ export const SmartColleges = () => {
             </div>
           </div>
 
-          {/* Live Web Camera AI Surveillance Playground */}
-          <div className="p-6 rounded-2xl bg-slate-900/40 border border-slate-900 shadow-xl space-y-4">
+          {/* Live Web Camera AI Surveillance Grid & IP Configurator */}
+          <div className="p-6 rounded-2xl bg-slate-900/40 border border-slate-900 shadow-xl space-y-6">
             <div className="flex justify-between items-center">
               <h3 className="text-sm font-extrabold text-white flex items-center gap-2">
                 <Video className="w-4 h-4 text-sky-400" />
-                Live Camera AI Surveillance Simulator
+                Live 4-CCTV AI Camera Grid
               </h3>
-              <span className="text-[9px] font-bold text-sky-400 bg-sky-950/80 px-2 py-0.5 rounded border border-sky-500/30 uppercase tracking-wider">
-                Live Test
+              <span className="text-[9px] font-bold text-sky-400 bg-sky-950/80 px-2.5 py-1 rounded-full border border-sky-500/30 uppercase tracking-wider">
+                Multi-Channel Active
               </span>
             </div>
 
-            <div className="aspect-video w-full bg-slate-950 border border-slate-800 rounded-xl flex flex-col items-center justify-center relative overflow-hidden">
-              {localCamActive ? (
-                <>
-                  <video 
-                    ref={videoRef}
-                    autoPlay
-                    playsInline
-                    muted
-                    className="w-full h-full object-cover scale-x-[-1]"
-                  />
-                  
-                  {/* Glowing Laser Bounding HUD overlays */}
-                  <div className="absolute inset-0 border border-sky-500/20 pointer-events-none z-10">
-                    {/* Laser line scan */}
-                    <div className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-sky-400 to-transparent z-20 scan-laser" />
-                    
-                    {/* Floating corner brackets */}
-                    <div className="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-sky-400" />
-                    <div className="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-sky-400" />
-                    <div className="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-sky-400" />
-                    <div className="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-sky-400" />
+            {/* 2x2 CCTV Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {camsConfig.map(cam => (
+                <div key={cam.id} className="relative aspect-video bg-slate-950 border border-slate-800 rounded-xl overflow-hidden flex flex-col items-center justify-center group">
+                  {cam.source === 'Webcam' && localCamActive ? (
+                    <video 
+                      ref={videoRef}
+                      autoPlay
+                      playsInline
+                      muted
+                      className="w-full h-full object-cover scale-x-[-1]"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-slate-900/5 flex flex-col items-center justify-center p-3 text-center">
+                      {cam.source === 'IP Camera' ? (
+                        <div className="space-y-1">
+                          <span className="text-[8px] font-mono text-cyan-400 bg-cyan-950/60 border border-cyan-500/20 px-2 py-0.5 rounded uppercase font-bold">RTSP CONNECTED</span>
+                          <p className="text-[8px] text-slate-500 font-mono truncate max-w-[120px]">{cam.target}</p>
+                        </div>
+                      ) : (
+                        <div className="space-y-1">
+                          <span className="text-[8px] font-mono text-slate-400 bg-slate-900 px-2 py-0.5 rounded uppercase">AI SIMULATION LOOP</span>
+                          <p className="text-[9px] text-slate-600">Crossings Detector</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
 
-                    {/* AI HUD Mesh data panel */}
-                    <div className="absolute bottom-4 left-4 p-2 rounded bg-slate-950/90 border border-slate-800 text-[8px] font-mono text-sky-400 space-y-0.5 animate-pulse">
-                      <p className="font-bold text-white flex items-center gap-1">
-                        <span className="h-1 w-1 rounded-full bg-sky-400 animate-ping inline-block" />
-                        AI SCREENER ACTIVE
-                      </p>
-                      <p>MESH ACCURACY: 98.4%</p>
-                      <p>MATCH TEMPLATE: CSE-STUDENT</p>
+                  {/* Bounding scan lasers */}
+                  <div className="absolute inset-0 border border-sky-500/10 pointer-events-none z-10">
+                    <div className="absolute left-0 right-0 h-[1.5px] bg-sky-400/40 scan-laser" />
+                    
+                    {/* Glowing corners */}
+                    <div className="absolute top-2 left-2 w-2 h-2 border-t-2 border-l-2 border-sky-400/60" />
+                    <div className="absolute top-2 right-2 w-2 h-2 border-t-2 border-r-2 border-sky-400/60" />
+                    <div className="absolute bottom-2 left-2 w-2 h-2 border-b-2 border-l-2 border-sky-400/60" />
+                    <div className="absolute bottom-2 right-2 w-2 h-2 border-b-2 border-r-2 border-sky-400/60" />
+
+                    <div className="absolute top-2 left-2 text-[8px] font-mono text-sky-400 font-bold bg-slate-950/80 px-1 py-0.2 rounded leading-none">
+                      {cam.id}
+                    </div>
+                    <div className="absolute top-2 right-2 flex items-center gap-1 bg-slate-950/80 px-1.5 py-0.2 rounded text-[7px] font-mono text-slate-400 leading-none">
+                      <span className="h-1 w-1 rounded-full bg-emerald-500 animate-pulse" />
+                      {cam.status}
+                    </div>
+                    
+                    {/* Face Detection Tally count */}
+                    <div className="absolute bottom-2 right-2 p-1 bg-slate-950/90 border border-slate-800 rounded font-mono text-[8px] text-sky-400 leading-none">
+                      TALLY: <span className="font-bold text-white text-[9px]">{cam.count}</span>
+                    </div>
+                    
+                    <div className="absolute bottom-2 left-2 text-[7px] text-slate-300 truncate max-w-[120px] bg-slate-950/80 px-1 rounded leading-none">
+                      {cam.name}
                     </div>
                   </div>
-                </>
-              ) : (
-                <div className="text-center p-4 space-y-2">
-                  <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500 mx-auto">
-                    <Video className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-400 font-bold">Local Surveillance Feed Offline</p>
-                    <p className="text-[9px] text-slate-600">Activate webcam to simulate real-time facial registration checkpoint scanner.</p>
-                  </div>
                 </div>
-              )}
-
-              <span className="absolute top-3 right-3 flex items-center gap-1 bg-slate-950/80 px-2 py-0.5 rounded border border-slate-800 text-[8px] font-mono text-slate-400 z-10">
-                <span className="h-1.5 w-1.5 rounded-full bg-sky-500 animate-pulse inline-block" />
-                {localCamActive ? 'CAM-WEB-LOCAL' : 'CAM-OFFLINE'}
-              </span>
+              ))}
             </div>
 
-            <div className="flex justify-center gap-3">
-              <button 
-                onClick={localCamActive ? stopLocalCam : startLocalCam}
-                className={`w-full py-2.5 rounded-xl font-bold text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 border ${
-                  localCamActive 
-                    ? 'bg-rose-950/20 border-rose-500/30 text-rose-400 font-bold' 
-                    : 'bg-sky-600 hover:bg-sky-700 border-sky-500/30 text-white shadow-md shadow-sky-500/10 font-bold'
-                }`}
-              >
-                {localCamActive ? <Video className="w-4 h-4 text-rose-400" /> : <Video className="w-4 h-4" />}
-                <span>{localCamActive ? 'Stop Live Camera Test' : 'Start Live Camera Test'}</span>
-              </button>
+            {/* IP Camera Settings and Stream Configurator */}
+            <div className="p-4 rounded-xl bg-slate-950 border border-slate-900 space-y-4">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Configure Camera Feed Source</span>
+              
+              <form onSubmit={handleConfigSubmit} className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-end">
+                <div>
+                  <label className="block text-[9px] font-semibold text-slate-500 uppercase mb-1.5">Select Channel:</label>
+                  <select 
+                    value={activeConfigCam}
+                    onChange={(e) => {
+                      const sel = e.target.value;
+                      setActiveConfigCam(sel);
+                      const activeCam = camsConfig.find(c => c.id === sel);
+                      if (activeCam) {
+                        setSourceType(activeCam.source as any);
+                        setIpInput(activeCam.target.includes('rtsp') ? activeCam.target : '192.168.1.100');
+                      }
+                    }}
+                    className="w-full px-2 py-1.5 text-xs rounded-lg bg-slate-900 border border-slate-800 text-white focus:border-sky-500/50 focus:outline-none transition-colors"
+                  >
+                    {camsConfig.map(c => (
+                      <option key={c.id} value={c.id}>{c.id} - {c.name}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[9px] font-semibold text-slate-500 uppercase mb-1.5">Stream Source Type:</label>
+                  <select 
+                    value={sourceType}
+                    onChange={(e) => setSourceType(e.target.value as any)}
+                    className="w-full px-2 py-1.5 text-xs rounded-lg bg-slate-900 border border-slate-800 text-white focus:border-sky-500/50 focus:outline-none transition-colors cursor-pointer"
+                  >
+                    <option value="Simulated">AI Loop Simulated</option>
+                    <option value="Webcam">Local Web Camera</option>
+                    <option value="IP Camera">IP Address / RTSP URL</option>
+                  </select>
+                </div>
+
+                <div>
+                  {sourceType === 'IP Camera' ? (
+                    <div>
+                      <label className="block text-[9px] font-semibold text-slate-500 uppercase mb-1.5">IP / RTSP URL:</label>
+                      <input 
+                        type="text"
+                        required
+                        value={ipInput}
+                        onChange={(e) => setIpInput(e.target.value)}
+                        placeholder="rtsp://192.168.1.100/feed"
+                        className="w-full px-2 py-1.5 text-xs rounded-lg bg-slate-900 border border-slate-800 text-white focus:border-sky-500/50 focus:outline-none transition-colors"
+                      />
+                    </div>
+                  ) : (
+                    <div className="h-[34px] flex items-center justify-center bg-slate-900/40 border border-slate-900/60 text-slate-500 text-[10px] rounded-lg">
+                      {sourceType === 'Webcam' ? 'Webcam active bounds' : 'Simulation loop active'}
+                    </div>
+                  )}
+                </div>
+
+                <button 
+                  type="submit"
+                  className="sm:col-span-3 py-2 rounded-lg bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs transition-all shadow-md shadow-sky-500/10 cursor-pointer"
+                >
+                  Connect & Stream Source
+                </button>
+              </form>
             </div>
 
             {scanResult && (
               <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-300 flex items-center gap-2 animate-in slide-in-from-bottom-2">
-                <AlertCircle className="w-4 h-4 text-emerald-400 shrink-0" />
+                <AlertCircle className="w-4.5 h-4.5 text-emerald-400 shrink-0" />
                 <span>{scanResult}</span>
               </div>
             )}
