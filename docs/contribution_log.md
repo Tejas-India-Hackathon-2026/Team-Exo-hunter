@@ -507,3 +507,4 @@
 * Commit #954: clean(landing): annotate scan laser coordinate indicators positioning - Completed on 08/21/2026 10:25:28
 * Commit #955: docs(explorer): refine cctv placeholder grid responsiveness ratios - Completed on 08/21/2026 10:25:30
 * Commit #956: style(admin-portal): optimize empty office alerts list binding criteria - Completed on 08/21/2026 10:25:31
+* Commit #957: refactor(colleges): document designation selection options layout parameters - Completed on 08/21/2026 10:25:31

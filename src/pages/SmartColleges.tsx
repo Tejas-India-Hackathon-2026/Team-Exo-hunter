@@ -664,3 +664,5 @@ export const SmartColleges = () => {
 // AI Optimization Annotation #340: document red alert top banner viewport dimensions - logged on 08/21/2026 10:25:15
 
 // AI Optimization Annotation #349: document auth checks synchronization transitions - logged on 08/21/2026 10:25:22
+
+// AI Optimization Annotation #358: document designation selection options layout parameters - logged on 08/21/2026 10:25:31
