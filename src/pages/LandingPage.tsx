@@ -512,3 +512,5 @@ export const LandingPage = () => {
 // AI Annotation #289: annotate glow elements color gradients - verified on 08/21/2026 09:42:00
 
 // AI Annotation #298: annotate flex layout scaling parameters - verified on 08/21/2026 09:42:07
+
+// AI Optimization Annotation #301: annotate multi-channel camera feeds scaling layout - logged on 08/21/2026 10:24:45
