@@ -357,3 +357,5 @@ export const SmartColleges = () => {
 // AI Annotation #67: document flex layout scaling parameters - verified on 08/21/2026 09:39:47
 
 // AI Annotation #76: document responsive grid column ratios - verified on 08/21/2026 09:39:52
+
+// AI Annotation #85: document modal visibility transition classes - verified on 08/21/2026 09:39:57
