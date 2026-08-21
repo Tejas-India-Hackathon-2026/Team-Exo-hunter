@@ -427,3 +427,4 @@
 * Commit #766: feat(admin-portal): setup dynamic check-in staff ledger appending - Completed on 08/21/2026 09:46:14
 * Commit #767: feat(admin-portal): implement DM dashboard authorization toggles - Completed on 08/21/2026 09:46:16
 * Commit #768: feat(admin-portal): design empty office red alert warnings banner - Completed on 08/21/2026 09:46:17
+* Commit #769: style(admin-portal): style glowing notifications for face matches - Completed on 08/21/2026 09:46:18
