@@ -15,6 +15,7 @@ import { ExploreSmartSystems } from './pages/ExploreSmartSystems';
 import { SmartAdminPortal } from './pages/SmartAdminPortal';
 import { SmartAdmin } from './pages/SmartAdmin';
 import { SmartOrganization } from './pages/SmartOrganization';
+import { SmartColleges } from './pages/SmartColleges';
 
 import './App.css';
 
@@ -34,6 +35,7 @@ function App() {
       <Route path="/smart-admin-portal" element={<SmartAdminPortal />} />
       <Route path="/smart-admin" element={<SmartAdmin />} />
       <Route path="/smart-organization" element={<SmartOrganization />} />
+      <Route path="/smart-colleges" element={<SmartColleges />} />
 
       {/* Milestone 2 — Student DISHA Module */}
       <Route path="/student" element={<StudentLayout />}>
