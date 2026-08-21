@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, Trash2, Video, 
@@ -31,6 +31,54 @@ interface Dustbin {
 
 export const SmartColleges = () => {
   const navigate = useNavigate();
+
+  // Local Camera States
+  const [localCamActive, setLocalCamActive] = useState(false);
+  const [cameraError, setCameraError] = useState<string | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+  const [scanResult, setScanResult] = useState<string | null>(null);
+
+  const startLocalCam = async () => {
+    setCameraError(null);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720 } });
+      streamRef.current = stream;
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+      setLocalCamActive(true);
+      
+      // Auto register a scan success log event after 4 seconds
+      setTimeout(() => {
+        setScanResult("✓ Face Matched: Student Rahul Verma (CSE-22-04) identified. Entry logged at Gate 1.");
+      }, 4000);
+    } catch (err: any) {
+      console.error("Camera access error:", err);
+      setCameraError("Unable to access local camera stream.");
+    }
+  };
+
+  const stopLocalCam = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+    }
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
+    setLocalCamActive(false);
+    setScanResult(null);
+  };
+
+  // Clean up camera on unmount
+  useEffect(() => {
+    return () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, []);
 
   // Gate Logs State
   const [gateLogs, setGateLogs] = useState<GateLog[]>([
@@ -244,6 +292,96 @@ export const SmartColleges = () => {
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Live Web Camera AI Surveillance Playground */}
+          <div className="p-6 rounded-2xl bg-slate-900/40 border border-slate-900 shadow-xl space-y-4">
+            <div className="flex justify-between items-center">
+              <h3 className="text-sm font-extrabold text-white flex items-center gap-2">
+                <Video className="w-4 h-4 text-sky-400" />
+                Live Camera AI Surveillance Simulator
+              </h3>
+              <span className="text-[9px] font-bold text-sky-400 bg-sky-950/80 px-2 py-0.5 rounded border border-sky-500/30 uppercase tracking-wider">
+                Live Test
+              </span>
+            </div>
+
+            <div className="aspect-video w-full bg-slate-950 border border-slate-800 rounded-xl flex flex-col items-center justify-center relative overflow-hidden">
+              {localCamActive ? (
+                <>
+                  <video 
+                    ref={videoRef}
+                    autoPlay
+                    playsInline
+                    muted
+                    className="w-full h-full object-cover scale-x-[-1]"
+                  />
+                  
+                  {/* Glowing Laser Bounding HUD overlays */}
+                  <div className="absolute inset-0 border border-sky-500/20 pointer-events-none z-10">
+                    {/* Laser line scan */}
+                    <div className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-sky-400 to-transparent z-20 scan-laser" />
+                    
+                    {/* Floating corner brackets */}
+                    <div className="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-sky-400" />
+                    <div className="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-sky-400" />
+                    <div className="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-sky-400" />
+                    <div className="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-sky-400" />
+
+                    {/* AI HUD Mesh data panel */}
+                    <div className="absolute bottom-4 left-4 p-2 rounded bg-slate-950/90 border border-slate-800 text-[8px] font-mono text-sky-400 space-y-0.5 animate-pulse">
+                      <p className="font-bold text-white flex items-center gap-1">
+                        <span className="h-1 w-1 rounded-full bg-sky-400 animate-ping inline-block" />
+                        AI SCREENER ACTIVE
+                      </p>
+                      <p>MESH ACCURACY: 98.4%</p>
+                      <p>MATCH TEMPLATE: CSE-STUDENT</p>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="text-center p-4 space-y-2">
+                  <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-500 mx-auto">
+                    <Video className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-400 font-bold">Local Surveillance Feed Offline</p>
+                    <p className="text-[9px] text-slate-600">Activate webcam to simulate real-time facial registration checkpoint scanner.</p>
+                  </div>
+                </div>
+              )}
+
+              <span className="absolute top-3 right-3 flex items-center gap-1 bg-slate-950/80 px-2 py-0.5 rounded border border-slate-800 text-[8px] font-mono text-slate-400 z-10">
+                <span className="h-1.5 w-1.5 rounded-full bg-sky-500 animate-pulse inline-block" />
+                {localCamActive ? 'CAM-WEB-LOCAL' : 'CAM-OFFLINE'}
+              </span>
+            </div>
+
+            <div className="flex justify-center gap-3">
+              <button 
+                onClick={localCamActive ? stopLocalCam : startLocalCam}
+                className={`w-full py-2.5 rounded-xl font-bold text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 border ${
+                  localCamActive 
+                    ? 'bg-rose-950/20 border-rose-500/30 text-rose-400 font-bold' 
+                    : 'bg-sky-600 hover:bg-sky-700 border-sky-500/30 text-white shadow-md shadow-sky-500/10 font-bold'
+                }`}
+              >
+                {localCamActive ? <Video className="w-4 h-4 text-rose-400" /> : <Video className="w-4 h-4" />}
+                <span>{localCamActive ? 'Stop Live Camera Test' : 'Start Live Camera Test'}</span>
+              </button>
+            </div>
+
+            {scanResult && (
+              <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-300 flex items-center gap-2 animate-in slide-in-from-bottom-2">
+                <AlertCircle className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>{scanResult}</span>
+              </div>
+            )}
+            {cameraError && (
+              <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-xs text-rose-300">
+                {cameraError}
+              </div>
+            )}
           </div>
 
         </div>
