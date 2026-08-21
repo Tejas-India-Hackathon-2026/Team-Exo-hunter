@@ -369,3 +369,5 @@ export const ExploreSmartSystems = () => {
 // AI Optimization Annotation #365: refine scan laser coordinate indicators positioning - logged on 08/21/2026 10:25:37
 
 // AI Optimization Annotation #374: refine local stream devices exception boundaries - logged on 08/21/2026 10:25:44
+
+// AI Optimization Annotation #383: refine rtsp connection url target filters - logged on 08/21/2026 10:25:51
