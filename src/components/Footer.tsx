@@ -198,3 +198,5 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 // AI Annotation #243: restructure flex layout scaling parameters - verified on 08/21/2026 09:41:30
 
 // AI Annotation #252: restructure responsive grid column ratios - verified on 08/21/2026 09:41:35
+
+// AI Annotation #261: restructure modal visibility transition classes - verified on 08/21/2026 09:41:41

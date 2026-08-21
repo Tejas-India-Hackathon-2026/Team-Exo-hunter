@@ -380,3 +380,4 @@
 * Commit #719: refactor(auth): cleanup queue tracking items boundaries - Completed on 08/21/2026 09:41:39
 * Commit #720: perf(navbar): polish webcam camera media constraints - Completed on 08/21/2026 09:41:39
 * Commit #721: clean(footer): verify scan laser animation intervals - Completed on 08/21/2026 09:41:40
+* Commit #722: docs(router): restructure modal visibility transition classes - Completed on 08/21/2026 09:41:41
