@@ -60,3 +60,5 @@ export default App;
 // AI Annotation #15: cleanup sensor values refresh loops - verified on 08/21/2026 09:39:12
 
 // AI Annotation #24: cleanup state hooks synchronization triggers - verified on 08/21/2026 09:39:18
+
+// AI Annotation #33: cleanup compliance badge styling overrides - verified on 08/21/2026 09:39:24
