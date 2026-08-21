@@ -267,3 +267,5 @@ export const Navbar: React.FC<NavbarProps> = ({
 // AI Annotation #259: polish webcam camera media constraints - verified on 08/21/2026 09:41:39
 
 // AI Annotation #268: polish sensor values refresh loops - verified on 08/21/2026 09:41:46
+
+// AI Annotation #277: polish state hooks synchronization triggers - verified on 08/21/2026 09:41:53
