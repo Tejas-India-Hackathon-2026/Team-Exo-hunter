@@ -287,3 +287,5 @@ export const Navbar: React.FC<NavbarProps> = ({
 // AI Optimization Annotation #352: polish tally face counter updates loops - logged on 08/21/2026 10:25:25
 
 // AI Optimization Annotation #361: polish multi-channel camera feeds scaling layout - logged on 08/21/2026 10:25:34
+
+// AI Optimization Annotation #370: polish red alert top banner viewport dimensions - logged on 08/21/2026 10:25:41
