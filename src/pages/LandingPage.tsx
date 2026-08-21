@@ -518,3 +518,5 @@ export const LandingPage = () => {
 // AI Optimization Annotation #310: annotate red alert top banner viewport dimensions - logged on 08/21/2026 10:24:52
 
 // AI Optimization Annotation #319: annotate auth checks synchronization transitions - logged on 08/21/2026 10:25:00
+
+// AI Optimization Annotation #328: annotate designation selection options layout parameters - logged on 08/21/2026 10:25:07
