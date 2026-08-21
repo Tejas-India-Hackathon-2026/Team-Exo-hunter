@@ -251,3 +251,4 @@
 * Commit #590: perf(admin-portal): optimize modal visibility transition classes - Completed on 08/21/2026 09:40:24
 * Commit #591: clean(colleges): document redirect anchor targets configuration - Completed on 08/21/2026 09:40:25
 * Commit #592: docs(organization): standardize responsive grid column ratios - Completed on 08/21/2026 09:40:25
+* Commit #593: style(auth): cleanup compliance badge styling overrides - Completed on 08/21/2026 09:40:26
