@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { 
-  ArrowLeft, Sparkles, Scan, School, Activity, 
-  Building2, Target 
+  ArrowLeft, Sparkles, Scan, School, 
+  Building2, Target, ShieldAlert
 } from 'lucide-react';
 
 export const ExploreSmartSystems = () => {
@@ -103,23 +103,23 @@ export const ExploreSmartSystems = () => {
             </button>
           </div>
 
-          {/* Smart Hospital Card */}
-          <div className="p-6 rounded-2xl bg-slate-900/40 border border-slate-900 hover:border-rose-500/40 hover:bg-rose-950/5 transition-all duration-300 flex flex-col justify-between group shadow-xl">
+          {/* Smart Administrative Portal Card */}
+          <div className="p-6 rounded-2xl bg-slate-900/40 border border-slate-900 hover:border-blue-500/40 hover:bg-blue-950/5 transition-all duration-300 flex flex-col justify-between group shadow-xl">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="p-3 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20"><Activity className="w-5 h-5" /></span>
-                <span className="text-[9px] font-bold text-rose-400 bg-rose-950/80 px-2.5 py-1 rounded-full border border-rose-500/30 uppercase tracking-wider">Live Demo</span>
+                <span className="p-3 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20"><ShieldAlert className="w-5 h-5" /></span>
+                <span className="text-[9px] font-bold text-blue-400 bg-blue-950/80 px-2.5 py-1 rounded-full border border-blue-500/30 uppercase tracking-wider">Live Demo</span>
               </div>
-              <h3 className="font-extrabold text-white text-lg tracking-tight">Smart Hospital Care</h3>
+              <h3 className="font-extrabold text-white text-lg tracking-tight">Smart Admin Portal</h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                AI clinical queue allocation, real-time patient status dashboards, and automated healthcare parameters updates.
+                DM / SP Governance dashboard to track staff check-ins, punctuality metrics, and AI-detected behavioral alerts.
               </p>
             </div>
             <button
-              onClick={() => navigate('/smart-hospital')}
-              className="w-full mt-6 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-rose-600/10"
+              onClick={() => navigate('/smart-admin-portal')}
+              className="w-full mt-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-blue-600/10"
             >
-              <span>Launch Hospital HUD</span>
+              <span>Launch Admin Portal</span>
               <span>➜</span>
             </button>
           </div>

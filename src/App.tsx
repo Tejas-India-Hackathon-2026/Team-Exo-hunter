@@ -12,7 +12,7 @@ import { CareerGuidance } from './student/pages/CareerGuidance';
 import { ProjectGuidance } from './student/pages/ProjectGuidance';
 import { Progress } from './student/pages/Progress';
 import { ExploreSmartSystems } from './pages/ExploreSmartSystems';
-import { SmartHospital } from './pages/SmartHospital';
+import { SmartAdminPortal } from './pages/SmartAdminPortal';
 import { SmartAdmin } from './pages/SmartAdmin';
 import { SmartOrganization } from './pages/SmartOrganization';
 
@@ -31,7 +31,7 @@ function App() {
       {/* Milestone 1 — Landing Page (fully preserved) */}
       <Route path="/" element={<LandingPage />} />
       <Route path="/explore-smart-systems" element={<ExploreSmartSystems />} />
-      <Route path="/smart-hospital" element={<SmartHospital />} />
+      <Route path="/smart-admin-portal" element={<SmartAdminPortal />} />
       <Route path="/smart-admin" element={<SmartAdmin />} />
       <Route path="/smart-organization" element={<SmartOrganization />} />
 
