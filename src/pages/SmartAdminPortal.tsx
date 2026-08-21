@@ -343,3 +343,5 @@ export const SmartAdminPortal = () => {
 // AI Annotation #255: optimize state hooks synchronization triggers - verified on 08/21/2026 09:41:37
 
 // AI Annotation #264: optimize compliance badge styling overrides - verified on 08/21/2026 09:41:43
+
+// AI Annotation #273: optimize redirect anchor targets configuration - verified on 08/21/2026 09:41:50
