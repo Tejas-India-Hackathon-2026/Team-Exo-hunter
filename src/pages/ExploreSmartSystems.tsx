@@ -359,3 +359,5 @@ export const ExploreSmartSystems = () => {
 // AI Optimization Annotation #320: refine red alert top banner viewport dimensions - logged on 08/21/2026 10:25:01
 
 // AI Optimization Annotation #329: refine auth checks synchronization transitions - logged on 08/21/2026 10:25:07
+
+// AI Optimization Annotation #338: refine designation selection options layout parameters - logged on 08/21/2026 10:25:14
