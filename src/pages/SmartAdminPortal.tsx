@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, ShieldAlert, Users, Bell, AlertTriangle, 
-  Smartphone, UserCheck, Eye, EyeOff, Clock, Camera, CameraOff, UserPlus, Lock, Unlock
+  Smartphone, UserCheck, Eye, EyeOff, Clock, Camera, CameraOff, UserPlus, Lock
 } from 'lucide-react';
 
 interface StaffStatus {
@@ -40,12 +40,46 @@ export const SmartAdminPortal = () => {
   const [regStatus, setRegStatus] = useState<string | null>(null);
   const [isRegistering, setIsRegistering] = useState(false);
 
+  // Authentication & Login Page States
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [guestMode, setGuestMode] = useState(false);
+  const [loginUser, setLoginUser] = useState('');
+  const [loginPass, setLoginPass] = useState('');
+  const [loginError, setLoginError] = useState<string | null>(null);
+
   // DM Alert Mode States
-  const [dmAuthorized, setDmAuthorized] = useState(true);
+  const [dmAuthorized, setDmAuthorized] = useState(false);
   const [emptyOfficeAlerts, setEmptyOfficeAlerts] = useState<string[]>([
     "🚨 RED ALERT: Records Section is currently EMPTY (Vikram Singh is LATE)",
     "🚨 RED ALERT: Accounts Desk 1 is EMPTY (Sunita Roy is ABSENT)"
   ]);
+
+  const handleDmLoginSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginError(null);
+    if ((loginUser.toLowerCase() === 'dm' && loginPass === 'dm123') || (loginUser.toLowerCase() === 'admin' && loginPass === 'admin123')) {
+      setIsLoggedIn(true);
+      setGuestMode(false);
+      setDmAuthorized(true);
+      setLoginUser('');
+      setLoginPass('');
+    } else {
+      setLoginError("Invalid Username or Password. Hint: dm / dm123");
+    }
+  };
+
+  const handleGuestLogin = () => {
+    setIsLoggedIn(true);
+    setGuestMode(true);
+    setDmAuthorized(false);
+    setLoginError(null);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setGuestMode(false);
+    setDmAuthorized(false);
+  };
 
   // Dynamic Staff Records
   const [staffList, setStaffList] = useState<StaffStatus[]>([
@@ -170,62 +204,144 @@ export const SmartAdminPortal = () => {
             </span>
           </div>
         </div>
-        <div className="flex items-center gap-3">
-          <button 
-            onClick={() => setDmAuthorized(!dmAuthorized)}
-            className={`p-2 rounded-xl border transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold ${
-              dmAuthorized 
-                ? 'bg-red-950/20 border-red-500/30 text-red-400' 
-                : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
-            }`}
-            title={dmAuthorized ? 'Logout from DM Console' : 'DM Authentication Login'}
-          >
-            {dmAuthorized ? <Lock className="w-3.5 h-3.5" /> : <Unlock className="w-3.5 h-3.5" />}
-            <span>{dmAuthorized ? 'DM Dashboard' : 'DM Login'}</span>
-          </button>
 
-          <div className="flex items-center gap-2 bg-slate-900 p-1.5 rounded-xl border border-slate-800">
+        {isLoggedIn ? (
+          <div className="flex items-center gap-3">
+            <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border text-[9px] font-extrabold uppercase ${
+              guestMode 
+                ? 'bg-slate-900 border-slate-800 text-slate-400' 
+                : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+            }`}>
+              <span className={`h-1 w-1 rounded-full ${guestMode ? 'bg-slate-500' : 'bg-emerald-500 animate-pulse'} shrink-0`} />
+              {guestMode ? 'Guest Mode' : 'DM Authorized'}
+            </span>
+
             <button 
-              onClick={() => setSelectedOffice('DM')}
-              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${selectedOffice === 'DM' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}
+              onClick={handleLogout}
+              className="px-3 py-1.5 rounded-lg border border-red-500/30 bg-red-950/20 text-red-400 hover:bg-red-900/20 text-xs font-bold transition-all cursor-pointer flex items-center gap-1"
             >
-              DM Office
+              <Lock className="w-3.5 h-3.5" />
+              <span>Logout</span>
             </button>
-            <button 
-              onClick={() => setSelectedOffice('SP')}
-              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${selectedOffice === 'SP' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}
-            >
-              SP Office
-            </button>
+
+            <div className="flex items-center gap-2 bg-slate-900 p-1.5 rounded-xl border border-slate-800">
+              <button 
+                onClick={() => setSelectedOffice('DM')}
+                className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${selectedOffice === 'DM' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}
+              >
+                DM Office
+              </button>
+              <button 
+                onClick={() => setSelectedOffice('SP')}
+                className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${selectedOffice === 'SP' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}
+              >
+                SP Office
+              </button>
+            </div>
           </div>
-        </div>
+        ) : (
+          <span className="text-[10px] text-slate-500 uppercase tracking-widest font-mono">Secure Access Panel</span>
+        )}
       </header>
 
-      {/* DM Red Alerts Banner */}
-      {dmAuthorized && emptyOfficeAlerts.length > 0 && (
-        <div className="bg-red-950/60 border-b border-red-500/30 px-6 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-red-300 relative z-20 animate-in slide-in-from-top-4 duration-300">
-          <div className="flex flex-col gap-1">
-            {emptyOfficeAlerts.map((alertMsg, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-red-500 animate-ping inline-block shrink-0" />
-                <span>{alertMsg}</span>
+      {/* Conditional rendering based on Login Status */}
+      {!isLoggedIn ? (
+        <main className="flex-1 max-w-md w-full mx-auto px-6 py-16 flex flex-col justify-center relative z-10">
+          <div className="p-8 rounded-2xl bg-slate-900/40 border border-slate-900 shadow-2xl space-y-6">
+            <div className="text-center space-y-2">
+              <div className="w-12 h-12 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mx-auto">
+                <ShieldAlert className="w-6 h-6 animate-pulse" />
               </div>
-            ))}
-          </div>
-          <button 
-            onClick={() => setEmptyOfficeAlerts([])}
-            className="px-2.5 py-1 rounded bg-red-900/40 hover:bg-red-900/60 text-red-200 border border-red-500/30 text-[10px] font-bold uppercase transition-colors cursor-pointer"
-          >
-            Acknowledge All Alerts
-          </button>
-        </div>
-      )}
+              <h2 className="text-xl font-extrabold text-white">DM & SP Office Authorization</h2>
+              <p className="text-[11px] text-slate-400 max-w-xs mx-auto">
+                Enter credentials to unlock administrative office monitoring systems and compliance alert boards.
+              </p>
+            </div>
 
-      {/* Main Grid Layout */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-6 py-8 md:py-12 grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
-        
-        {/* Left Side (Col 1 & 2): AI Video Monitor & Behavior Alerts Logs */}
-        <div className="lg:col-span-2 space-y-6">
+            <form onSubmit={handleDmLoginSubmit} className="space-y-4">
+              <div>
+                <label className="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1.5">Official username:</label>
+                <input 
+                  type="text"
+                  required
+                  value={loginUser}
+                  onChange={(e) => setLoginUser(e.target.value)}
+                  placeholder="e.g. dm"
+                  className="w-full px-3.5 py-2 text-xs rounded-xl bg-slate-950 border border-slate-800 text-white focus:border-blue-500/50 focus:outline-none transition-all placeholder:text-slate-700"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1.5">Security password:</label>
+                <input 
+                  type="password"
+                  required
+                  value={loginPass}
+                  onChange={(e) => setLoginPass(e.target.value)}
+                  placeholder="e.g. dm123"
+                  className="w-full px-3.5 py-2 text-xs rounded-xl bg-slate-950 border border-slate-800 text-white focus:border-blue-500/50 focus:outline-none transition-all placeholder:text-slate-700"
+                />
+              </div>
+
+              {loginError && (
+                <p className="text-[10px] text-red-400 bg-red-950/20 border border-red-500/20 p-2 rounded-lg text-center font-medium">
+                  {loginError}
+                </p>
+              )}
+
+              <button 
+                type="submit"
+                className="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs transition-all shadow-lg shadow-blue-500/10 cursor-pointer"
+              >
+                Unlock DM Dashboard Console
+              </button>
+            </form>
+
+            <div className="relative flex py-1 items-center">
+              <div className="flex-grow border-t border-slate-800/80"></div>
+              <span className="flex-shrink mx-4 text-[9px] font-mono text-slate-500 uppercase">Or</span>
+              <div className="flex-grow border-t border-slate-800/80"></div>
+            </div>
+
+            <button 
+              onClick={handleGuestLogin}
+              className="w-full py-2.5 rounded-xl bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white font-bold text-xs transition-all cursor-pointer"
+            >
+              Guest Login (Direct Access)
+            </button>
+            
+            <div className="text-center text-[10px] text-slate-500/80">
+              Credentials Hint: User: <strong className="text-slate-400">dm</strong> • Pass: <strong className="text-slate-400">dm123</strong>
+            </div>
+          </div>
+        </main>
+      ) : (
+        <>
+          {/* DM Red Alerts Banner */}
+          {dmAuthorized && emptyOfficeAlerts.length > 0 && (
+            <div className="bg-red-950/60 border-b border-red-500/30 px-6 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-red-300 relative z-20 animate-in slide-in-from-top-4 duration-300">
+              <div className="flex flex-col gap-1">
+                {emptyOfficeAlerts.map((alertMsg, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-red-500 animate-ping inline-block shrink-0" />
+                    <span>{alertMsg}</span>
+                  </div>
+                ))}
+              </div>
+              <button 
+                onClick={() => setEmptyOfficeAlerts([])}
+                className="px-2.5 py-1 rounded bg-red-900/40 hover:bg-red-900/60 text-red-200 border border-red-500/30 text-[10px] font-bold uppercase transition-colors cursor-pointer"
+              >
+                Acknowledge All Alerts
+              </button>
+            </div>
+          )}
+
+          {/* Main Grid Layout */}
+          <main className="flex-1 max-w-6xl w-full mx-auto px-6 py-8 md:py-12 grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
+            
+            {/* Left Side (Col 1 & 2): AI Video Monitor & Behavior Alerts Logs */}
+            <div className="lg:col-span-2 space-y-6">
           
           {/* AI Behavioural CCTV Simulator */}
           <div className="p-6 rounded-2xl bg-slate-900/40 border border-slate-900 shadow-xl space-y-4">
@@ -479,7 +595,9 @@ export const SmartAdminPortal = () => {
           </div>
         </div>
 
-      </main>
+          </main>
+        </>
+      )}
     </div>
   );
 };
