@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, ShieldAlert, Users, Bell, AlertTriangle, 
-  Smartphone, UserCheck, Eye, EyeOff, Clock 
+  Smartphone, UserCheck, Eye, EyeOff, Clock, Camera, CameraOff, UserPlus, Lock, Unlock
 } from 'lucide-react';
 
 interface StaffStatus {
@@ -28,8 +28,27 @@ export const SmartAdminPortal = () => {
   const [selectedOffice, setSelectedOffice] = useState<'DM' | 'SP'>('DM');
   const [cctvMask, setCctvMask] = useState(true);
 
+  // Local camera stream states
+  const [localCamActive, setLocalCamActive] = useState(false);
+  const [cameraError, setCameraError] = useState<string | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+
+  // Employee Registration States
+  const [regName, setRegName] = useState('');
+  const [regRole, setRegRole] = useState('Senior Clerk');
+  const [regStatus, setRegStatus] = useState<string | null>(null);
+  const [isRegistering, setIsRegistering] = useState(false);
+
+  // DM Alert Mode States
+  const [dmAuthorized, setDmAuthorized] = useState(true);
+  const [emptyOfficeAlerts, setEmptyOfficeAlerts] = useState<string[]>([
+    "🚨 RED ALERT: Records Section is currently EMPTY (Vikram Singh is LATE)",
+    "🚨 RED ALERT: Accounts Desk 1 is EMPTY (Sunita Roy is ABSENT)"
+  ]);
+
   // Dynamic Staff Records
-  const [staffList] = useState<StaffStatus[]>([
+  const [staffList, setStaffList] = useState<StaffStatus[]>([
     { id: 'ST-501', name: 'Alok Ranjan', role: 'Senior Clerk', checkIn: '09:55 AM', status: 'On Time' },
     { id: 'ST-502', name: 'Shreya Sharma', role: 'Stenographer', checkIn: '10:05 AM', status: 'On Time' },
     { id: 'ST-503', name: 'Vikram Singh', role: 'Record Keeper', checkIn: '10:45 AM', status: 'Late' },
@@ -44,6 +63,69 @@ export const SmartAdminPortal = () => {
   ]);
 
   const [simulationResult, setSimulationResult] = useState<string | null>(null);
+
+  // Local camera control handlers
+  const startLocalCam = async () => {
+    setCameraError(null);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720 } });
+      streamRef.current = stream;
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+      setLocalCamActive(true);
+    } catch (err: any) {
+      console.error("Camera access error:", err);
+      setCameraError("Unable to access local camera stream.");
+    }
+  };
+
+  const stopLocalCam = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+    }
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
+    }
+    setLocalCamActive(false);
+  };
+
+  // Clean up camera on unmount
+  useEffect(() => {
+    return () => {
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, []);
+
+  // Employee Registration Handler
+  const handleRegisterEmployee = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!regName || !regRole) return;
+
+    setIsRegistering(true);
+    setRegStatus("Scanning Face Features...");
+
+    setTimeout(() => {
+      const newStaff: StaffStatus = {
+        id: `ST-${Math.floor(506 + Math.random() * 90)}`,
+        name: regName,
+        role: regRole,
+        checkIn: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        status: 'On Time'
+      };
+
+      setStaffList([...staffList, newStaff]);
+      setRegStatus(`✓ Success: ${regName} registered as ${regRole}! Facial signature saved.`);
+      setRegName('');
+      setIsRegistering(false);
+
+      // Auto dismiss success message after 4s
+      setTimeout(() => setRegStatus(null), 4000);
+    }, 2000);
+  };
 
   // AI Scanner Simulation Trigger
   const runAiScanner = () => {
@@ -88,21 +170,56 @@ export const SmartAdminPortal = () => {
             </span>
           </div>
         </div>
-        <div className="flex items-center gap-2 bg-slate-900 p-1.5 rounded-xl border border-slate-800">
+        <div className="flex items-center gap-3">
           <button 
-            onClick={() => setSelectedOffice('DM')}
-            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${selectedOffice === 'DM' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}
+            onClick={() => setDmAuthorized(!dmAuthorized)}
+            className={`p-2 rounded-xl border transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold ${
+              dmAuthorized 
+                ? 'bg-red-950/20 border-red-500/30 text-red-400' 
+                : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white'
+            }`}
+            title={dmAuthorized ? 'Logout from DM Console' : 'DM Authentication Login'}
           >
-            DM Office
+            {dmAuthorized ? <Lock className="w-3.5 h-3.5" /> : <Unlock className="w-3.5 h-3.5" />}
+            <span>{dmAuthorized ? 'DM Dashboard' : 'DM Login'}</span>
           </button>
-          <button 
-            onClick={() => setSelectedOffice('SP')}
-            className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${selectedOffice === 'SP' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}
-          >
-            SP Office
-          </button>
+
+          <div className="flex items-center gap-2 bg-slate-900 p-1.5 rounded-xl border border-slate-800">
+            <button 
+              onClick={() => setSelectedOffice('DM')}
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${selectedOffice === 'DM' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}
+            >
+              DM Office
+            </button>
+            <button 
+              onClick={() => setSelectedOffice('SP')}
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${selectedOffice === 'SP' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white'}`}
+            >
+              SP Office
+            </button>
+          </div>
         </div>
       </header>
+
+      {/* DM Red Alerts Banner */}
+      {dmAuthorized && emptyOfficeAlerts.length > 0 && (
+        <div className="bg-red-950/60 border-b border-red-500/30 px-6 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-red-300 relative z-20 animate-in slide-in-from-top-4 duration-300">
+          <div className="flex flex-col gap-1">
+            {emptyOfficeAlerts.map((alertMsg, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-red-500 animate-ping inline-block shrink-0" />
+                <span>{alertMsg}</span>
+              </div>
+            ))}
+          </div>
+          <button 
+            onClick={() => setEmptyOfficeAlerts([])}
+            className="px-2.5 py-1 rounded bg-red-900/40 hover:bg-red-900/60 text-red-200 border border-red-500/30 text-[10px] font-bold uppercase transition-colors cursor-pointer"
+          >
+            Acknowledge All Alerts
+          </button>
+        </div>
+      )}
 
       {/* Main Grid Layout */}
       <main className="flex-1 max-w-6xl w-full mx-auto px-6 py-8 md:py-12 grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
@@ -128,6 +245,16 @@ export const SmartAdminPortal = () => {
 
             {/* Video Box */}
             <div className="aspect-video w-full bg-slate-950 border border-slate-800 rounded-xl flex flex-col items-center justify-center relative overflow-hidden">
+              {localCamActive ? (
+                <video 
+                  ref={videoRef}
+                  autoPlay
+                  playsInline
+                  muted
+                  className="w-full h-full object-cover scale-x-[-1]"
+                />
+              ) : null}
+
               {cctvMask && (
                 <div className="absolute inset-0 border border-blue-500/10 pointer-events-none z-10">
                   {/* Mock scanner frames */}
@@ -142,26 +269,28 @@ export const SmartAdminPortal = () => {
                 </div>
               )}
 
-              <span className="absolute top-3 right-3 flex items-center gap-1 bg-slate-950/80 px-2 py-0.5 rounded border border-slate-800 text-[8px] font-mono text-slate-400">
+              <span className="absolute top-3 right-3 flex items-center gap-1 bg-slate-950/80 px-2 py-0.5 rounded border border-slate-800 text-[8px] font-mono text-slate-400 z-10">
                 <span className="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse inline-block" />
-                CCTV-02-OFFICE
+                {localCamActive ? 'LOCAL WEBCAM FEED' : 'CCTV-02-OFFICE'}
               </span>
 
-              {simulationResult === 'scanning' ? (
-                <div className="text-center space-y-2">
-                  <div className="w-8 h-8 border-2 border-blue-400 border-t-transparent rounded-full animate-spin mx-auto" />
-                  <span className="text-[10px] font-mono text-blue-400 block animate-pulse">Running AI Behavioral Analysis...</span>
-                </div>
-              ) : (
+              {!localCamActive && simulationResult !== 'scanning' && (
                 <div className="text-center p-4">
                   <p className="text-xs text-slate-500">Live Office Security Stream</p>
                   <p className="text-[9px] text-slate-600 mt-1">AI monitors: Phone Usage, Idling, Punctuality & Unauthorized Entries</p>
                 </div>
               )}
+
+              {simulationResult === 'scanning' && !localCamActive && (
+                <div className="text-center space-y-2">
+                  <div className="w-8 h-8 border-2 border-blue-400 border-t-transparent rounded-full animate-spin mx-auto" />
+                  <span className="text-[10px] font-mono text-blue-400 block animate-pulse">Running AI Behavioral Analysis...</span>
+                </div>
+              )}
             </div>
 
-            {/* Controller Button */}
-            <div className="flex gap-4">
+            {/* Controller Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3">
               <button 
                 onClick={runAiScanner}
                 disabled={simulationResult === 'scanning'}
@@ -170,6 +299,18 @@ export const SmartAdminPortal = () => {
                 <Eye className="w-4 h-4" />
                 <span>Simulate Real-time AI Behavior Check</span>
               </button>
+
+              <button 
+                onClick={localCamActive ? stopLocalCam : startLocalCam}
+                className={`py-2.5 px-4 rounded-xl font-bold text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 border ${
+                  localCamActive 
+                    ? 'bg-rose-950/20 border-rose-500/30 text-rose-400' 
+                    : 'bg-slate-900 border-slate-800 text-slate-300 hover:text-white'
+                }`}
+              >
+                {localCamActive ? <CameraOff className="w-4 h-4" /> : <Camera className="w-4 h-4" />}
+                <span>{localCamActive ? 'Disable Local WebCam' : 'Activate Local Camera'}</span>
+              </button>
             </div>
 
             {/* Alert banner if any simulation result */}
@@ -177,6 +318,12 @@ export const SmartAdminPortal = () => {
               <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/20 text-xs text-red-300 flex items-center gap-2.5 animate-in slide-in-from-bottom-2">
                 <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
                 <span>{simulationResult}</span>
+              </div>
+            )}
+            {cameraError && (
+              <div className="p-3.5 rounded-xl bg-rose-550/10 border border-rose-500/20 text-xs text-rose-300 flex items-center gap-2.5">
+                <ShieldAlert className="w-4 h-4 text-rose-400 shrink-0" />
+                <span>{cameraError}</span>
               </div>
             )}
           </div>
@@ -228,6 +375,59 @@ export const SmartAdminPortal = () => {
             </div>
           </div>
 
+          {/* Employee Face Registration Card */}
+          <div className="p-6 rounded-2xl bg-slate-900/40 border border-slate-900 shadow-xl space-y-4">
+            <h3 className="text-sm font-extrabold text-white flex items-center gap-2">
+              <UserPlus className="w-4.5 h-4.5 text-blue-400" />
+              New Employee Face & Bio Registration
+            </h3>
+
+            <form onSubmit={handleRegisterEmployee} className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1.5">Employee Name:</label>
+                  <input 
+                    type="text" 
+                    required
+                    value={regName}
+                    onChange={(e) => setRegName(e.target.value)}
+                    placeholder="e.g. Anand Kumar"
+                    className="w-full px-3 py-2 text-xs rounded-lg bg-slate-950 border border-slate-800 text-white focus:border-blue-500/50 focus:outline-none transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1.5">Designation/Role:</label>
+                  <select 
+                    value={regRole}
+                    onChange={(e) => setRegRole(e.target.value)}
+                    className="w-full px-3 py-2 text-xs rounded-lg bg-slate-950 border border-slate-800 text-white focus:border-blue-500/50 focus:outline-none transition-colors cursor-pointer"
+                  >
+                    <option value="Senior Clerk">Senior Clerk</option>
+                    <option value="Accounts Assistant">Accounts Assistant</option>
+                    <option value="Office Guard">Office Guard</option>
+                    <option value="Sub-Divisional Magistrate">Sub-Divisional Magistrate</option>
+                    <option value="HOD Systems">HOD Systems</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <button
+                  type="submit"
+                  disabled={isRegistering}
+                  className="flex-1 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-blue-900/50 text-white font-bold text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-blue-600/10"
+                >
+                  <Camera className="w-4 h-4" />
+                  <span>Scan Face & Register Employee</span>
+                </button>
+              </div>
+            </form>
+            {regStatus && (
+              <div className={`p-3 rounded-lg text-xs font-semibold ${regStatus.includes('✓') ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-300' : 'bg-blue-500/10 border border-blue-500/20 text-blue-300 animate-pulse'} animate-in zoom-in-95`}>
+                {regStatus}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Right Side: Staff Punctuality & Late check-ins Ledger */}
