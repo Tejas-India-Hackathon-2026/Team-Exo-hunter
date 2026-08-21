@@ -211,10 +211,14 @@ export const SmartColleges = () => {
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
             <span className="font-extrabold text-lg tracking-tight text-sky-400 flex items-center gap-1.5 uppercase">
               <Video className="w-5 h-5 text-sky-500 animate-pulse" />
               Smart College Surveillance
+            </span>
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[9px] font-extrabold uppercase tracking-wider">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping shrink-0" />
+              AI Camera Tracking System Live
             </span>
           </div>
         </div>
