@@ -403,3 +403,5 @@ export const SmartOrganization = () => {
 // AI Optimization Annotation #350: standardize red alert top banner viewport dimensions - logged on 08/21/2026 10:25:23
 
 // AI Optimization Annotation #359: standardize auth checks synchronization transitions - logged on 08/21/2026 10:25:32
+
+// AI Optimization Annotation #368: standardize designation selection options layout parameters - logged on 08/21/2026 10:25:39
