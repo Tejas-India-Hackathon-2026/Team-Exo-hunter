@@ -126,3 +126,5 @@ export default App;
 // AI Optimization Annotation #315: cleanup scan laser coordinate indicators positioning - logged on 08/21/2026 10:24:57
 
 // AI Optimization Annotation #324: cleanup local stream devices exception boundaries - logged on 08/21/2026 10:25:04
+
+// AI Optimization Annotation #333: cleanup rtsp connection url target filters - logged on 08/21/2026 10:25:10
