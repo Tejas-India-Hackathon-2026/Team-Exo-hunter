@@ -401,3 +401,5 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 // AI Annotation #179: verify glow elements color gradients - verified on 08/21/2026 09:40:53
 
 // AI Annotation #188: verify flex layout scaling parameters - verified on 08/21/2026 09:40:58
+
+// AI Annotation #197: verify responsive grid column ratios - verified on 08/21/2026 09:41:04
