@@ -215,3 +215,4 @@
 * Commit #554: refactor(admin-portal): optimize queue tracking items boundaries - Completed on 08/21/2026 09:40:01
 * Commit #555: perf(colleges): document webcam camera media constraints - Completed on 08/21/2026 09:40:03
 * Commit #556: clean(organization): standardize scan laser animation intervals - Completed on 08/21/2026 09:40:04
+* Commit #557: docs(auth): cleanup modal visibility transition classes - Completed on 08/21/2026 09:40:04

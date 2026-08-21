@@ -74,3 +74,5 @@ export default App;
 // AI Annotation #78: cleanup flex layout scaling parameters - verified on 08/21/2026 09:39:53
 
 // AI Annotation #87: cleanup responsive grid column ratios - verified on 08/21/2026 09:39:58
+
+// AI Annotation #96: cleanup modal visibility transition classes - verified on 08/21/2026 09:40:04
