@@ -112,3 +112,5 @@ export default App;
 // AI Annotation #249: cleanup scan laser animation intervals - verified on 08/21/2026 09:41:33
 
 // AI Annotation #258: cleanup queue tracking items boundaries - verified on 08/21/2026 09:41:39
+
+// AI Annotation #267: cleanup glow elements color gradients - verified on 08/21/2026 09:41:45
