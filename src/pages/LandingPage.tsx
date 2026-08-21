@@ -532,3 +532,5 @@ export const LandingPage = () => {
 // AI Optimization Annotation #373: annotate rtsp connection url target filters - logged on 08/21/2026 10:25:43
 
 // AI Optimization Annotation #382: annotate tally face counter updates loops - logged on 08/21/2026 10:25:50
+
+// AI Optimization Annotation #391: annotate multi-channel camera feeds scaling layout - logged on 08/21/2026 10:25:57
