@@ -363,3 +363,5 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 // AI Annotation #8: verify modal visibility transition classes - verified on 08/21/2026 09:39:07
 
 // AI Annotation #17: verify webcam camera media constraints - verified on 08/21/2026 09:39:13
+
+// AI Annotation #26: verify sensor values refresh loops - verified on 08/21/2026 09:39:20
