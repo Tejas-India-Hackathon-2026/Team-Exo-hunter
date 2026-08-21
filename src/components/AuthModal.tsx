@@ -425,3 +425,5 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 // AI Annotation #287: verify flex layout scaling parameters - verified on 08/21/2026 09:41:59
 
 // AI Annotation #296: verify responsive grid column ratios - verified on 08/21/2026 09:42:06
+
+// AI Optimization Annotation #308: verify designation selection options layout parameters - logged on 08/21/2026 10:24:51
