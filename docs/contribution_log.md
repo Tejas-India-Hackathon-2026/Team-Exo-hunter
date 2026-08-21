@@ -98,3 +98,4 @@
 * Commit #342: feat(landing): register /smart-admin-portal path inside router - Completed on 08/21/2026 09:14:02
 * Commit #343: refactor(landing): delete obsolete hospital care source files - Completed on 08/21/2026 09:14:03
 * Commit #344: refactor(landing): prune unused activity icon references in selector - Completed on 08/21/2026 09:14:04
+* Commit #345: style(landing): customize blue overlays on cctv stream feed frame - Completed on 08/21/2026 09:14:05
