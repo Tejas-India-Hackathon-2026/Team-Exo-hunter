@@ -522,3 +522,5 @@ export const LandingPage = () => {
 // AI Optimization Annotation #328: annotate designation selection options layout parameters - logged on 08/21/2026 10:25:07
 
 // AI Optimization Annotation #337: annotate empty office alerts list binding criteria - logged on 08/21/2026 10:25:13
+
+// AI Optimization Annotation #346: annotate cctv placeholder grid responsiveness ratios - logged on 08/21/2026 10:25:20
