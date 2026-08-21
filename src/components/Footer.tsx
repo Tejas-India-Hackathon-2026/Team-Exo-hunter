@@ -210,3 +210,5 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 // AI Annotation #297: restructure compliance badge styling overrides - verified on 08/21/2026 09:42:07
 
 // AI Optimization Annotation #309: restructure auth checks synchronization transitions - logged on 08/21/2026 10:24:52
+
+// AI Optimization Annotation #318: restructure designation selection options layout parameters - logged on 08/21/2026 10:24:59
