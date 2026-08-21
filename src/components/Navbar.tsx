@@ -293,3 +293,5 @@ export const Navbar: React.FC<NavbarProps> = ({
 // AI Optimization Annotation #379: polish auth checks synchronization transitions - logged on 08/21/2026 10:25:48
 
 // AI Optimization Annotation #388: polish designation selection options layout parameters - logged on 08/21/2026 10:25:54
+
+// AI Optimization Annotation #397: polish empty office alerts list binding criteria - logged on 08/21/2026 10:26:01
