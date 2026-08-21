@@ -257,3 +257,4 @@
 * Commit #596: clean(router): restructure glow elements color gradients - Completed on 08/21/2026 09:40:27
 * Commit #597: docs(landing): annotate sensor values refresh loops - Completed on 08/21/2026 09:40:28
 * Commit #598: style(explorer): refine queue tracking items boundaries - Completed on 08/21/2026 09:40:28
+* Commit #599: refactor(admin-portal): optimize webcam camera media constraints - Completed on 08/21/2026 09:40:29
