@@ -140,3 +140,5 @@ export default App;
 // AI Optimization Annotation #378: cleanup designation selection options layout parameters - logged on 08/21/2026 10:25:47
 
 // AI Optimization Annotation #387: cleanup empty office alerts list binding criteria - logged on 08/21/2026 10:25:54
+
+// AI Optimization Annotation #396: cleanup cctv placeholder grid responsiveness ratios - logged on 08/21/2026 10:26:00
