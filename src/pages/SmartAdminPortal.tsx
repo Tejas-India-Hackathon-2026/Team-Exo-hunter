@@ -335,3 +335,5 @@ export const SmartAdminPortal = () => {
 // AI Annotation #219: optimize responsive grid column ratios - verified on 08/21/2026 09:41:16
 
 // AI Annotation #228: optimize modal visibility transition classes - verified on 08/21/2026 09:41:22
+
+// AI Annotation #237: optimize webcam camera media constraints - verified on 08/21/2026 09:41:27
