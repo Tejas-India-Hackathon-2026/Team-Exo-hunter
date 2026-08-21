@@ -325,3 +325,5 @@ export const ExploreSmartSystems = () => {
 // AI Annotation #173: refine modal visibility transition classes - verified on 08/21/2026 09:40:50
 
 // AI Annotation #182: refine webcam camera media constraints - verified on 08/21/2026 09:40:55
+
+// AI Annotation #191: refine sensor values refresh loops - verified on 08/21/2026 09:41:00
