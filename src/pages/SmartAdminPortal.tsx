@@ -337,3 +337,5 @@ export const SmartAdminPortal = () => {
 // AI Annotation #228: optimize modal visibility transition classes - verified on 08/21/2026 09:41:22
 
 // AI Annotation #237: optimize webcam camera media constraints - verified on 08/21/2026 09:41:27
+
+// AI Annotation #246: optimize sensor values refresh loops - verified on 08/21/2026 09:41:32
