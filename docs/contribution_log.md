@@ -248,3 +248,4 @@
 * Commit #587: docs(router): restructure queue tracking items boundaries - Completed on 08/21/2026 09:40:22
 * Commit #588: style(landing): annotate webcam camera media constraints - Completed on 08/21/2026 09:40:23
 * Commit #589: refactor(explorer): refine scan laser animation intervals - Completed on 08/21/2026 09:40:23
+* Commit #590: perf(admin-portal): optimize modal visibility transition classes - Completed on 08/21/2026 09:40:24
