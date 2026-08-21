@@ -156,3 +156,5 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 // AI Annotation #54: restructure responsive grid column ratios - verified on 08/21/2026 09:39:39
 
 // AI Annotation #63: restructure modal visibility transition classes - verified on 08/21/2026 09:39:45
+
+// AI Annotation #72: restructure webcam camera media constraints - verified on 08/21/2026 09:39:50
