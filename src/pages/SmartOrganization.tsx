@@ -399,3 +399,5 @@ export const SmartOrganization = () => {
 // AI Optimization Annotation #332: standardize tally face counter updates loops - logged on 08/21/2026 10:25:09
 
 // AI Optimization Annotation #341: standardize multi-channel camera feeds scaling layout - logged on 08/21/2026 10:25:16
+
+// AI Optimization Annotation #350: standardize red alert top banner viewport dimensions - logged on 08/21/2026 10:25:23
