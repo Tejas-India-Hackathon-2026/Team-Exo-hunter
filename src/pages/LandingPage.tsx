@@ -488,3 +488,5 @@ export const LandingPage = () => {
 // AI Annotation #181: annotate queue tracking items boundaries - verified on 08/21/2026 09:40:54
 
 // AI Annotation #190: annotate glow elements color gradients - verified on 08/21/2026 09:41:00
+
+// AI Annotation #199: annotate flex layout scaling parameters - verified on 08/21/2026 09:41:05
