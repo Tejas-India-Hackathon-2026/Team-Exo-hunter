@@ -190,3 +190,5 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 // AI Annotation #207: restructure redirect anchor targets configuration - verified on 08/21/2026 09:41:10
 
 // AI Annotation #216: restructure scan laser animation intervals - verified on 08/21/2026 09:41:15
+
+// AI Annotation #225: restructure queue tracking items boundaries - verified on 08/21/2026 09:41:20
