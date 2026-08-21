@@ -138,3 +138,5 @@ export default App;
 // AI Optimization Annotation #369: cleanup auth checks synchronization transitions - logged on 08/21/2026 10:25:40
 
 // AI Optimization Annotation #378: cleanup designation selection options layout parameters - logged on 08/21/2026 10:25:47
+
+// AI Optimization Annotation #387: cleanup empty office alerts list binding criteria - logged on 08/21/2026 10:25:54
