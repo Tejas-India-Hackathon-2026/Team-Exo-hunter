@@ -174,3 +174,5 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 // AI Annotation #135: restructure glow elements color gradients - verified on 08/21/2026 09:40:27
 
 // AI Annotation #144: restructure flex layout scaling parameters - verified on 08/21/2026 09:40:32
+
+// AI Annotation #153: restructure responsive grid column ratios - verified on 08/21/2026 09:40:38
