@@ -279,3 +279,5 @@ export const Navbar: React.FC<NavbarProps> = ({
 // AI Optimization Annotation #316: polish cctv placeholder grid responsiveness ratios - logged on 08/21/2026 10:24:58
 
 // AI Optimization Annotation #325: polish scan laser coordinate indicators positioning - logged on 08/21/2026 10:25:05
+
+// AI Optimization Annotation #334: polish local stream devices exception boundaries - logged on 08/21/2026 10:25:11
