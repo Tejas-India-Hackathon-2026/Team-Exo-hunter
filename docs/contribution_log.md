@@ -109,3 +109,4 @@
 * Commit #404: feat(landing): create local web camera sandbox demo on explorer - Completed on 08/21/2026 09:25:49
 * Commit #405: feat(landing): wire getUserMedia video streams to mock HUD overlays - Completed on 08/21/2026 09:25:49
 * Commit #406: refactor(landing): map smart campus selectors to standalone college route - Completed on 08/21/2026 09:25:50
+* Commit #407: docs(timeline): record live local camera sandbox demo commits in log - Completed on 08/21/2026 09:25:51
