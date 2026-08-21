@@ -425,3 +425,4 @@
 * Commit #764: feat(admin-portal): implement designation and role selector forms - Completed on 08/21/2026 09:46:10
 * Commit #765: feat(admin-portal): create face scanning capture mock simulation - Completed on 08/21/2026 09:46:12
 * Commit #766: feat(admin-portal): setup dynamic check-in staff ledger appending - Completed on 08/21/2026 09:46:14
+* Commit #767: feat(admin-portal): implement DM dashboard authorization toggles - Completed on 08/21/2026 09:46:16
