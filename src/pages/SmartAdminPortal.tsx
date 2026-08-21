@@ -557,3 +557,5 @@ export const SmartAdminPortal = () => {
 // AI Optimization Annotation #312: optimize tally face counter updates loops - logged on 08/21/2026 10:24:54
 
 // AI Optimization Annotation #321: optimize multi-channel camera feeds scaling layout - logged on 08/21/2026 10:25:01
+
+// AI Optimization Annotation #330: optimize red alert top banner viewport dimensions - logged on 08/21/2026 10:25:08
