@@ -328,3 +328,4 @@
 * Commit #667: docs(footer): verify modal visibility transition classes - Completed on 08/21/2026 09:41:09
 * Commit #668: style(router): restructure redirect anchor targets configuration - Completed on 08/21/2026 09:41:10
 * Commit #669: refactor(landing): annotate responsive grid column ratios - Completed on 08/21/2026 09:41:11
+* Commit #670: perf(explorer): refine compliance badge styling overrides - Completed on 08/21/2026 09:41:11
