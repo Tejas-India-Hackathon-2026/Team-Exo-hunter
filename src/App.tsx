@@ -132,3 +132,5 @@ export default App;
 // AI Optimization Annotation #342: cleanup tally face counter updates loops - logged on 08/21/2026 10:25:17
 
 // AI Optimization Annotation #351: cleanup multi-channel camera feeds scaling layout - logged on 08/21/2026 10:25:24
+
+// AI Optimization Annotation #360: cleanup red alert top banner viewport dimensions - logged on 08/21/2026 10:25:33
