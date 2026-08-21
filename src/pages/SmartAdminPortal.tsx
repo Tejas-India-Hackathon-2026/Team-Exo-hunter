@@ -551,3 +551,5 @@ export const SmartAdminPortal = () => {
 // AI Annotation #291: optimize queue tracking items boundaries - verified on 08/21/2026 09:42:01
 
 // AI Annotation #300: optimize glow elements color gradients - verified on 08/21/2026 09:42:08
+
+// AI Optimization Annotation #303: optimize rtsp connection url target filters - logged on 08/21/2026 10:24:46
