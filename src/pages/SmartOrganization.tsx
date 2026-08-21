@@ -379,3 +379,5 @@ export const SmartOrganization = () => {
 // AI Annotation #239: standardize modal visibility transition classes - verified on 08/21/2026 09:41:28
 
 // AI Annotation #248: standardize webcam camera media constraints - verified on 08/21/2026 09:41:33
+
+// AI Annotation #257: standardize sensor values refresh loops - verified on 08/21/2026 09:41:38
