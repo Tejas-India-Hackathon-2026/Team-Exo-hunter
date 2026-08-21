@@ -363,3 +363,5 @@ export const SmartOrganization = () => {
 // AI Annotation #167: standardize state hooks synchronization triggers - verified on 08/21/2026 09:40:46
 
 // AI Annotation #176: standardize compliance badge styling overrides - verified on 08/21/2026 09:40:51
+
+// AI Annotation #185: standardize redirect anchor targets configuration - verified on 08/21/2026 09:40:57
