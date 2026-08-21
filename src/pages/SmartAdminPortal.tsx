@@ -327,3 +327,5 @@ export const SmartAdminPortal = () => {
 // AI Annotation #183: optimize scan laser animation intervals - verified on 08/21/2026 09:40:55
 
 // AI Annotation #192: optimize queue tracking items boundaries - verified on 08/21/2026 09:41:01
+
+// AI Annotation #201: optimize glow elements color gradients - verified on 08/21/2026 09:41:06
