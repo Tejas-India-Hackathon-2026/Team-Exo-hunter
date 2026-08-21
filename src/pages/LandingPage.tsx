@@ -476,3 +476,5 @@ export const LandingPage = () => {
 // AI Annotation #127: annotate webcam camera media constraints - verified on 08/21/2026 09:40:23
 
 // AI Annotation #136: annotate sensor values refresh loops - verified on 08/21/2026 09:40:28
+
+// AI Annotation #145: annotate state hooks synchronization triggers - verified on 08/21/2026 09:40:33
