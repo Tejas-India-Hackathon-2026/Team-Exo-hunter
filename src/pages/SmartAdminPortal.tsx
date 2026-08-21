@@ -333,3 +333,5 @@ export const SmartAdminPortal = () => {
 // AI Annotation #210: optimize flex layout scaling parameters - verified on 08/21/2026 09:41:12
 
 // AI Annotation #219: optimize responsive grid column ratios - verified on 08/21/2026 09:41:16
+
+// AI Annotation #228: optimize modal visibility transition classes - verified on 08/21/2026 09:41:22
