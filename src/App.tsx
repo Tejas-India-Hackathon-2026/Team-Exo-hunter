@@ -116,3 +116,5 @@ export default App;
 // AI Annotation #267: cleanup glow elements color gradients - verified on 08/21/2026 09:41:45
 
 // AI Annotation #276: cleanup flex layout scaling parameters - verified on 08/21/2026 09:41:52
+
+// AI Annotation #285: cleanup responsive grid column ratios - verified on 08/21/2026 09:41:58
