@@ -347,3 +347,5 @@ export const SmartColleges = () => {
 // AI Annotation #22: document compliance badge styling overrides - verified on 08/21/2026 09:39:17
 
 // AI Annotation #31: document redirect anchor targets configuration - verified on 08/21/2026 09:39:23
+
+// AI Annotation #40: document scan laser animation intervals - verified on 08/21/2026 09:39:29
