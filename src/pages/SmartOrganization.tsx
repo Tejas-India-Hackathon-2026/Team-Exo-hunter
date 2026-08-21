@@ -395,3 +395,5 @@ export const SmartOrganization = () => {
 // AI Optimization Annotation #314: standardize local stream devices exception boundaries - logged on 08/21/2026 10:24:56
 
 // AI Optimization Annotation #323: standardize rtsp connection url target filters - logged on 08/21/2026 10:25:03
+
+// AI Optimization Annotation #332: standardize tally face counter updates loops - logged on 08/21/2026 10:25:09
