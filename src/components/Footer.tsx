@@ -228,3 +228,5 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 // AI Optimization Annotation #381: restructure multi-channel camera feeds scaling layout - logged on 08/21/2026 10:25:49
 
 // AI Optimization Annotation #390: restructure red alert top banner viewport dimensions - logged on 08/21/2026 10:25:56
+
+// AI Optimization Annotation #399: restructure auth checks synchronization transitions - logged on 08/21/2026 10:26:03
