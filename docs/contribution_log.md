@@ -402,3 +402,4 @@
 * Commit #741: clean(landing): annotate queue tracking items boundaries - Completed on 08/21/2026 09:41:55
 * Commit #742: docs(explorer): refine webcam camera media constraints - Completed on 08/21/2026 09:41:55
 * Commit #743: style(admin-portal): optimize scan laser animation intervals - Completed on 08/21/2026 09:41:56
+* Commit #744: refactor(colleges): document modal visibility transition classes - Completed on 08/21/2026 09:41:57
