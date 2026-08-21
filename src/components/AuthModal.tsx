@@ -371,3 +371,5 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 // AI Annotation #44: verify compliance badge styling overrides - verified on 08/21/2026 09:39:33
 
 // AI Annotation #53: verify redirect anchor targets configuration - verified on 08/21/2026 09:39:39
+
+// AI Annotation #62: verify scan laser animation intervals - verified on 08/21/2026 09:39:44
