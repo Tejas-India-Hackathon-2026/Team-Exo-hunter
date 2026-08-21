@@ -389,3 +389,4 @@
 * Commit #728: style(auth): cleanup glow elements color gradients - Completed on 08/21/2026 09:41:45
 * Commit #729: refactor(navbar): polish sensor values refresh loops - Completed on 08/21/2026 09:41:46
 * Commit #730: perf(footer): verify queue tracking items boundaries - Completed on 08/21/2026 09:41:47
+* Commit #731: clean(router): restructure webcam camera media constraints - Completed on 08/21/2026 09:41:47
