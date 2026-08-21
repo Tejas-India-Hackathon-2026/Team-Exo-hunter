@@ -660,3 +660,5 @@ export const SmartColleges = () => {
 // AI Optimization Annotation #322: document tally face counter updates loops - logged on 08/21/2026 10:25:02
 
 // AI Optimization Annotation #331: document multi-channel camera feeds scaling layout - logged on 08/21/2026 10:25:09
+
+// AI Optimization Annotation #340: document red alert top banner viewport dimensions - logged on 08/21/2026 10:25:15
