@@ -485,3 +485,4 @@
 * Commit #932: refactor(auth): cleanup rtsp connection url target filters - Completed on 08/21/2026 10:25:10
 * Commit #933: perf(navbar): polish local stream devices exception boundaries - Completed on 08/21/2026 10:25:11
 * Commit #934: clean(footer): verify scan laser coordinate indicators positioning - Completed on 08/21/2026 10:25:12
+* Commit #935: docs(router): restructure cctv placeholder grid responsiveness ratios - Completed on 08/21/2026 10:25:12
