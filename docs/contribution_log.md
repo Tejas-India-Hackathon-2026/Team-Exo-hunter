@@ -429,3 +429,4 @@
 * Commit #768: feat(admin-portal): design empty office red alert warnings banner - Completed on 08/21/2026 09:46:17
 * Commit #769: style(admin-portal): style glowing notifications for face matches - Completed on 08/21/2026 09:46:18
 * Commit #770: refactor(admin-portal): bind webcam hooks with disconnect callbacks - Completed on 08/21/2026 09:46:18
+* Commit #771: docs(timeline): record administrative webcam and registration changes - Completed on 08/21/2026 09:46:19
