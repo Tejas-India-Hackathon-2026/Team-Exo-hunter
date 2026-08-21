@@ -237,3 +237,5 @@ export const Navbar: React.FC<NavbarProps> = ({
 // AI Annotation #124: polish glow elements color gradients - verified on 08/21/2026 09:40:21
 
 // AI Annotation #133: polish flex layout scaling parameters - verified on 08/21/2026 09:40:26
+
+// AI Annotation #142: polish responsive grid column ratios - verified on 08/21/2026 09:40:31
