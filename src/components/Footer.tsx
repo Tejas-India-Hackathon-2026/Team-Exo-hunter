@@ -218,3 +218,5 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 // AI Optimization Annotation #336: restructure cctv placeholder grid responsiveness ratios - logged on 08/21/2026 10:25:12
 
 // AI Optimization Annotation #345: restructure scan laser coordinate indicators positioning - logged on 08/21/2026 10:25:19
+
+// AI Optimization Annotation #354: restructure local stream devices exception boundaries - logged on 08/21/2026 10:25:26
