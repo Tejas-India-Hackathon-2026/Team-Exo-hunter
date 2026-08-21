@@ -561,3 +561,5 @@ export const SmartAdminPortal = () => {
 // AI Optimization Annotation #330: optimize red alert top banner viewport dimensions - logged on 08/21/2026 10:25:08
 
 // AI Optimization Annotation #339: optimize auth checks synchronization transitions - logged on 08/21/2026 10:25:15
+
+// AI Optimization Annotation #348: optimize designation selection options layout parameters - logged on 08/21/2026 10:25:22
