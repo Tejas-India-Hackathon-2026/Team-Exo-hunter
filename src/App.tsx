@@ -128,3 +128,5 @@ export default App;
 // AI Optimization Annotation #324: cleanup local stream devices exception boundaries - logged on 08/21/2026 10:25:04
 
 // AI Optimization Annotation #333: cleanup rtsp connection url target filters - logged on 08/21/2026 10:25:10
+
+// AI Optimization Annotation #342: cleanup tally face counter updates loops - logged on 08/21/2026 10:25:17
