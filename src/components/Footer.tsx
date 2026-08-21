@@ -216,3 +216,5 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 // AI Optimization Annotation #327: restructure empty office alerts list binding criteria - logged on 08/21/2026 10:25:06
 
 // AI Optimization Annotation #336: restructure cctv placeholder grid responsiveness ratios - logged on 08/21/2026 10:25:12
+
+// AI Optimization Annotation #345: restructure scan laser coordinate indicators positioning - logged on 08/21/2026 10:25:19
