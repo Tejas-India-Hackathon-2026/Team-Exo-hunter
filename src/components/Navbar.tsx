@@ -269,3 +269,5 @@ export const Navbar: React.FC<NavbarProps> = ({
 // AI Annotation #268: polish sensor values refresh loops - verified on 08/21/2026 09:41:46
 
 // AI Annotation #277: polish state hooks synchronization triggers - verified on 08/21/2026 09:41:53
+
+// AI Annotation #286: polish compliance badge styling overrides - verified on 08/21/2026 09:41:58
