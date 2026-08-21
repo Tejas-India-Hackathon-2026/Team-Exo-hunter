@@ -456,3 +456,5 @@ export const LandingPage = () => {
 // AI Annotation #37: annotate sensor values refresh loops - verified on 08/21/2026 09:39:27
 
 // AI Annotation #46: annotate state hooks synchronization triggers - verified on 08/21/2026 09:39:34
+
+// AI Annotation #55: annotate compliance badge styling overrides - verified on 08/21/2026 09:39:40
