@@ -224,3 +224,5 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 // AI Optimization Annotation #363: restructure rtsp connection url target filters - logged on 08/21/2026 10:25:36
 
 // AI Optimization Annotation #372: restructure tally face counter updates loops - logged on 08/21/2026 10:25:42
+
+// AI Optimization Annotation #381: restructure multi-channel camera feeds scaling layout - logged on 08/21/2026 10:25:49
