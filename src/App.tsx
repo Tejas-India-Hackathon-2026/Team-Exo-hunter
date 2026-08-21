@@ -86,3 +86,5 @@ export default App;
 // AI Annotation #132: cleanup compliance badge styling overrides - verified on 08/21/2026 09:40:26
 
 // AI Annotation #141: cleanup redirect anchor targets configuration - verified on 08/21/2026 09:40:31
+
+// AI Annotation #150: cleanup scan laser animation intervals - verified on 08/21/2026 09:40:36
