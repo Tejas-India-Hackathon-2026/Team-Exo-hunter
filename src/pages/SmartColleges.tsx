@@ -385,3 +385,5 @@ export const SmartColleges = () => {
 // AI Annotation #193: document webcam camera media constraints - verified on 08/21/2026 09:41:01
 
 // AI Annotation #202: document sensor values refresh loops - verified on 08/21/2026 09:41:07
+
+// AI Annotation #211: document state hooks synchronization triggers - verified on 08/21/2026 09:41:12
