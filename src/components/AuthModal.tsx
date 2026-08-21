@@ -437,3 +437,5 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 // AI Optimization Annotation #344: verify local stream devices exception boundaries - logged on 08/21/2026 10:25:18
 
 // AI Optimization Annotation #353: verify rtsp connection url target filters - logged on 08/21/2026 10:25:25
+
+// AI Optimization Annotation #362: verify tally face counter updates loops - logged on 08/21/2026 10:25:35
