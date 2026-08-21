@@ -120,3 +120,5 @@ export default App;
 // AI Annotation #285: cleanup responsive grid column ratios - verified on 08/21/2026 09:41:58
 
 // AI Annotation #294: cleanup modal visibility transition classes - verified on 08/21/2026 09:42:05
+
+// AI Optimization Annotation #306: cleanup cctv placeholder grid responsiveness ratios - logged on 08/21/2026 10:24:49
