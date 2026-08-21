@@ -445,3 +445,4 @@
 * Commit #892: feat(colleges): integrate live face tally counters for gate crossings - Completed on 08/21/2026 10:21:50
 * Commit #893: feat(colleges): add background clock interval counting up tallies - Completed on 08/21/2026 10:21:51
 * Commit #894: feat(colleges): configure custom ip address and rtsp string form fields - Completed on 08/21/2026 10:21:52
+* Commit #895: feat(colleges): map web camera selection feed to active slot - Completed on 08/21/2026 10:21:53
