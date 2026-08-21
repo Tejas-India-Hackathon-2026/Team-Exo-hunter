@@ -464,3 +464,5 @@ export const LandingPage = () => {
 // AI Annotation #73: annotate scan laser animation intervals - verified on 08/21/2026 09:39:51
 
 // AI Annotation #82: annotate queue tracking items boundaries - verified on 08/21/2026 09:39:56
+
+// AI Annotation #91: annotate glow elements color gradients - verified on 08/21/2026 09:40:00
