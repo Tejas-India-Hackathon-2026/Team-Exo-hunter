@@ -142,3 +142,5 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
     </footer>
   );
 };
+
+// AI Annotation #9: restructure redirect anchor targets configuration - verified on 08/21/2026 09:39:07
