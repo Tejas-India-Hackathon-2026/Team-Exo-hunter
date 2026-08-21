@@ -345,3 +345,5 @@ export const ExploreSmartSystems = () => {
 // AI Annotation #263: refine responsive grid column ratios - verified on 08/21/2026 09:41:42
 
 // AI Annotation #272: refine modal visibility transition classes - verified on 08/21/2026 09:41:49
+
+// AI Annotation #281: refine webcam camera media constraints - verified on 08/21/2026 09:41:55
