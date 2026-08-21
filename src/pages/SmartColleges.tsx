@@ -393,3 +393,5 @@ export const SmartColleges = () => {
 // AI Annotation #229: document redirect anchor targets configuration - verified on 08/21/2026 09:41:22
 
 // AI Annotation #238: document scan laser animation intervals - verified on 08/21/2026 09:41:27
+
+// AI Annotation #247: document queue tracking items boundaries - verified on 08/21/2026 09:41:32
