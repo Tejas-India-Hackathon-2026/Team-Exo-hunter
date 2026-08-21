@@ -212,3 +212,5 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 // AI Optimization Annotation #309: restructure auth checks synchronization transitions - logged on 08/21/2026 10:24:52
 
 // AI Optimization Annotation #318: restructure designation selection options layout parameters - logged on 08/21/2026 10:24:59
+
+// AI Optimization Annotation #327: restructure empty office alerts list binding criteria - logged on 08/21/2026 10:25:06
