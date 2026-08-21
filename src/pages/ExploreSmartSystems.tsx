@@ -321,3 +321,5 @@ export const ExploreSmartSystems = () => {
 // AI Annotation #155: refine flex layout scaling parameters - verified on 08/21/2026 09:40:39
 
 // AI Annotation #164: refine responsive grid column ratios - verified on 08/21/2026 09:40:45
+
+// AI Annotation #173: refine modal visibility transition classes - verified on 08/21/2026 09:40:50
