@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+  <title>Login - Disha AI Attendance</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Attendance CSS -->
+  <link rel="stylesheet" href="css/attendance-style.css">
+</head>
+<body>
+  <div id="autosoft-attendance-app" style="justify-content: center; align-items: center; min-height: 100vh;">
+    <!-- Toast Container -->
+    <div id="autosoft-attendance-app-toast-container"></div>
+
+    <div class="asa-card" style="width: 100%; max-width: 440px; margin: 40px auto; padding: 40px;">
+      <!-- Title -->
+      <div style="text-align: center; margin-bottom: 30px;">
+        <span style="font-family: var(--asa-display); font-size: 1.5rem; font-weight: 800; color: #fff;">Disha<span>AI</span></span>
+        <h2 style="font-family: var(--asa-display); font-size: 1.3rem; font-weight: 700; color: var(--asa-primary); margin-top: 10px;">AI Smart Attendance Portal</h2>
+        <p style="color: var(--asa-text-muted); font-size: 0.88rem; margin-top: 4px;">Sign in to access your dashboard</p>
+      </div>
+
+      <!-- Tab selections -->
+      <div style="display: flex; gap: 8px; margin-bottom: 24px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--asa-border); border-radius: 12px; padding: 4px;">
+        <button class="asa-btn asa-btn-secondary" style="flex: 1; padding: 10px; font-size: 0.82rem; border: none; font-weight: 600;" id="tab-student" onclick="selectRole('Student')">Student</button>
+        <button class="asa-btn asa-btn-secondary" style="flex: 1; padding: 10px; font-size: 0.82rem; border: none; font-weight: 600;" id="tab-faculty" onclick="selectRole('Faculty')">Faculty</button>
+        <button class="asa-btn asa-btn-secondary" style="flex: 1; padding: 10px; font-size: 0.82rem; border: none; font-weight: 600;" id="tab-admin" onclick="selectRole('Admin')">Admin</button>
+      </div>
+
+      <!-- Credentials tip box -->
+      <div style="background: rgba(0, 229, 255, 0.03); border: 1px solid rgba(0, 229, 255, 0.1); border-radius: 10px; padding: 12px; margin-bottom: 20px; font-size: 0.8rem; line-height: 1.4; color: var(--asa-text-muted);">
+        <i class="fa-solid fa-circle-info" style="color: var(--asa-primary); margin-right: 4px;"></i> 
+        Demo Credentials:<br>
+        <span id="demo-credentials-text">Username: <strong>student</strong> / Password: <strong>student123</strong></span>
+      </div>
+
+      <!-- Login Form -->
+      <form onsubmit="handlePortalLogin(event)">
+        <!-- Faculty Select Dropdown -->
+        <div class="asa-input-group" id="faculty-select-group" style="display: none;">
+          <label class="asa-input-label">Select Faculty Member</label>
+          <select id="login-faculty-select" class="asa-select">
+            <option value="Mr. Anand Raj (AP)">Mr. Anand Raj (AP) — Computer Networks</option>
+            <option value="Mr. Niraj Nirmal (AP)">Mr. Niraj Nirmal (AP) — Computer Org & Arch</option>
+            <option value="Mr. Md. Zaki Anwer (AP)">Mr. Md. Zaki Anwer (AP) — Algorithms</option>
+            <option value="Ms. Manisha Rani (AP)">Ms. Manisha Rani (AP) — DBMS</option>
+          </select>
+        </div>
+
+        <div class="asa-input-group" id="username-input-group">
+          <label class="asa-input-label">Username / Email</label>
+          <input type="text" id="login-username" class="asa-input" placeholder="Enter username" required>
+        </div>
+
+        <div class="asa-input-group" style="position: relative;">
+          <label class="asa-input-label">Password</label>
+          <input type="password" id="login-password" class="asa-input" placeholder="Enter password" required>
+          <button type="button" onclick="togglePassVisibility()" style="position: absolute; right: 16px; top: 38px; background: none; border: none; color: var(--asa-text-muted); cursor: pointer; font-size: 1.1rem; z-index: 10;">
+            <i class="fa-solid fa-eye" id="pass-toggle-icon"></i>
+          </button>
+        </div>
+
+        <!-- Meta actions -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; font-size: 0.85rem;">
+          <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--asa-text-muted);">
+            <input type="checkbox" id="remember-me" style="accent-color: var(--asa-primary);"> Remember Me
+          </label>
+          <a href="#" onclick="alert('Demo Mode: Please use the provided credentials to login.')" style="color: var(--asa-primary); text-decoration: none; font-weight: 500;">Forgot Password?</a>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" id="login-submit" class="asa-btn asa-btn-primary" style="width: 100%; padding: 14px;">
+          <i class="fa-solid fa-right-to-bracket"></i> Sign In
+        </button>
+      </form>
+
+      <!-- Back to Landing Link -->
+      <div style="text-align: center; margin-top: 24px;">
+        <a href="index.html" style="color: var(--asa-text-muted); text-decoration: none; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 6px;"><i class="fa-solid fa-arrow-left-long"></i> Back to Homepage</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Javascript Core & Auth Libraries -->
+  <script src="js/attendance-app.js"></script>
+  <script src="js/attendance-auth.js"></script>
+  <script>
+    let activeRole = "Student";
+
+    // Grab query parameter role
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const roleParam = params.get('role');
+      if (roleParam === 'Admin' || roleParam === 'Faculty' || roleParam === 'Student') {
+        activeRole = roleParam;
+      }
+      selectRole(activeRole);
+    });
+
+    function selectRole(role) {
+      activeRole = role;
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.style.background = 'rgba(255, 255, 255, 0.05)');
+      
+      const stTab = document.getElementById('tab-student');
+      const faTab = document.getElementById('tab-faculty');
+      const adTab = document.getElementById('tab-admin');
+      
+      stTab.className = 'asa-btn asa-btn-secondary';
+      faTab.className = 'asa-btn asa-btn-secondary';
+      adTab.className = 'asa-btn asa-btn-secondary';
+      
+      const credText = document.getElementById('demo-credentials-text');
+      const usernameInput = document.getElementById('login-username');
+      
+      const usernameGroup = document.getElementById('username-input-group');
+      const facultyGroup = document.getElementById('faculty-select-group');
+
+      if (role === 'Student') {
+        stTab.className = 'asa-btn asa-btn-primary';
+        credText.innerHTML = "Username: <strong>student</strong> / Password: <strong>student123</strong>";
+        usernameInput.value = 'student';
+        usernameGroup.style.display = 'block';
+        facultyGroup.style.display = 'none';
+      } else if (role === 'Faculty') {
+        faTab.className = 'asa-btn asa-btn-primary';
+        credText.innerHTML = "Username: <strong>faculty</strong> / Password: <strong>faculty123</strong>";
+        usernameInput.value = 'faculty';
+        usernameGroup.style.display = 'none';
+        facultyGroup.style.display = 'block';
+      } else if (role === 'Admin') {
+        adTab.className = 'asa-btn asa-btn-primary';
+        credText.innerHTML = "Username: <strong>admin</strong> / Password: <strong>admin123</strong>";
+        usernameInput.value = 'admin';
+        usernameGroup.style.display = 'block';
+        facultyGroup.style.display = 'none';
+      }
+      document.getElementById('login-password').value = '';
+    }
+
+    function togglePassVisibility() {
+      const passField = document.getElementById('login-password');
+      const icon = document.getElementById('pass-toggle-icon');
+      if (passField.type === "password") {
+        passField.type = "text";
+        icon.className = "fa-solid fa-eye-slash";
+      } else {
+        passField.type = "password";
+        icon.className = "fa-solid fa-eye";
+      }
+    }
+
+    function triggerToast(message, type = 'success') {
+      const container = document.getElementById('autosoft-attendance-app-toast-container');
+      const toast = document.createElement('div');
+      toast.className = `asa-toast ${type}`;
+      toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation'}"></i> ${message}`;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
+    }
+
+    function handlePortalLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('login-username').value;
+      const pass = document.getElementById('login-password').value;
+      const submitBtn = document.getElementById('login-submit');
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Authenticating...';
+
+      setTimeout(() => {
+        const result = window.asaAuth.login(user, pass, activeRole);
+        if (result.success) {
+          // If active role is Faculty, override session name with chosen dropdown value
+          if (activeRole === 'Faculty') {
+            const selectedName = document.getElementById('login-faculty-select').value;
+            const sessionData = JSON.parse(sessionStorage.getItem('asa_user_session'));
+            sessionData.name = selectedName;
+            sessionStorage.setItem('asa_user_session', JSON.stringify(sessionData));
+            result.user.name = selectedName;
+          }
+          
+          triggerToast(`Welcome back, ${result.user.name}! Redirecting...`, 'success');
+          setTimeout(() => {
+            if (result.user.role === 'Admin') {
+              window.location.href = "admin-dashboard.html";
+            } else if (result.user.role === 'Faculty') {
+              window.location.href = "faculty-dashboard.html";
+            } else {
+              window.location.href = "student-registration.html";
+            }
+          }, 1500);
+        } else {
+          triggerToast(result.error || "Login failed.", 'error');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Sign In';
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
+
+<!-- Placeholders definition notes -->
+
+<!-- Auth main panel alignment -->
+
+<!-- Validation callback parameters -->
+
+<!-- Responsive login grid scale -->
+
+<!-- Error layout styling attributes -->
+
+<!-- Redirect criteria settings -->
+
+<!-- Checkbox custom color rules -->
+
+<!-- Input elements cleanup note -->

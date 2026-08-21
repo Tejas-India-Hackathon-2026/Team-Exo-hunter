@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+  <title>Student Registration - Disha AI Attendance</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Attendance CSS -->
+  <link rel="stylesheet" href="css/attendance-style.css">
+</head>
+<body>
+  <div id="autosoft-attendance-app">
+    <!-- Navbar Header -->
+    <header style="padding: 20px 24px; border-bottom: 1px solid var(--asa-border); background: var(--asa-panel-solid); display: flex; justify-content: space-between; align-items: center;">
+      <span style="font-family: var(--asa-display); font-size: 1.3rem; font-weight: 800; color: #fff;">Disha<span>AI</span> <span style="color: var(--asa-primary); font-weight: 400; font-size: 1rem;">| AI Attendance</span></span>
+      <a href="index.html" class="asa-btn asa-btn-secondary" style="padding: 8px 16px; font-size: 0.85rem;"><i class="fa-solid fa-house"></i> Home</a>
+    </header>
+
+    <div class="asa-registration-shell" style="max-width: 720px; width: 92%; margin: 40px auto; padding: 0 10px;">
+      <!-- Wizard Tracker -->
+      <div class="asa-wizard-steps">
+        <div class="asa-wizard-step active" id="step-dot-1">1</div>
+        <div class="asa-wizard-step" id="step-dot-2">2</div>
+        <div class="asa-wizard-step" id="step-dot-3">3</div>
+      </div>
+
+      <!-- STEP 1: Academic details -->
+      <div class="asa-card" id="card-step-1">
+        <h3 style="font-family: var(--asa-display); font-size: 1.35rem; font-weight: 700; margin-bottom: 8px;"><i class="fa-solid fa-graduation-cap" style="color: var(--asa-primary);"></i> Step 1: Academic Details</h3>
+        <p style="color: var(--asa-text-muted); font-size: 0.88rem; margin-bottom: 24px;">Please fill in your primary academic details for registration.</p>
+        
+        <form onsubmit="goToStep2(event)">
+          <div class="asa-form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+            <div class="asa-input-group">
+              <label class="asa-input-label">Student Full Name *</label>
+              <input type="text" id="reg-name" class="asa-input" placeholder="e.g. John Doe" required>
+            </div>
+            <div class="asa-input-group">
+              <label class="asa-input-label">Father's Name *</label>
+              <input type="text" id="reg-father" class="asa-input" placeholder="e.g. Richard Doe" required>
+            </div>
+          </div>
+
+          <div class="asa-form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+            <div class="asa-input-group">
+              <label class="asa-input-label">Roll Number *</label>
+              <input type="text" id="reg-roll" class="asa-input" placeholder="e.g. CSE-025" required>
+            </div>
+            <div class="asa-input-group">
+              <label class="asa-input-label">University Registration Number *</label>
+              <input type="text" id="reg-university" class="asa-input" placeholder="e.g. UG-2025-00455" required>
+            </div>
+          </div>
+
+          <div class="asa-form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+            <div class="asa-input-group">
+              <label class="asa-input-label">Email Address *</label>
+              <input type="email" id="reg-email" class="asa-input" placeholder="e.g. john@gmail.com" required>
+            </div>
+            <div class="asa-input-group">
+              <label class="asa-input-label">Mobile Number *</label>
+              <input type="tel" id="reg-mobile" class="asa-input" placeholder="e.g. 9876543228" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+            <div class="asa-input-group">
+              <label class="asa-input-label">Branch *</label>
+              <select id="reg-branch" class="asa-select" required>
+                <option value="" disabled selected>Select Branch</option>
+                <option>Computer Science</option>
+                <option>Electronics</option>
+                <option>Mechanical</option>
+                <option>Civil</option>
+              </select>
+            </div>
+            <div class="asa-input-group">
+              <label class="asa-input-label">Semester *</label>
+              <select id="reg-semester" class="asa-select" required>
+                <option value="" disabled>Select Semester</option>
+                <option>Semester I</option>
+                <option>Semester II</option>
+                <option>Semester III</option>
+                <option value="Semester IV" selected>Semester IV</option>
+                <option>Semester V</option>
+                <option>Semester VI</option>
+                <option>Semester VII</option>
+                <option>Semester VIII</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="asa-form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+            <div class="asa-input-group">
+              <label class="asa-input-label">Section *</label>
+              <select id="reg-section" class="asa-select" required>
+                <option value="A+B" selected>A+B (Combined)</option>
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+              </select>
+            </div>
+            <div class="asa-input-group">
+              <label class="asa-input-label">Academic Session *</label>
+              <input type="text" id="reg-session" class="asa-input" placeholder="e.g. 2025-2029" required>
+            </div>
+          </div>
+
+          <button type="submit" class="asa-btn asa-btn-primary" style="width: 100%; padding: 14px;">
+            Continue to Face Registration <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+
+      <!-- STEP 2: Face data captures -->
+      <div class="asa-card" id="card-step-2" style="display: none;">
+        <h3 style="font-family: var(--asa-display); font-size: 1.35rem; font-weight: 700; margin-bottom: 8px;"><i class="fa-solid fa-camera" style="color: var(--asa-primary);"></i> Step 2: Face Registration</h3>
+        <p style="color: var(--asa-text-muted); font-size: 0.88rem; margin-bottom: 24px;">Position your face inside the scan frame to capture five structural angles.</p>
+
+        <!-- Simulated circular guide -->
+        <div class="asa-scanner-view">
+          <div class="asa-scanner-guide"></div>
+          <video id="webcam-reg" class="asa-scanner-video" autoplay muted playsinline preload="none"></video>
+          <div id="scanner-overlay" class="asa-scanner-overlay">
+            <p style="color: var(--asa-primary); font-weight: 700;"><i class="fa-solid fa-arrows-spin fa-spin"></i> Initializing camera feed...</p>
+          </div>
+        </div>
+
+        <!-- Progress metrics -->
+        <div style="margin-top: 24px; margin-bottom: 24px;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; color: var(--asa-text-muted); margin-bottom: 8px;">
+            <span id="reg-progress-text">Face Registration Progress: 0/5 Images Captured</span>
+          </div>
+          <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; border: 1px solid var(--asa-border);">
+            <div id="reg-progress-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, var(--asa-primary), var(--asa-secondary)); transition: width 0.3s;"></div>
+          </div>
+        </div>
+
+        <!-- Snapshot thumbnail previews -->
+        <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 24px;" id="captured-preview-grid"></div>
+
+        <!-- Consent Box -->
+        <div style="margin-bottom: 24px;">
+          <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 0.85rem; line-height: 1.4; color: var(--asa-text-muted);">
+            <input type="checkbox" id="consent-check" style="margin-top: 3px; accent-color: var(--asa-primary);" onchange="toggleConsent()">
+            <span>I give permission to use my facial data only for authorized academic attendance purposes according to the institution's policy. *</span>
+          </label>
+        </div>
+
+        <!-- Actions -->
+        <div class="asa-action-row" style="display: flex; gap: 12px;">
+          <button class="asa-btn asa-btn-secondary" style="flex: 1;" onclick="backToStep1()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+          <button class="asa-btn asa-btn-primary" style="flex: 2;" id="capture-btn" onclick="captureFaceAngle()"><i class="fa-solid fa-camera"></i> Capture Face Angle</button>
+        </div>
+
+        <button class="asa-btn asa-btn-primary" style="width: 100%; margin-top: 16px; padding: 14px;" id="submit-reg-btn" onclick="submitFaceRegistration()" disabled>
+          Complete Registration & Generate ID <i class="fa-solid fa-circle-check"></i>
+        </button>
+      </div>
+
+      <!-- STEP 3: Registration Confirmation ID -->
+      <div class="asa-card" id="card-step-3" style="display: none; text-align: center;">
+        <h3 style="font-family: var(--asa-display); font-size: 1.5rem; font-weight: 800; color: var(--asa-warning); margin-bottom: 6px;">
+          <i class="fa-solid fa-clock"></i> Registration Submitted for Verification
+        </h3>
+        <p style="color: var(--asa-text-muted); font-size: 0.9rem; margin-bottom: 18px;">Your biometric face data is registered and your request is now waiting for faculty/admin review.</p>
+        <div style="display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; background:rgba(245,158,11,.12); border:1px solid rgba(245,158,11,.3); color:#fbbf24; font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:18px;" id="approval-status-badge">Pending Approval</div>
+        <p style="color: var(--asa-text-muted); font-size: 0.9rem; margin-bottom: 35px;" id="approval-status-message">Your registration is pending faculty/admin review. Once approved, you will receive a success notification and your attendance access will be activated.</p>
+
+        <!-- Simulated Student Badge ID -->
+        <div style="width: 100%; max-width: 380px; margin: 0 auto 35px auto; background: linear-gradient(135deg, var(--asa-panel-solid), #12182c); border: 2.5px solid var(--asa-primary); border-radius: 20px; box-shadow: 0 15px 40px rgba(0, 229, 255, 0.15); overflow: hidden; position: relative;">
+          <!-- Card Glow background -->
+          <div style="position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; border-radius: 50%; background: var(--asa-primary); opacity: 0.05; filter: blur(50px);"></div>
+          
+          <!-- Card Header branding -->
+          <div style="background: rgba(0, 229, 255, 0.05); padding: 16px; border-bottom: 1.5px solid var(--asa-border); display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-family: var(--asa-display); font-weight: 800; font-size: 0.95rem; color: #fff; letter-spacing: 0.5px;">Disha<span>AI</span> <span style="color: var(--asa-primary); font-weight: 400; font-size: 0.75rem;">COLLEGE ID</span></span>
+            <span id="card-status-badge" style="font-size: 0.65rem; background: var(--asa-success-glow); color: var(--asa-success); border: 1px solid rgba(16, 185, 129, 0.2); padding: 2px 6px; border-radius: 4px; font-weight: 700;">BIOMETRIC ACTIVE</span>
+          </div>
+
+          <!-- Card Body content -->
+          <div style="padding: 24px; text-align: left; display: flex; gap: 20px; align-items: center;">
+            <!-- Profile avatar slot -->
+            <div style="width: 90px; height: 90px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1.5px dashed var(--asa-primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative;">
+              <i class="fa-solid fa-user-tie" style="font-size: 3rem; color: var(--asa-text-muted);"></i>
+              <i class="fa-solid fa-face-viewfinder" style="position: absolute; bottom: 4px; right: 4px; color: var(--asa-primary); font-size: 0.95rem;"></i>
+            </div>
+            
+            <div style="flex: 1; line-height: 1.4;">
+              <h4 style="font-size: 1.15rem; font-weight: 700; color: #fff;" id="id-card-name">Ayush Raj</h4>
+              <p style="font-size: 0.82rem; color: var(--asa-primary); font-weight: 700; margin-top: 2px;" id="id-card-id">STU-CSE-1001</p>
+              
+              <div style="margin-top: 10px; font-size: 0.75rem; color: var(--asa-text-muted); display: grid; grid-template-columns: auto 1fr; gap: 4px 10px;">
+                <span>Roll No:</span><strong style="color: #fff;" id="id-card-roll">CSE-001</strong>
+                <span>Branch:</span><strong style="color: #fff;" id="id-card-branch">Computer Science</strong>
+                <span>Semester:</span><strong style="color: #fff;" id="id-card-sem">Semester III</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Footer info -->
+          <div style="background: rgba(255,255,255,0.02); padding: 10px 24px; border-top: 1px solid var(--asa-border); display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; color: var(--asa-text-muted);">
+            <span>Issued: <strong style="color: #fff;" id="id-card-date">July 09, 2026</strong></span>
+            <span>Signature: <strong style="color: var(--asa-primary); font-family: 'Space Grotesk';">DISHA AI</strong></span>
+          </div>
+        </div>
+
+        <div class="asa-action-row asa-action-row-center" style="display: flex; gap: 12px; justify-content: center;">
+          <button class="asa-btn asa-btn-secondary" onclick="window.location.reload()"><i class="fa-solid fa-user-plus"></i> Register Another</button>
+          <a href="index.html" class="asa-btn asa-btn-primary"><i class="fa-solid fa-house"></i> Return Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Javascript Core & Registration Libraries -->
+  <script src="js/attendance-app.js"></script>
+  <script src="js/face-registration.js"></script>
+  <script>
+    let formData = {};
+
+    function goToStep2(e) {
+      e.preventDefault();
+      
+      // Save fields
+      formData = {
+        fullName: document.getElementById('reg-name').value.trim(),
+        fatherName: document.getElementById('reg-father').value.trim(),
+        rollNo: document.getElementById('reg-roll').value.trim(),
+        regNo: document.getElementById('reg-university').value.trim(),
+        email: document.getElementById('reg-email').value.trim(),
+        mobile: document.getElementById('reg-mobile').value.trim(),
+        branch: document.getElementById('reg-branch').value,
+        semester: document.getElementById('reg-semester').value,
+        section: document.getElementById('reg-section').value,
+        session: document.getElementById('reg-session').value.trim()
+      };
+
+      // Transition Wizard UI
+      document.getElementById('card-step-1').style.display = 'none';
+      document.getElementById('card-step-2').style.display = 'block';
+      document.getElementById('step-dot-1').className = 'asa-wizard-step completed';
+      document.getElementById('step-dot-2').className = 'asa-wizard-step active';
+
+      // Open camera feed
+      window.asaFaceReg.startCamera('webcam-reg', 'scanner-overlay');
+      document.getElementById('card-step-2').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      toggleConsent();
+    }
+
+    function backToStep1() {
+      window.asaFaceReg.resetWizard();
+      document.getElementById('card-step-2').style.display = 'none';
+      document.getElementById('card-step-1').style.display = 'block';
+      document.getElementById('step-dot-1').className = 'asa-wizard-step active';
+      document.getElementById('step-dot-2').className = 'asa-wizard-step';
+      document.getElementById('captured-preview-grid').innerHTML = '';
+      document.getElementById('reg-progress-bar').style.width = '0%';
+      document.getElementById('reg-progress-text').innerText = 'Face Registration Progress: 0/5 Images Captured';
+      
+      const triggerBtn = document.getElementById('capture-btn');
+      triggerBtn.disabled = false;
+      triggerBtn.innerHTML = '<i class="fa-solid fa-camera"></i> Capture Face Angle';
+      triggerBtn.style.opacity = '1';
+    }
+
+    function toggleConsent() {
+      const checked = document.getElementById('consent-check').checked;
+      const captureBtn = document.getElementById('capture-btn');
+      if (captureBtn) {
+        captureBtn.disabled = !checked;
+        captureBtn.style.opacity = checked ? '1' : '0.4';
+      }
+    }
+
+    function captureFaceAngle() {
+      window.asaFaceReg.captureNext(
+        'webcam-reg', 
+        'scanner-overlay', 
+        'reg-progress-text', 
+        'reg-progress-bar', 
+        'captured-preview-grid'
+      );
+    }
+
+    function renderApprovalStatus(student) {
+      const badge = document.getElementById('approval-status-badge');
+      const message = document.getElementById('approval-status-message');
+      const heading = document.querySelector('#card-step-3 h3');
+
+      if (!badge || !message || !heading) return;
+
+      const isApproved = student && (student.approvalStatus === 'Approved' || student.status === 'Active');
+      const cardBadge = document.getElementById('card-status-badge');
+      badge.textContent = isApproved ? 'Approved' : 'Pending Approval';
+      badge.style.background = isApproved ? 'rgba(16, 185, 129, 0.16)' : 'rgba(245,158,11,.12)';
+      badge.style.borderColor = isApproved ? 'rgba(16, 185, 129, 0.28)' : 'rgba(245,158,11,.3)';
+      badge.style.color = isApproved ? 'var(--asa-success)' : '#fbbf24';
+      if (cardBadge) {
+        cardBadge.textContent = isApproved ? 'APPROVED' : 'PENDING REVIEW';
+        cardBadge.style.background = isApproved ? 'rgba(16, 185, 129, 0.16)' : 'rgba(245,158,11,.12)';
+        cardBadge.style.borderColor = isApproved ? 'rgba(16, 185, 129, 0.28)' : 'rgba(245,158,11,.3)';
+        cardBadge.style.color = isApproved ? 'var(--asa-success)' : '#fbbf24';
+      }
+      heading.innerHTML = isApproved ? '<i class="fa-solid fa-circle-check"></i> Registration Approved' : '<i class="fa-solid fa-clock"></i> Registration Submitted for Verification';
+      heading.style.color = isApproved ? 'var(--asa-success)' : 'var(--asa-warning)';
+      message.textContent = isApproved
+        ? 'Your registration has been approved. Your biometric attendance access is now active.'
+        : 'Your registration is pending faculty/admin review. Once approved, you will receive a success notification and your attendance access will be activated.';
+    }
+
+    function submitFaceRegistration() {
+      const student = window.asaFaceReg.saveRegistration(formData, 'webcam-reg');
+      sessionStorage.setItem('asa_last_registration_id', student.id);
+
+      // Render Step 3 Card ID Details
+      document.getElementById('id-card-name').innerText = student.fullName;
+      document.getElementById('id-card-id').innerText = student.id;
+      document.getElementById('id-card-roll').innerText = student.rollNo;
+      document.getElementById('id-card-branch').innerText = student.branch;
+      document.getElementById('id-card-sem').innerText = student.semester;
+      document.getElementById('id-card-date').innerText = student.registrationDate;
+      renderApprovalStatus(student);
+
+      // Transition Wizard UI
+      document.getElementById('card-step-2').style.display = 'none';
+      document.getElementById('card-step-3').style.display = 'block';
+      document.getElementById('step-dot-2').className = 'asa-wizard-step completed';
+      document.getElementById('step-dot-3').className = 'asa-wizard-step completed';
+    }
+
+    function showApprovalNotification(student) {
+      const alertBox = document.getElementById('approval-status-message');
+      if (!alertBox || !student) return;
+
+      const approvalStatus = student.approvalStatus || student.status;
+      if (approvalStatus === 'Approved') {
+        alertBox.innerHTML = '<strong>Approved:</strong> Your registration has been approved. You can now use the attendance system.';
+        alertBox.style.color = 'var(--asa-success)';
+      } else if (approvalStatus === 'Rejected') {
+        alertBox.innerHTML = '<strong>Rejected:</strong> Your registration request was not approved. Please contact faculty/admin for help.';
+        alertBox.style.color = 'var(--asa-danger)';
+      }
+
+      const notice = JSON.parse(localStorage.getItem('asa_last_approval_notice') || 'null');
+      if (notice && notice.studentId === student.id) {
+        alertBox.innerHTML = `<strong>${notice.status === 'Approved' ? 'Approved' : 'Rejected'}:</strong> ${notice.message}`;
+        alertBox.style.color = notice.status === 'Approved' ? 'var(--asa-success)' : 'var(--asa-danger)';
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // 1. Try to read active session
+      const session = sessionStorage.getItem('asa_user_session');
+      if (session) {
+        const user = JSON.parse(session);
+        if (user.role === 'Student') {
+          // If student logged in, let's search if they exist in LocalStorage
+          const students = JSON.parse(localStorage.getItem('asa_students') || '[]');
+          
+          // Seeded student username is 'student', which maps to Ayush Raj (STU-CSE-1001)
+          const student = students.find(s => s.fullName === 'Ayush Raj' || s.email === 'ayush@dishaai.com');
+          if (student) {
+            // Render Step 3 Card ID Details
+            document.getElementById('id-card-name').innerText = student.fullName;
+            document.getElementById('id-card-id').innerText = student.id;
+            document.getElementById('id-card-roll').innerText = student.rollNo;
+            document.getElementById('id-card-branch').innerText = student.branch;
+            document.getElementById('id-card-sem').innerText = student.semester;
+            document.getElementById('id-card-date').innerText = student.registrationDate || "July 09, 2026";
+            renderApprovalStatus(student);
+
+            // Show step 3 directly
+            document.getElementById('card-step-1').style.display = 'none';
+            document.getElementById('card-step-2').style.display = 'none';
+            document.getElementById('card-step-3').style.display = 'block';
+            document.getElementById('step-dot-1').className = 'asa-wizard-step completed';
+            document.getElementById('step-dot-2').className = 'asa-wizard-step completed';
+            document.getElementById('step-dot-3').className = 'asa-wizard-step completed';
+
+            const registrationId = sessionStorage.getItem('asa_last_registration_id');
+            if (registrationId) {
+              const latestStudent = students.find(s => s.id === registrationId);
+              if (latestStudent) {
+                renderApprovalStatus(latestStudent);
+                showApprovalNotification(latestStudent);
+              }
+            }
+
+            // Change first action button to Sign Out
+            const btnContainer = document.querySelector('#card-step-3 .asa-btn-secondary').parentElement;
+            btnContainer.innerHTML = `
+              <button class="asa-btn asa-btn-secondary" onclick="sessionStorage.removeItem('asa_user_session'); window.location.href='index.html';"><i class="fa-solid fa-power-off"></i> Sign Out</button>
+              <a href="index.html" class="asa-btn asa-btn-primary"><i class="fa-solid fa-house"></i> Return Home</a>
+            `;
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
+
+<!-- Webcam feed interface wrapper -->
+
+<!-- Capture decks status layout -->
+
+<!-- Resolution ratio parameters config -->
+
+<!-- Face viewport box scale attributes -->
+
+<!-- Steps guidance instructions text -->
+
+<!-- Coordinates matching maps guides -->
+
+<!-- Capture button active styling tags -->
+
+<!-- Class bindings dynamic selectors -->

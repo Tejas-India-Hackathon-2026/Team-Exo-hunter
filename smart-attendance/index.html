@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="keywords" content="Disha AI, AI Attendance, Facial Recognition Attendance, Smart Classrooms" />
+  <meta name="description" content="AI-powered face recognition classroom attendance system." />
+  <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+  <title>Disha AI Smart Attendance System</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Attendance CSS -->
+  <link rel="stylesheet" href="css/attendance-style.css">
+</head>
+<body>
+  <div id="autosoft-attendance-app">
+    <!-- Navbar Header -->
+    <header style="padding: 20px 24px; border-bottom: 1px solid var(--asa-border); background: var(--asa-panel-solid); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="font-family: var(--asa-display); font-size: 1.3rem; font-weight: 800; color: #fff; letter-spacing: 0.5px;">Disha<span>AI</span> <span style="color: var(--asa-primary); font-weight: 400; font-size: 1rem;">| AI Attendance</span></span>
+      </div>
+      <a href="../" class="asa-btn asa-btn-secondary" style="padding: 8px 16px; font-size: 0.85rem;"><i class="fa-solid fa-arrow-left-long"></i> Back to Disha AI</a>
+    </header>
+
+    <!-- Hero Section -->
+    <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; align-items: center; max-width: 1200px; margin: 40px auto; padding: 40px 24px;">
+      <!-- Hero Details Left -->
+      <div style="line-height: 1.2;">
+        <div class="asa-badge" style="background: rgba(0, 229, 255, 0.08); color: var(--asa-primary); border: 1px solid rgba(0, 229, 255, 0.2); font-weight: 800; font-size: 0.8rem; margin-bottom: 20px; display: inline-flex;">PROTOTYPE DEMONSTRATION</div>
+        <h1 style="font-family: var(--asa-display); font-size: 2.8rem; font-weight: 800; line-height: 1.15; color: #fff;">Disha AI <br><span style="background: linear-gradient(135deg, var(--asa-primary), var(--asa-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Smart Attendance</span></h1>
+        <p style="font-size: 1.15rem; color: var(--asa-text-muted); margin-top: 18px; line-height: 1.5;">“Smart Recognition. Accurate Attendance. Better Classrooms.”</p>
+        <div style="display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap;">
+          <a href="login.html?role=Faculty" class="asa-btn asa-btn-primary"><i class="fa-solid fa-chalkboard-user"></i> Faculty Login</a>
+          <a href="login.html?role=Admin" class="asa-btn asa-btn-secondary"><i class="fa-solid fa-user-gear"></i> Admin Dashboard</a>
+          <a href="student-registration.html" class="asa-btn asa-btn-secondary" style="border-color: rgba(0, 229, 255, 0.25); color: var(--asa-primary);"><i class="fa-solid fa-id-card"></i> Student Registration</a>
+        </div>
+      </div>
+
+      <!-- 3D Animation Canvas Right -->
+      <div class="asa-card" style="padding: 15px; overflow: hidden; position: relative; border-color: rgba(0, 229, 255, 0.15); border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 229, 255, 0.05);">
+        <div style="position: absolute; top: 15px; left: 15px; background: rgba(7,9,19,0.75); border: 1px solid var(--asa-border); border-radius: 6px; padding: 4px 10px; font-size: 0.7rem; font-weight: 800; color: var(--asa-primary); z-index: 10; display: flex; align-items: center; gap: 6px;">
+          <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--asa-primary); animation: asa-pulse 1.5s infinite;"></span>
+          3D FACE SCANNING VISUALIZER
+        </div>
+        <canvas id="three-scanning-canvas" style="width: 100%; height: 350px; display: block; background: transparent; border-radius: 12px;"></canvas>
+      </div>
+    </section>
+
+    <!-- Workflow Section -->
+    <section class="asa-workflow-section">
+      <h2>AI Attendance <span>Workflow</span></h2>
+      <div class="asa-workflow-grid">
+        <div class="asa-workflow-step">
+          <i class="fa-solid fa-user-plus"></i>
+          <p>Student Registration</p>
+        </div>
+        <div class="asa-workflow-arrow"><i class="fa-solid fa-angle-right"></i></div>
+        <div class="asa-workflow-step">
+          <i class="fa-solid fa-camera"></i>
+          <p>Face Data Collection</p>
+        </div>
+        <div class="asa-workflow-arrow"><i class="fa-solid fa-angle-right"></i></div>
+        <div class="asa-workflow-step">
+          <i class="fa-solid fa-face-smile"></i>
+          <p>AI Face Recognition</p>
+        </div>
+        <div class="asa-workflow-arrow"><i class="fa-solid fa-angle-right"></i></div>
+        <div class="asa-workflow-step">
+          <i class="fa-solid fa-clipboard-check"></i>
+          <p>Automatic Attendance</p>
+        </div>
+        <div class="asa-workflow-arrow"><i class="fa-solid fa-angle-right"></i></div>
+        <div class="asa-workflow-step">
+          <i class="fa-solid fa-file-pdf"></i>
+          <p>Report Export & Share</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section style="padding: 60px 0;">
+      <h2 style="font-family: var(--asa-display); font-size: 2rem; font-weight: 800; text-align: center; margin-bottom: 20px;">System <span>Features</span></h2>
+      <div class="asa-features-grid">
+        <div class="asa-feature-card">
+          <i class="fa-solid fa-microchip"></i>
+          <h3>AI Face Recognition</h3>
+          <p>Identifies students instantly inside the classroom with green/yellow matching indicators.</p>
+        </div>
+        <div class="asa-feature-card">
+          <i class="fa-solid fa-bolt"></i>
+          <h3>Automatic Attendance</h3>
+          <p>Logs student records directly to LocalStorage database cache, preventing duplicate checks.</p>
+        </div>
+        <div class="asa-feature-card">
+          <i class="fa-solid fa-chart-line"></i>
+          <h3>Real-Time Analytics</h3>
+          <p>Displays visual occupancy, branch attendance, and daily metrics using Chart.js graphs.</p>
+        </div>
+        <div class="asa-feature-card">
+          <i class="fa-solid fa-user-check"></i>
+          <h3>Faculty Verification</h3>
+          <p>Allows supervisors to review unrecognized faces and manually correct log details.</p>
+        </div>
+        <div class="asa-feature-card">
+          <i class="fa-solid fa-file-pdf"></i>
+          <h3>PDF Report Generation</h3>
+          <p>Downloads professional classroom logs complete with signatures using jsPDF.</p>
+        </div>
+        <div class="asa-feature-card">
+          <i class="fa-solid fa-share-nodes"></i>
+          <h3>WhatsApp Sharing</h3>
+          <p>Formats attendance stats automatically and opens standard chat shares with one click.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="asa-footer">
+      <p>&copy; 2026 Disha AI. Powered by <span>Disha AI</span></p>
+    </footer>
+  </div>
+
+  <!-- JS Databases initialization -->
+  <script src="js/attendance-app.js"></script>
+
+  <!-- Three.js CDN Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- 3D Scanning Visualizer Logic -->
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const canvas = document.getElementById('three-scanning-canvas');
+      if (!canvas) return;
+
+      // 1. Create Scene, Camera, and Renderer
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+      camera.position.z = 7;
+
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+      renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // Handle window resizing
+      function onWindowResize() {
+        camera.aspect = canvas.clientWidth / canvas.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+      }
+      window.addEventListener('resize', onWindowResize);
+
+      // 2. Create 3D Wireframe Face Model
+      const geometry = new THREE.SphereGeometry(2, 28, 28);
+      
+      // Wireframe wire mesh
+      const meshMat = new THREE.MeshBasicMaterial({
+        color: 0x00e5ff,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.12
+      });
+      const faceMesh = new THREE.Mesh(geometry, meshMat);
+      scene.add(faceMesh);
+
+      // Node point cloud points
+      const pointsMat = new THREE.PointsMaterial({
+        color: 0x00e5ff,
+        size: 0.05,
+        transparent: true,
+        opacity: 0.75
+      });
+      const facePoints = new THREE.Points(geometry, pointsMat);
+      scene.add(facePoints);
+
+      // 3. Create Laser Scanner Ring
+      const scannerGeom = new THREE.RingGeometry(0, 2.3, 32);
+      const scannerMat = new THREE.MeshBasicMaterial({
+        color: 0x00e5ff,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.25,
+        wireframe: true
+      });
+      const scannerPlane = new THREE.Mesh(scannerGeom, scannerMat);
+      scannerPlane.rotation.x = Math.PI / 2;
+      scene.add(scannerPlane);
+
+      // 4. Animation Sweep Loop
+      let scannerDirection = 1;
+      const speed = 0.015;
+
+      function renderFrame() {
+        requestAnimationFrame(renderFrame);
+
+        // Smooth rotation
+        faceMesh.rotation.y += 0.003;
+        facePoints.rotation.y += 0.003;
+        faceMesh.rotation.x += 0.001;
+        facePoints.rotation.x += 0.001;
+
+        // Laser scan plane motion
+        scannerPlane.position.y += speed * scannerDirection;
+        if (scannerPlane.position.y > 2.2) {
+          scannerDirection = -1;
+        } else if (scannerPlane.position.y < -2.2) {
+          scannerDirection = 1;
+        }
+
+        renderer.render(scene, camera);
+      }
+
+      renderFrame();
+    });
+  </script>
+</body>
+</html>
+
+<!-- Index navigation container -->
+
+<!-- Body typography definitions -->
+
+<!-- Viewport meta settings -->
+
+<!-- Grid layout layout properties -->
+
+<!-- Accessibility navigation tags -->
+
+<!-- Script loading configuration -->
+
+<!-- Theme configuration note -->
+
+<!-- Quick links components detail -->

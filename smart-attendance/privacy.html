@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+  <title>Privacy Policy - Disha AI Attendance</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Attendance CSS -->
+  <link rel="stylesheet" href="css/attendance-style.css">
+</head>
+<body>
+  <div id="autosoft-attendance-app">
+    <div class="asa-layout-wrapper">
+      <!-- Sidebar Navigation -->
+      <aside class="asa-sidebar">
+        <div class="asa-sidebar-logo">
+          <span>Disha<span>AI</span> <span style="font-size: 0.8rem; font-weight: 500; color: var(--asa-text-muted);">AI</span></span>
+        </div>
+        <ul class="asa-sidebar-menu">
+          <li class="asa-menu-item"><a href="faculty-dashboard.html" class="asa-menu-link" id="nav-dash-link"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+          <li class="asa-menu-item"><a href="live-attendance.html" class="asa-menu-link"><i class="fa-solid fa-camera"></i> Live AI Scanner</a></li>
+          <li class="asa-menu-item"><a href="attendance-records.html" class="asa-menu-link"><i class="fa-solid fa-database"></i> Attendance Logs</a></li>
+          <li class="asa-menu-item"><a href="unrecognized-faces.html" class="asa-menu-link"><i class="fa-solid fa-face-rolling-eyes"></i> Unresolved Queue</a></li>
+          <li class="asa-menu-item"><a href="reports.html" class="asa-menu-link"><i class="fa-solid fa-file-pdf"></i> Reports Desk</a></li>
+          <li class="asa-menu-item"><a href="classroom-analytics.html" class="asa-menu-link"><i class="fa-solid fa-brain"></i> Analytics</a></li>
+          <li class="asa-menu-item"><a href="privacy.html" class="asa-menu-link active"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a></li>
+          <li class="asa-menu-item" style="margin-top: 30px; border-top: 1px solid var(--asa-border); padding-top: 15px;"><a href="../" class="asa-menu-link"><i class="fa-solid fa-arrow-left-long"></i> Back to Main Portal</a></li>
+          <li class="asa-menu-item"><a href="#" onclick="window.asaAuth.logout()" class="asa-menu-link" style="color: var(--asa-danger);"><i class="fa-solid fa-power-off"></i> Sign Out</a></li>
+        </ul>
+      </aside>
+
+      <!-- Main Privacy Content -->
+      <main class="asa-main-content">
+        <!-- Header Banner -->
+        <header class="asa-header">
+          <div class="asa-header-title">
+            <h1>Privacy & Security Guidelines</h1>
+            <p>Biometric facial data policy, consent records, and system security guidelines.</p>
+          </div>
+          <div class="asa-header-meta">
+            <div class="asa-user-badge"><i class="fa-solid fa-shield-halved"></i> PRIVACY PORTAL</div>
+          </div>
+        </header>
+
+        <!-- Privacy info card -->
+        <section class="asa-card" style="padding: 40px; line-height: 1.6;">
+          <h2 style="font-family: var(--asa-display); font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 20px;">Biometric Data Usage Statement</h2>
+          
+          <div style="display: flex; flex-direction: column; gap: 20px; color: var(--asa-text-muted); font-size: 0.95rem;">
+            <p>
+              Disha AI Smart Attendance System processes facial images and biometric details solely to register and verify classroom attendance. To ensure compliance with institutional policies, we enforce the following security rules:
+            </p>
+
+            <div style="border-left: 3px solid var(--asa-primary); padding-left: 16px; margin: 10px 0;">
+              <h4 style="font-weight: 700; color: #fff; margin-bottom: 6px;">1. Biometric Consent Requirements</h4>
+              <p>
+                Student registration is completely optional. Face scanning cannot be initiated until the student explicitly selects the authorization check-box on the registration page.
+              </p>
+            </div>
+
+            <div style="border-left: 3px solid var(--asa-primary); padding-left: 16px; margin: 10px 0;">
+              <h4 style="font-weight: 700; color: #fff; margin-bottom: 6px;">2. LocalStorage Prototype Sandbox Notice</h4>
+              <p>
+                This version is a client-side prototype. Student metadata (name, roll, email) is stored inside the browser's LocalStorage. Camera feed snapshot images are processed transiently in active memory and **are not saved permanently** to local files or remote hosts.
+              </p>
+            </div>
+
+            <div style="border-left: 3px solid var(--asa-primary); padding-left: 16px; margin: 10px 0;">
+              <h4 style="font-weight: 700; color: #fff; margin-bottom: 6px;">3. Role-Based Permissions</h4>
+              <p>
+                Access to dashboards, records lists, and unresolved face verify queues is strictly restricted to authenticated Admin and Faculty roles. Session validation checks are run on every page request.
+              </p>
+            </div>
+
+            <div style="border-left: 3px solid var(--asa-primary); padding-left: 16px; margin: 10px 0;">
+              <h4 style="font-weight: 700; color: #fff; margin-bottom: 6px;">4. Biometric Encryption & Deletion Rights</h4>
+              <p>
+                In production deployment, all facial vector coordinates must be encrypted before database storage. Students reserve the right to review, update, or request complete deletion of their biometric metadata from institutional records according to university rules.
+              </p>
+            </div>
+
+            <p style="margin-top: 20px;">
+              For any questions regarding data storage boundaries or data deletion requests, please contact the IT Administration office at <a href="mailto:support@dishaai.com" style="color: var(--asa-primary); text-decoration: none;">support@dishaai.com</a>.
+            </p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Javascript Core & Auth Libraries -->
+  <script src="js/attendance-app.js"></script>
+  <script src="js/attendance-auth.js"></script>
+  <script>
+    // Enforce guard
+    window.asaAuth.requireRole(['Faculty', 'Admin']);
+
+    window.addEventListener('DOMContentLoaded', () => {
+      // Set session link
+      const session = window.asaAuth.getSession();
+      if (session && session.role === 'Admin') {
+        const link = document.getElementById('nav-dash-link');
+        link.href = "admin-dashboard.html";
+      }
+    });
+  </script>
+</body>
+</html>
+
+<!-- Terms sections definitions tags -->
+
+<!-- Policy paragraph spacing metrics -->
+
+<!-- Standard privacy ID anchors -->
+
+<!-- Lists items bullet alignment -->
+
+<!-- Retention rules policy details -->
+
+<!-- Terms validation controls outlines -->
+
+<!-- Banner outlines border styling -->
+
+<!-- Static layout element cleanup -->

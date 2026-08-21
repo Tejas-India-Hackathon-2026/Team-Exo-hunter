@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
+  <title>Live AI Attendance Scanner - Disha AI Attendance</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Attendance CSS -->
+  <link rel="stylesheet" href="css/attendance-style.css">
+</head>
+<body>
+  <div id="autosoft-attendance-app">
+    <!-- Toast container -->
+    <div id="autosoft-attendance-app-toast-container"></div>
+
+    <div class="asa-layout-wrapper">
+      <!-- Sidebar Navigation -->
+      <aside class="asa-sidebar">
+        <div class="asa-sidebar-logo">
+          <span>Disha<span>AI</span> <span style="font-size: 0.8rem; font-weight: 500; color: var(--asa-text-muted);">AI</span></span>
+        </div>
+        <ul class="asa-sidebar-menu">
+          <li class="asa-menu-item"><a href="faculty-dashboard.html" class="asa-menu-link" id="nav-dash-link"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+          <li class="asa-menu-item"><a href="live-attendance.html" class="asa-menu-link active"><i class="fa-solid fa-camera"></i> Live AI Scanner</a></li>
+          <li class="asa-menu-item"><a href="attendance-records.html" class="asa-menu-link"><i class="fa-solid fa-database"></i> Attendance Logs</a></li>
+          <li class="asa-menu-item"><a href="unrecognized-faces.html" class="asa-menu-link"><i class="fa-solid fa-face-rolling-eyes"></i> Unresolved Queue</a></li>
+          <li class="asa-menu-item"><a href="reports.html" class="asa-menu-link"><i class="fa-solid fa-file-pdf"></i> Reports Desk</a></li>
+          <li class="asa-menu-item"><a href="classroom-analytics.html" class="asa-menu-link"><i class="fa-solid fa-brain"></i> Analytics</a></li>
+          <li class="asa-menu-item"><a href="privacy.html" class="asa-menu-link"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</a></li>
+          <li class="asa-menu-item" style="margin-top: 30px; border-top: 1px solid var(--asa-border); padding-top: 15px;"><a href="../" class="asa-menu-link"><i class="fa-solid fa-arrow-left-long"></i> Back to Main Portal</a></li>
+          <li class="asa-menu-item"><a href="#" onclick="window.asaAuth.logout()" class="asa-menu-link" style="color: var(--asa-danger);"><i class="fa-solid fa-power-off"></i> Sign Out</a></li>
+        </ul>
+      </aside>
+
+      <!-- Main Scanner View -->
+      <main class="asa-main-content">
+        <!-- Header Banner -->
+        <header class="asa-header">
+          <div class="asa-header-title">
+            <h1>Live AI Attendance Scanner</h1>
+            <p>Initiate facial recognition scan session inside active classrooms.</p>
+          </div>
+          <div class="asa-header-meta">
+            <div class="asa-user-badge"><i class="fa-solid fa-camera"></i> LIVE SCANNING SESSION</div>
+          </div>
+        </header>
+
+        <section class="asa-grid-2col" style="grid-template-columns: 1.2fr 0.8fr;">
+          <!-- Camera Feed Frame -->
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            <div class="asa-card" style="position: relative; overflow: hidden; padding: 20px; display: flex; flex-direction: column; gap: 20px;">
+              <!-- Metadata label header -->
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--asa-border); padding-bottom: 12px; font-size: 0.88rem; font-weight: 600; color: var(--asa-text-muted);">
+                <span id="session-class-label">Class: B.Tech CSE – Semester III (Sec A)</span>
+                <span id="session-subject-label">Subject: Data Structure and Algorithms</span>
+              </div>
+
+              <!-- Camera scanning area -->
+              <div id="live-camera-wrapper" style="width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 16px; overflow: hidden; position: relative; border: 1.5px solid var(--asa-border);">
+                <!-- Active guide line (simulated) -->
+                <div class="asa-scanner-guide" style="display: none;" id="scanner-circular-guide"></div>
+                <video id="webcam-scan" style="width: 100%; height: 100%; object-fit: cover;" autoplay playsinline></video>
+                <!-- Image tag for IP Camera MJPEG stream fallback -->
+                <img id="ipcam-scan" style="width: 100%; height: 100%; object-fit: cover; display: none;" />
+                
+                <!-- Status tag -->
+                <div style="position: absolute; top: 15px; left: 15px; background: rgba(7, 9, 19, 0.85); border: 1px solid var(--asa-border); border-radius: 6px; padding: 4px 10px; font-size: 0.72rem; font-weight: 700; z-index: 10; display: flex; align-items: center; gap: 6px;">
+                  <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #9ca3af;" id="cam-status-dot"></span>
+                  <span id="cam-status-text">CAMERA INACTIVE</span>
+                </div>
+
+                <div style="position: absolute; top: 15px; right: 15px; background: rgba(239, 68, 68, 0.15); border: 1.5px solid var(--asa-danger); border-radius: 6px; padding: 4px 10px; font-size: 0.7rem; font-weight: 800; z-index: 10; color: var(--asa-danger);" id="sim-banner">
+                  PROTOTYPE MODE
+                </div>
+              </div>
+
+              <!-- Registration Reminder Note -->
+              <p style="font-size: 0.82rem; color: var(--asa-text-muted); text-align: center; margin-top: -10px; line-height: 1.4;">
+                <i class="fa-solid fa-circle-info" style="color: var(--asa-primary);"></i> If face not found, please register under <a href="student-registration.html" target="_blank" style="color: var(--asa-primary); text-decoration: none; font-weight: 600;">Student Registration</a>.
+              </p>
+
+              <!-- Action Controls -->
+              <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center; border-top: 1px solid var(--asa-border); padding-top: 18px;">
+                <button class="asa-btn asa-btn-secondary" style="padding: 10px 14px;" onclick="startWebcam()"><i class="fa-solid fa-power-off"></i> Start Local Camera</button>
+                
+                <!-- IP Camera Input Group -->
+                <div style="display: flex; gap: 6px; flex: 1; min-width: 250px;">
+                  <input type="text" id="ip-cam-input" class="asa-input" style="padding: 10px; font-size: 0.85rem; margin-bottom: 0;" placeholder="e.g. 192.168.1.100:8080/video or IP URL">
+                  <button class="asa-btn asa-btn-secondary" style="padding: 10px 14px; font-size: 0.85rem; white-space: nowrap;" onclick="connectIPCamera()"><i class="fa-solid fa-network-wired"></i> Connect IP Cam</button>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <button class="asa-btn asa-btn-primary" id="demo-btn" style="flex: 1;" onclick="startAIDemo()"><i class="fa-solid fa-play"></i> Run AI Attendance Demo</button>
+                <button class="asa-btn asa-btn-danger" id="stop-btn" style="flex: 1;" onclick="stopSession()" disabled><i class="fa-solid fa-circle-stop"></i> Stop & Save Session</button>
+              </div>
+            </div>
+
+            <!-- Stats overlay footer -->
+            <div class="asa-stats-grid" style="margin-bottom: 0;">
+              <div class="asa-stat-card" style="padding: 16px 20px;">
+                <div class="asa-stat-icon cyan" style="width: 44px; height: 44px; font-size: 1.25rem;"><i class="fa-solid fa-id-badge"></i></div>
+                <div class="asa-stat-details">
+                  <h3 style="font-size: 1.45rem;" id="stat-detected">0</h3>
+                  <p style="font-size: 0.78rem;">Detected</p>
+                </div>
+              </div>
+
+              <div class="asa-stat-card" style="padding: 16px 20px;">
+                <div class="asa-stat-icon green" style="width: 44px; height: 44px; font-size: 1.25rem;"><i class="fa-solid fa-user-check"></i></div>
+                <div class="asa-stat-details">
+                  <h3 style="font-size: 1.45rem;" id="stat-present">0</h3>
+                  <p style="font-size: 0.78rem;">Present</p>
+                </div>
+              </div>
+
+              <div class="asa-stat-card" style="padding: 16px 20px;">
+                <div class="asa-stat-icon danger" style="width: 44px; height: 44px; font-size: 1.25rem;"><i class="fa-solid fa-face-rolling-eyes"></i></div>
+                <div class="asa-stat-details">
+                  <h3 style="font-size: 1.45rem;" id="stat-unrecognized">0</h3>
+                  <p style="font-size: 0.78rem;">Unidentified</p>
+                </div>
+              </div>
+
+              <div class="asa-stat-card" style="padding: 16px 20px;">
+                <div class="asa-stat-icon blue" style="width: 44px; height: 44px; font-size: 1.25rem;"><i class="fa-solid fa-square-poll-vertical"></i></div>
+                <div class="asa-stat-details">
+                  <h3 style="font-size: 1.45rem;" id="stat-confidence">0%</h3>
+                  <p style="font-size: 0.78rem;">Avg. Confidence</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Real-Time Log table -->
+          <div class="asa-card" style="display: flex; flex-direction: column; height: 100%; min-height: 480px; padding: 24px;">
+            <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; border-bottom: 1px solid var(--asa-border); padding-bottom: 12px;"><i class="fa-solid fa-clock-rotate-left" style="color: var(--asa-primary);"></i> Active Scanner Logs</h3>
+            <div class="asa-table-container" style="flex: 1; margin-top: 0; max-height: 400px;">
+              <table class="asa-table">
+                <thead>
+                  <tr>
+                    <th style="padding: 10px 12px;">Student</th>
+                    <th style="padding: 10px 12px;">Roll</th>
+                    <th style="padding: 10px 12px;">Time</th>
+                    <th style="padding: 10px 12px;">Confidence</th>
+                    <th style="padding: 10px 12px;">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="scan-tbody">
+                  <tr>
+                    <td colspan="5" style="text-align: center; color: var(--asa-text-muted); padding: 40px 10px;">
+                      <i class="fa-solid fa-camera-retro" style="font-size: 2rem; display: block; margin-bottom: 10px; opacity: 0.3;"></i>
+                      Logs will display here once the camera scans.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Javascript Core, Auth & Recognition Libraries -->
+  <script src="js/attendance-app.js"></script>
+  <script src="js/attendance-auth.js"></script>
+  <script src="js/face-recognition.js"></script>
+  <script>
+    // Guard check
+    window.asaAuth.requireRole(['Faculty', 'Admin']);
+
+    // Customize navigation sidebar active role link & parse query params
+    window.addEventListener('DOMContentLoaded', () => {
+      const session = window.asaAuth.getSession();
+      if (session && session.role === 'Admin') {
+        const link = document.getElementById('nav-dash-link');
+        link.href = "admin-dashboard.html";
+      }
+
+      // Dynamic URL Param Parsing
+      const params = new URLSearchParams(window.location.search);
+      const subCode = params.get('subject');
+      const classId = params.get('class');
+
+      const subjects = window.asaDB.get("asa_subjects");
+      const classes = window.asaDB.get("asa_classes");
+
+      const targetSubject = subjects.find(s => s.code === subCode);
+      const targetClass = classes.find(c => c.id === classId);
+
+      if (targetSubject) {
+        document.getElementById('session-subject-label').innerText = `Subject: ${targetSubject.name} (${targetSubject.code})`;
+      }
+      if (targetClass) {
+        document.getElementById('session-class-label').innerText = `Class: ${targetClass.name}`;
+      }
+    });
+
+    function startWebcam() {
+      const video = document.getElementById('webcam-scan');
+      const img = document.getElementById('ipcam-scan');
+      video.style.display = 'block';
+      img.style.display = 'none';
+      img.src = '';
+
+      window.asaFaceRec.startCamera('webcam-scan');
+      
+      const dot = document.getElementById('cam-status-dot');
+      const text = document.getElementById('cam-status-text');
+      dot.style.backgroundColor = 'var(--asa-primary)';
+      text.innerText = 'CAMERA LIVE';
+      triggerToast('Web camera feed initialized successfully.', 'success');
+    }
+
+    function connectIPCamera() {
+      let url = document.getElementById('ip-cam-input').value.trim();
+      if (!url) {
+        alert("Please enter a valid Camera IP Address or MJPEG stream URL.");
+        return;
+      }
+
+      // Prepend protocol if missing
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        url = 'http://' + url;
+      }
+
+      // Stop webcam stream
+      window.asaFaceRec.stopCamera();
+
+      const video = document.getElementById('webcam-scan');
+      const img = document.getElementById('ipcam-scan');
+
+      video.style.display = 'none';
+      img.style.display = 'block';
+      img.src = url;
+
+      const dot = document.getElementById('cam-status-dot');
+      const text = document.getElementById('cam-status-text');
+      dot.style.backgroundColor = 'var(--asa-primary)';
+      text.innerText = 'IP CAMERA LIVE';
+
+      triggerToast('Connecting to IP Camera stream...', 'warning');
+
+      img.onerror = () => {
+        triggerToast('Failed to connect to IP Camera stream. Using simulator fallback.', 'error');
+        img.style.display = 'none';
+        video.style.display = 'block';
+        video.style.background = '#090f1a';
+      };
+    }
+
+    function startAIDemo() {
+      const img = document.getElementById('ipcam-scan');
+      if (img.style.display !== 'block') {
+        startWebcam();
+      }
+      triggerToast('AI Scanner session initiated. Fetching structural face metrics...', 'warning');
+
+      const demoBtn = document.getElementById('demo-btn');
+      const stopBtn = document.getElementById('stop-btn');
+      demoBtn.disabled = true;
+      demoBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Scan Session Active...';
+      stopBtn.disabled = false;
+
+      const statsMap = {
+        detected: 'stat-detected',
+        present: 'stat-present',
+        unrecognized: 'stat-unrecognized',
+        confidence: 'stat-confidence'
+      };
+
+      window.asaFaceRec.runSimulationDemo('live-camera-wrapper', 'scan-tbody', statsMap, () => {
+        triggerToast('Attendance scan completed. All results queued for verification.', 'success');
+        stopBtn.disabled = true;
+        demoBtn.disabled = false;
+        demoBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run AI Attendance Demo';
+      });
+    }
+
+    function stopSession() {
+      window.asaFaceRec.stopCamera();
+      
+      const video = document.getElementById('webcam-scan');
+      const img = document.getElementById('ipcam-scan');
+      video.style.display = 'block';
+      img.style.display = 'none';
+      img.src = '';
+
+      triggerToast('Scan session stopped. Record saved to database.', 'success');
+      
+      const demoBtn = document.getElementById('demo-btn');
+      const stopBtn = document.getElementById('stop-btn');
+      stopBtn.disabled = true;
+      demoBtn.disabled = false;
+      demoBtn.innerHTML = '<i class="fa-solid fa-play"></i> Run AI Attendance Demo';
+
+      const dot = document.getElementById('cam-status-dot');
+      const text = document.getElementById('cam-status-text');
+      dot.style.backgroundColor = '#9ca3af';
+      text.innerText = 'CAMERA INACTIVE';
+    }
+
+    function triggerToast(message, type = 'success') {
+      const container = document.getElementById('autosoft-attendance-app-toast-container');
+      const toast = document.createElement('div');
+      toast.className = `asa-toast ${type}`;
+      toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation'}"></i> ${message}`;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3500);
+    }
+  </script>
+</body>
+</html>
+
+<!-- Camera stream interface wrapper -->
+
+<!-- Grid feed layout metrics -->
+
+<!-- Status class trigger definitions -->
+
+<!-- Identification badges positioning -->
+
+<!-- Error banner template notes -->
+
+<!-- Socket listeners API guides -->
+
+<!-- Camera status headers format -->
+
+<!-- Element identifiers layout tag -->
