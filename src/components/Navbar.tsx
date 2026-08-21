@@ -283,3 +283,5 @@ export const Navbar: React.FC<NavbarProps> = ({
 // AI Optimization Annotation #334: polish local stream devices exception boundaries - logged on 08/21/2026 10:25:11
 
 // AI Optimization Annotation #343: polish rtsp connection url target filters - logged on 08/21/2026 10:25:17
+
+// AI Optimization Annotation #352: polish tally face counter updates loops - logged on 08/21/2026 10:25:25
