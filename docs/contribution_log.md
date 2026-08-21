@@ -112,3 +112,4 @@
 * Commit #407: docs(timeline): record live local camera sandbox demo commits in log - Completed on 08/21/2026 09:25:51
 * Commit #452: refactor(landing): remove redundant smart administrative services card - Completed on 08/21/2026 09:35:01
 * Commit #453: refactor(landing): clean up obsolete billing and invoice pages - Completed on 08/21/2026 09:35:02
+* Commit #454: refactor(landing): exclude smart-admin route entry from main app routes - Completed on 08/21/2026 09:35:02
