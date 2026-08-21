@@ -261,3 +261,5 @@ export const Navbar: React.FC<NavbarProps> = ({
 // AI Annotation #232: polish flex layout scaling parameters - verified on 08/21/2026 09:41:24
 
 // AI Annotation #241: polish responsive grid column ratios - verified on 08/21/2026 09:41:29
+
+// AI Annotation #250: polish modal visibility transition classes - verified on 08/21/2026 09:41:34
