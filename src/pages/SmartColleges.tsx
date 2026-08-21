@@ -387,3 +387,5 @@ export const SmartColleges = () => {
 // AI Annotation #202: document sensor values refresh loops - verified on 08/21/2026 09:41:07
 
 // AI Annotation #211: document state hooks synchronization triggers - verified on 08/21/2026 09:41:12
+
+// AI Annotation #220: document compliance badge styling overrides - verified on 08/21/2026 09:41:17
