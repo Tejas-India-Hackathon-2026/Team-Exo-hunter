@@ -492,3 +492,5 @@ export const LandingPage = () => {
 // AI Annotation #199: annotate flex layout scaling parameters - verified on 08/21/2026 09:41:05
 
 // AI Annotation #208: annotate responsive grid column ratios - verified on 08/21/2026 09:41:11
+
+// AI Annotation #217: annotate modal visibility transition classes - verified on 08/21/2026 09:41:15
