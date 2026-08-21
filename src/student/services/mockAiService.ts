@@ -57,7 +57,7 @@ export async function getAiResponse(
 
   const apiKey = customApiKey;
   
-  const models = ['gemini-3.6-flash', 'gemini-1.5-flash'];
+  const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
   let response: Response | null = null;
   let lastErrorStatus = 200;
   let lastErrorBody = '';
@@ -181,7 +181,7 @@ Return the roadmap as a JSON array of 9 steps. Each step must have exactly this 
 Set the first 3 steps status as "completed", step 4 status as "current", and the remaining 5 steps as "upcoming".
 Return ONLY the raw JSON array, without any markdown formatting or backticks.`;
 
-  const models = ['gemini-3.6-flash', 'gemini-1.5-flash'];
+  const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
   let response: Response | null = null;
 
   for (const model of models) {
@@ -249,7 +249,7 @@ export async function generateDynamicStudyPlan(
   }
   Return ONLY the raw JSON array, without any markdown formatting or backticks.`;
 
-  const models = ['gemini-3.6-flash', 'gemini-1.5-flash'];
+  const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
   let response: Response | null = null;
 
   for (const model of models) {
