@@ -5,6 +5,7 @@ import { SUGGESTED_PROMPTS } from '../data/studentData';
 import {
   getAiResponse,
   generateMessageId,
+  generateSmartFallback,
   type AiMessage,
 } from '../services/mockAiService';
 
@@ -158,13 +159,13 @@ export const DishaAiChat = () => {
         };
         setMessages(prev => [...prev, assistantMsg]);
       } catch {
-        const errMsg: AiMessage = {
+        const fallbackMsg: AiMessage = {
           id: generateMessageId(),
           role: 'assistant',
-          content: '⚠️ Something went wrong. Please try again.',
+          content: generateSmartFallback(trimmed),
           timestamp: new Date(),
         };
-        setMessages(prev => [...prev, errMsg]);
+        setMessages(prev => [...prev, fallbackMsg]);
       } finally {
         setIsLoading(false);
         inputRef.current?.focus();
@@ -207,13 +208,13 @@ export const DishaAiChat = () => {
       };
       setMessages(prev => [...prev, assistantMsg]);
     } catch {
-      const errMsg: AiMessage = {
+      const fallbackMsg: AiMessage = {
         id: generateMessageId(),
         role: 'assistant',
-        content: '⚠️ Something went wrong. Please try again.',
+        content: generateSmartFallback(trimmed),
         timestamp: new Date(),
       };
-      setMessages(prev => [...prev, errMsg]);
+      setMessages(prev => [...prev, fallbackMsg]);
     } finally {
       setIsLoading(false);
     }

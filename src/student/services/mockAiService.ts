@@ -145,6 +145,93 @@ For consistent daily progress, follow this structured routine:
 💡 *Tip: Open the **Study Planner** tab in your DISHA portal to check off your daily tasks and track your weekly goals!*`;
   }
 
+  if (q.includes('cloud') || q.includes('devops') || q.includes('docker') || q.includes('kubernetes') || q.includes('aws')) {
+    return `☁️ **Cloud & DevOps Career Roadmap:**
+
+1. **Linux & Scripting:**
+   • Bash scripting, Linux CLI, SSH, permissions, and process management.
+2. **Containerization & Networking:**
+   • Docker (Dockerfiles, multi-stage builds, Docker Compose).
+   • Networking concepts (DNS, TCP/IP, Load Balancers, NGINX reverse proxy).
+3. **Cloud Infrastructure:**
+   • AWS Core: EC2, S3, RDS, Lambda, IAM, VPC.
+   • Infrastructure as Code (IaC): Terraform or Ansible.
+4. **CI/CD & Orchestration:**
+   • GitHub Actions / GitLab CI pipelines.
+   • Kubernetes (Pods, Deployments, Services, Ingress, Helm charts).
+
+🛠️ *Hands-on Project: Containerize a microservices application and automate deployment with GitHub Actions.*`;
+  }
+
+  if (q.includes('data science') || q.includes('data analyst') || q.includes('analytics') || q.includes('sql') || q.includes('pandas') || q.includes('power bi')) {
+    return `📊 **Data Science & Analytics Roadmap:**
+
+1. **Data Querying & Wrangling:**
+   • Advanced SQL (Joins, Window Functions, CTEs, Aggregations).
+   • Python (Pandas, NumPy) for cleaning, reshaping, and exploratory data analysis.
+2. **Data Visualization & Storytelling:**
+   • Matplotlib, Seaborn, Plotly.
+   • BI Tools: Power BI / Tableau dashboards for stakeholders.
+3. **Statistical Inference & Predictive Modeling:**
+   • Hypothesis testing, A/B testing, regression and classification.
+4. **Portfolio Projects:**
+   • Customer Churn Prediction model with feature engineering.
+   • Interactive Real-Time Sales & Revenue BI Dashboard.
+
+💡 *Tip: Practice SQL questions on Stratascratch and LeetCode SQL 50!*`;
+  }
+
+  if (q.includes('cyber') || q.includes('security') || q.includes('ethical hacking') || q.includes('penetration')) {
+    return `🛡️ **Cybersecurity & Ethical Hacking Roadmap:**
+
+1. **Foundations (Weeks 1-4):**
+   • Computer Networking (OSI Model, Subnetting, Wireshark packet analysis).
+   • Operating Systems (Linux administration, Windows internals).
+2. **Security Concepts (Weeks 5-8):**
+   • Cryptography (Symmetric/Asymmetric encryption, Hashing, SSL/TLS).
+   • Web Vulnerabilities (OWASP Top 10: SQLi, XSS, CSRF, SSRF).
+3. **Tools & Practice Labs (Weeks 9-12):**
+   • Nmap, Burp Suite, Metasploit, Hydra.
+   • Practice on TryHackMe, HackTheBox, and OverTheWire.
+4. **Certifications to Target:**
+   • CompTIA Security+, CEH, or eJPT (Junior Penetration Tester).
+
+⚠️ *Always practice on authorized labs and CTFs!*`;
+  }
+
+  if (q.includes('project') || q.includes('idea') || q.includes('final year') || q.includes('hackathon')) {
+    return `🚀 **High-Impact Project Ideas for Students:**
+
+1. **AI-Powered Autonomous Guidance Platform (like DISHA):**
+   • Features: Personalized roadmaps, AI study planner, diagnostic assessments, real-time analytics.
+   • Tech Stack: React 19, TypeScript, TailwindCSS, Gemini API / FastAPI.
+2. **Smart Campus Face Attendance & Security Monitoring:**
+   • Features: Edge AI facial verification, automated attendance logging, intrusion alerts.
+   • Tech Stack: Python OpenCV, Face_Recognition library, WebSockets dashboard.
+3. **Smart Inventory & Invoice Generation with OCR:**
+   • Features: Scan receipt images, parse tabular data with LLM, export PDF invoices.
+   • Tech Stack: Node.js/Python, Tesseract OCR, PostgreSQL.
+4. **Decentralized Verifiable Credential & Student ID System:**
+   • Features: QR-verified cryptographic certificates and identity.
+
+💡 *Check out the **Project Guidance** tab in the sidebar for step-by-step guides for each project!*`;
+  }
+
+  if (q.includes('cgpa') || q.includes('marks') || q.includes('college') || q.includes('semester') || q.includes('viva')) {
+    return `🎓 **College Academic & Semester Success Guide:**
+
+1. **Maximizing CGPA efficiently:**
+   • Focus heavily on internal tests and lab assignments (easy high scoring).
+   • Solve previous 5 years' university question papers (PYQs) — 60-70% patterns repeat.
+2. **Ace Technical Viva & Lab Exams:**
+   • Know the *why* behind every line of code in your lab manual.
+   • Prepare 1-line definitions of fundamental terms (e.g. Polymorphism, Normalization, Deadlock).
+3. **Balance Academics with Skill Building:**
+   • Give 70% of study time to industry skills (DSA, Development) and 30% to college syllabus.
+
+📚 *You can generate structured flashcards and notes anytime in the DISHA portal!*`;
+  }
+
   if (q.includes('hello') || q.includes('hi') || q.includes('hey') || q.includes('who are you') || q.includes('disha')) {
     return `👋 **Hello! I am DISHA AI** (Digital Intelligent Student Helper & Advisor).
 
@@ -175,6 +262,8 @@ Here are actionable steps and best practices to help you succeed:
 
 🎯 *Let me know if you would like a detailed roadmap, project recommendations, or a daily task plan for this topic!*`;
 }
+
+export { generateSmartFallback };
 
 export async function getAiResponse(
   userMessage: string, 
