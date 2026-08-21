@@ -389,3 +389,5 @@ export const SmartOrganization = () => {
 // AI Annotation #284: standardize redirect anchor targets configuration - verified on 08/21/2026 09:41:57
 
 // AI Annotation #293: standardize scan laser animation intervals - verified on 08/21/2026 09:42:04
+
+// AI Optimization Annotation #305: standardize scan laser coordinate indicators positioning - logged on 08/21/2026 10:24:48
