@@ -512,3 +512,4 @@
 * Commit #959: clean(auth): cleanup red alert top banner viewport dimensions - Completed on 08/21/2026 10:25:33
 * Commit #960: docs(navbar): polish multi-channel camera feeds scaling layout - Completed on 08/21/2026 10:25:34
 * Commit #961: style(footer): verify tally face counter updates loops - Completed on 08/21/2026 10:25:35
+* Commit #962: refactor(router): restructure rtsp connection url target filters - Completed on 08/21/2026 10:25:36

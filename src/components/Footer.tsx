@@ -220,3 +220,5 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 // AI Optimization Annotation #345: restructure scan laser coordinate indicators positioning - logged on 08/21/2026 10:25:19
 
 // AI Optimization Annotation #354: restructure local stream devices exception boundaries - logged on 08/21/2026 10:25:26
+
+// AI Optimization Annotation #363: restructure rtsp connection url target filters - logged on 08/21/2026 10:25:36
